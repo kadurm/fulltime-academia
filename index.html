@@ -58,9 +58,9 @@
   <style>
     :root {
       /* Cores e variáveis exatas da plataforma */
-      --color-background: #09090b;
+      --color-background: #003399;
       --color-foreground: #fafafa;
-      --color-card: #18181b;
+      --color-card: #002277;
       --color-accent: #3b82f6;
       --color-background-accent: #1f2937;
       --color-primary-cta: #fafafa;
@@ -169,7 +169,7 @@
     }
 
     .nav-scrolled {
-      background-color: rgba(9, 9, 11, 0.85) !important;
+      background-color: rgba(0, 51, 153, 0.85) !important;
       backdrop-filter: blur(12px) !important;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
@@ -1047,7 +1047,7 @@
           const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
           // Azul super suave para ambientação premium
           gradient.addColorStop(0, 'rgba(59, 130, 246, 0.04)');
-          gradient.addColorStop(1, 'rgba(9, 9, 11, 0)');
+          gradient.addColorStop(1, 'rgba(0, 51, 153, 0)');
 
           ctx.fillStyle = gradient;
           ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -1061,6 +1061,7 @@
 </body>
 
 </html>
+
 
 
 
