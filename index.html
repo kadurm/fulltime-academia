@@ -108,29 +108,19 @@
       text-align: center !important;
     }
 
-    /* Estilos UI da Plataforma c/ fallback robusto para color-mix */
+    /* Estilos UI da Plataforma c/ Glassmorphism */
     .card {
       position: relative;
-      background-color: var(--color-card);
-      background: linear-gradient(180deg, color-mix(in srgb, var(--color-card), white 2%) -35%, var(--color-card) 65%);
-      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+      background-color: rgba(45, 45, 45, 0.6) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.3);
     }
 
+    /* Remove pseudo-elemento que forçava borda sólida gradiente anterior */
     .card::before {
-      content: "";
-      position: absolute;
-      pointer-events: none;
-      inset: 0;
-      padding: 1px;
-      border-radius: inherit;
-      background: linear-gradient(160deg,
-          var(--color-border) 0%,
-          color-mix(in srgb, var(--color-border), transparent 50%) 50%,
-          var(--color-border) 100%);
-      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-      mask-composite: exclude;
+      display: none !important;
     }
 
     .primary-button {
@@ -651,20 +641,25 @@
         <div class="flex flex-col gap-1.5">
           <label for="lead-name" class="text-sm font-medium px-1">Nome Completo</label>
           <input type="text" id="lead-name" placeholder="Ex: João Silva" required
-                 class="w-full px-4 py-3 bg-white/5 border border-border rounded-theme text-foreground focus:outline-none focus:border-accent">
+                 class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-theme text-foreground focus:outline-none focus:border-accent backdrop-blur-sm">
         </div>
         <div class="flex flex-col gap-1.5">
           <label for="lead-phone" class="text-sm font-medium px-1">WhatsApp</label>
           <input type="tel" id="lead-phone" placeholder="(38) 99999-9999" required
-                 class="w-full px-4 py-3 bg-white/5 border border-border rounded-theme text-foreground focus:outline-none focus:border-accent">
+                 class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-theme text-foreground focus:outline-none focus:border-accent backdrop-blur-sm">
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="lead-email" class="text-sm font-medium px-1">E-mail</label>
+          <input type="email" id="lead-email" placeholder="Ex: joao@email.com" required
+                 class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-theme text-foreground focus:outline-none focus:border-accent backdrop-blur-sm">
         </div>
         <div class="flex flex-col gap-1.5">
           <label for="lead-unit" class="text-sm font-medium px-1">Unidade de Preferência</label>
           <select id="lead-unit" required
-                  class="w-full px-4 py-3 bg-[#383838] border border-border rounded-theme text-foreground focus:outline-none focus:border-accent">
-            <option value="Centro">Unidade Centro</option>
-            <option value="Sul">Unidade Sul</option>
-            <option value="Norte">Unidade Norte</option>
+                  class="w-full px-4 py-3 bg-rgba(45,45,45,0.8) border border-white/10 rounded-theme text-foreground focus:outline-none focus:border-accent backdrop-blur-sm appearance-none">
+            <option value="Centro" class="bg-[#383838]">Unidade Centro</option>
+            <option value="Sul" class="bg-[#383838]">Unidade Sul</option>
+            <option value="Norte" class="bg-[#383838]">Unidade Norte</option>
           </select>
         </div>
         <button type="submit" class="relative cursor-pointer h-12 mt-4 px-6 primary-button rounded-theme text-primary-cta-text font-medium w-full shadow-lg">
