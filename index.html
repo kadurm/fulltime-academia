@@ -93,6 +93,15 @@
         font-size: 2rem !important;
         line-height: 1.1;
       }
+      h2 {
+        font-size: 1.75rem !important;
+      }
+      h3 {
+        font-size: 1.25rem !important;
+      }
+      .section-subtitle {
+        font-size: 1rem !important;
+      }
       .hero-carousel-wrapper, #main-carousel { 
         margin-top: -1.5rem !important; 
         margin-bottom: 0 !important; 
@@ -110,6 +119,24 @@
 
     h1, h2, h3, .section-subtitle, .blur-text {
       text-align: center !important;
+    }
+
+    h2 {
+      font-size: 2.5rem !important;
+      line-height: 1.3 !important;
+      margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.75rem !important;
+      line-height: 1.3 !important;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem !important;
+      line-height: 1.6 !important;
+      margin-bottom: 2rem;
+      display: block;
     }
 
     /* Estilos UI da Plataforma c/ Glassmorphism */
@@ -350,9 +377,9 @@
       <div class="w-content-width mx-auto flex flex-col gap-8">
         <div class="flex flex-col md:flex-row gap-3 md:gap-15 md:items-end">
           <div class="w-full md:w-6/10 flex flex-col gap-3">
-            <h2 class="blur-text text-balance text-6xl font-medium" aria-label="Experiência Premium em Montes Claros">
+            <h2 class="blur-text" aria-label="Experiência Premium em Montes Claros">
               Experiência Premium em Montes Claros</h2>
-            <p class="blur-text text-balance text-lg leading-tight"
+            <p class="blur-text section-subtitle"
               aria-label="Nossa missão é entregar qualidade, tecnologia e conforto para sua jornada fitness diária. Com 4 unidades espalhadas estrategicamente, você sempre terá uma Fulltime perto.">
               Nossa missão é entregar qualidade, tecnologia e conforto para sua jornada fitness diária. Com 4 unidades
               espalhadas estrategicamente, você sempre terá uma Fulltime perto.</p>
@@ -401,9 +428,9 @@
       <div class="w-content-width mx-auto flex flex-col gap-6">
         <div class="flex flex-col md:flex-row gap-3 md:gap-15 md:items-end">
           <div class="w-full md:w-6/10 flex flex-col gap-3">
-            <h2 class="blur-text text-balance text-background text-6xl font-medium"
+            <h2 class="blur-text text-background"
               aria-label="O Melhor para o seu Treino">O Melhor para o seu Treino</h2>
-            <p class="blur-text text-balance text-background text-lg leading-tight"
+            <p class="blur-text text-background section-subtitle"
               aria-label="Recursos exclusivos pensados para sua performance e bem-estar.">Recursos exclusivos pensados
               para sua performance e bem‑estar.</p>
           </div>
@@ -512,8 +539,8 @@
       <div class="w-content-width mx-auto flex flex-col gap-6">
         <div class="flex flex-col md:flex-row gap-3 md:gap-15 md:items-end">
           <div class="w-full md:w-6/10 flex flex-col gap-3">
-            <h2 class="blur-text text-balance text-6xl font-medium" aria-label="Nossas Unidades">Nossas Unidades</h2>
-            <p class="blur-text text-balance text-lg leading-tight"
+            <h2 class="blur-text" aria-label="Nossas Unidades">Nossas Unidades</h2>
+            <p class="blur-text section-subtitle"
               aria-label="Encontre a Fulltime mais próxima de você e venha treinar.">Encontre a Fulltime mais próxima de você e venha treinar.</p>
           </div>
           <div class="w-full md:w-4/10 flex flex-col gap-3 md:items-end"></div>
@@ -527,7 +554,7 @@
                      alt="Unidade Ibituruna" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
               </div>
               <div class="p-6 flex flex-col gap-4 flex-1">
-                <h3 class="text-2xl font-medium">Unidade Ibituruna</h3>
+                <h3>Unidade Ibituruna</h3>
                 <p class="text-sm text-foreground/70 leading-relaxed">Av. José Corrêa Machado, 1079 - Ibituruna, Montes Claros</p>
                 <div class="mt-auto">
                   <button type="button" data-unidade="Ibituruna" 
@@ -546,7 +573,7 @@
                      alt="Unidade São José" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
               </div>
               <div class="p-6 flex flex-col gap-4 flex-1">
-                <h3 class="text-2xl font-medium">Unidade São José</h3>
+                <h3 class="text-foreground">Unidade São José</h3>
                 <p class="text-sm text-foreground/70 leading-relaxed">Av. Floriano Neiva, 610 - Alto São João</p>
                 <div class="mt-auto">
                   <button type="button" data-unidade="São José" 
@@ -689,10 +716,10 @@
             </path>
           </svg>
         </div>
-        <p class="blur-text text-3xl md:text-5xl font-medium text-balance text-center leading-tight text-background"
+        <h2 class="blur-text text-background"
           aria-label="A melhor academia que já frequentei em Montes Claros! Infraestrutura impecável e atendimento nota 10.">
-          A melhor academia que já frequentei em Montes Claros! Infraestrutura impecável e atendimento nota 10.</p>
-        <p class="text-xl text-center mb-1 text-background">Mariana Silva</p>
+          A melhor academia que já frequentei em Montes Claros! Infraestrutura impecável e atendimento nota 10.</h2>
+        <p class="text-center text-background font-medium">Mariana Silva</p>
         <div role="group" aria-label="User avatars" class="relative z-1 flex items-center gap-3 justify-center">
           <div class="flex items-center">
             <div class="relative card p-0.5 rounded-theme z-[5]">
@@ -742,7 +769,7 @@
       <div class="w-content-width mx-auto">
         <div class="flex flex-col md:flex-row gap-6 md:gap-10">
           <div class="w-full md:w-2/5 flex flex-col gap-3">
-            <div class="blur-text text-6xl font-medium" aria-label="Dúvidas Frequentes">Dúvidas Frequentes</div>
+            <h2 class="blur-text" aria-label="Dúvidas Frequentes">Dúvidas Frequentes</h2>
           </div>
           <div class="w-full md:w-3/5 flex flex-col gap-4">
             <div>
@@ -750,7 +777,7 @@
                 class="card p-5 rounded-theme-capped cursor-pointer flex flex-col items-center justify-between transition-all duration-500 group"
                 aria-expanded="false">
                 <div class="flex flex-row items-center justify-between w-full">
-                  <h2 class="text-base md:text-xl font-medium text-foreground">Como funcionam as unidades?</h2>
+                  <h3 class="text-base md:text-xl font-medium text-foreground">Como funcionam as unidades?</h3>
                   <div
                     class="h-8 w-8 shrink-0 flex items-center justify-center rounded-theme primary-button transition-all duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -764,7 +791,7 @@
                 </div>
                 <div style="max-height:0px"
                   class="overflow-hidden transition-[max-height] duration-500 w-full flex flex-col faq-content">
-                  <div class="text-base text-foreground/80 pt-4">Você pode escolher a unidade que preferir ou optar pelo
+                  <div class="text-base text-foreground/80 pt-4 text-center">Você pode escolher a unidade que preferir ou optar pelo
                     plano global.</div>
                 </div>
               </div>
@@ -774,7 +801,7 @@
                 class="card p-5 rounded-theme-capped cursor-pointer flex flex-col items-center justify-between transition-all duration-500 group"
                 aria-expanded="false">
                 <div class="flex flex-row items-center justify-between w-full">
-                  <h2 class="text-base md:text-xl font-medium text-foreground">Preciso agendar avaliação?</h2>
+                  <h3 class="text-base md:text-xl font-medium text-foreground">Preciso agendar avaliação?</h3>
                   <div
                     class="h-8 w-8 shrink-0 flex items-center justify-center rounded-theme primary-button transition-all duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -788,7 +815,7 @@
                 </div>
                 <div style="max-height:0px"
                   class="overflow-hidden transition-[max-height] duration-500 w-full flex flex-col faq-content">
-                  <div class="text-base text-foreground/80 pt-4">Sim, fazemos acompanhamento técnico para todos os
+                  <div class="text-base text-foreground/80 pt-4 text-center">Sim, fazemos acompanhamento técnico para todos os
                     alunos.</div>
                 </div>
               </div>
@@ -798,7 +825,7 @@
                 class="card p-5 rounded-theme-capped cursor-pointer flex flex-col items-center justify-between transition-all duration-500 group"
                 aria-expanded="false">
                 <div class="flex flex-row items-center justify-between w-full">
-                  <h2 class="text-base md:text-xl font-medium text-foreground">Tem plano fidelidade?</h2>
+                  <h3 class="text-base md:text-xl font-medium text-foreground">Tem plano fidelidade?</h3>
                   <div
                     class="h-8 w-8 shrink-0 flex items-center justify-center rounded-theme primary-button transition-all duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -812,7 +839,7 @@
                 </div>
                 <div style="max-height:0px"
                   class="overflow-hidden transition-[max-height] duration-500 w-full flex flex-col faq-content">
-                  <div class="text-base text-foreground/80 pt-4">Sim, oferecemos descontos para planos anuais.</div>
+                  <div class="text-base text-foreground/80 pt-4 text-center">Sim, oferecemos descontos para planos anuais.</div>
                 </div>
               </div>
             </div>
@@ -830,11 +857,11 @@
           <div class="bg-[#003399] text-white rounded-theme-capped p-8 md:p-12 flex items-center justify-center">
             <form class="relative z-1 w-full flex flex-col gap-6" onsubmit="event.preventDefault();">
               <div class="w-full flex flex-col gap-2 text-center">
-                <div class="blur-text text-4xl font-medium leading-[1.175] text-balance text-white"
-                  aria-label="Fale Conosco">Fale Conosco</div>
-                <div class="blur-text text-base leading-[1.15] text-balance text-white/80"
+                <h2 class="blur-text text-white"
+                  aria-label="Fale Conosco">Fale Conosco</h2>
+                <p class="blur-text section-subtitle text-white/80"
                   aria-label="Entre em contato via WhatsApp e tire suas dúvidas agora.">Entre em contato via WhatsApp e
-                  tire suas dúvidas agora.</div>
+                  tire suas dúvidas agora.</p>
               </div>
               <div class="w-full flex flex-col gap-4">
                 <div class="w-full">
