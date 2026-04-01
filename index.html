@@ -173,6 +173,38 @@
       backdrop-filter: blur(12px) !important;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
+
+    /* Animação do Carrossel de Fotos */
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .carousel-container {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    .carousel-track {
+      display: flex;
+      width: max-content;
+      animation: scroll 40s linear infinite;
+    }
+
+    .carousel-item {
+      flex: 0 0 auto;
+      width: 70vw;
+      margin: 0 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .carousel-item {
+        width: 35vw;
+      }
+    }
   </style>
 </head>
 
@@ -315,55 +347,61 @@
           </div>
         </div>
 
-        <!-- Galeria Flutuante "HeroBillboardRotatedCarousel" (com fallbacks onerror à prova de bloqueio HTTP) -->
-        <div class="relative w-full flex justify-center items-center overflow-hidden">
-          <div class="w-[70%] md:w-[40%] aspect-square md:aspect-[16/10] opacity-0"></div>
-
-          <div
-            class="image-animate not-in-view !absolute w-[70%] md:w-[40%] aspect-square md:aspect-[16/10] card p-1 rounded-theme-capped overflow-hidden hover:z-50 hover:scale-105"
-            style="z-index:3; transform:translateX(-200%) translateY(10%) scale(0.8) rotate(-4deg); transition-delay: 0ms;">
-            <img alt="Locker room" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
-              src="http://img.b2bpic.net/free-photo/woman-training-gym-pandemic-with-medical-mask_23-2148762628.jpg"
-              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=800&auto=format&fit=crop';" />
-            <div class="absolute inset-0 bg-background/50 backdrop-blur-[1px] pointer-events-none select-none"></div>
-          </div>
-
-          <div
-            class="image-animate not-in-view !absolute w-[70%] md:w-[40%] aspect-square md:aspect-[16/10] card p-1 rounded-theme-capped overflow-hidden hover:z-50 hover:scale-[0.95]"
-            style="z-index:4; transform:translateX(calc(-100% - 20px)) translateY(5%) scale(0.88) rotate(-2deg); transition-delay: 100ms;">
-            <img alt="Strength training" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
-              src="http://img.b2bpic.net/free-photo/kettlebell-chain-strength-training-dark-gym-setting_84443-84496.jpg"
-              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop';" />
-            <div class="absolute inset-0 bg-background/50 backdrop-blur-[1px] pointer-events-none select-none"></div>
-          </div>
-
-          <div
-            class="image-animate not-in-view !absolute w-[70%] md:w-[40%] aspect-square md:aspect-[16/10] card p-1 rounded-theme-capped overflow-hidden hover:z-50 hover:scale-105"
-            style="z-index:10; transform:translateY(25px); transition-delay: 200ms;">
-            <img alt="Modern gym interior" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
-              src="http://img.b2bpic.net/free-photo/woman-training-gym_23-2148024360.jpg"
-              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=800&auto=format&fit=crop';" />
-            <div
-              class="absolute inset-0 bg-background/50 backdrop-blur-[1px] pointer-events-none select-none opacity-0 hover:opacity-0">
+        <!-- Galeria Flutuante (Carrossel de fotos contínuo) -->
+        <div class="carousel-container">
+          <div class="carousel-track">
+            <!-- Primeira sequência de fotos -->
+            <div class="carousel-item card p-1 rounded-theme-capped overflow-hidden aspect-square md:aspect-[16/10]">
+              <img alt="Locker room" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
+                src="http://img.b2bpic.net/free-photo/woman-training-gym-pandemic-with-medical-mask_23-2148762628.jpg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=800&auto=format&fit=crop';" />
             </div>
-          </div>
-
-          <div
-            class="image-animate not-in-view !absolute w-[70%] md:w-[40%] aspect-square md:aspect-[16/10] card p-1 rounded-theme-capped overflow-hidden hover:z-50 hover:scale-[0.95]"
-            style="z-index:4; transform:translateX(calc(100% + 20px)) translateY(5%) scale(0.88) rotate(2deg); transition-delay: 100ms;">
-            <img alt="Gym equipment" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
-              src="http://img.b2bpic.net/free-photo/from-back-sexy-young-woman-sportswear-seafront-sunrise-summer-morning-tropical-country-workout-fashionable-model-fitness-happiness_197531-2913.jpg"
-              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1558611848-73f7eb4001a1?q=80&w=800&auto=format&fit=crop';" />
-            <div class="absolute inset-0 bg-background/50 backdrop-blur-[1px] pointer-events-none select-none"></div>
-          </div>
-
-          <div
-            class="image-animate not-in-view !absolute w-[70%] md:w-[40%] aspect-square md:aspect-[16/10] card p-1 rounded-theme-capped overflow-hidden hover:z-50 hover:scale-105"
-            style="z-index:3; transform:translateX(200%) translateY(10%) scale(0.8) rotate(4deg); transition-delay: 0ms;">
-            <img alt="Weight room" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
-              src="http://img.b2bpic.net/free-photo/woman-with-medical-mask-cleaning-gym-equipment-with-copy-space_23-2148766017.jpg"
-              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=800&auto=format&fit=crop';" />
-            <div class="absolute inset-0 bg-background/50 backdrop-blur-[1px] pointer-events-none select-none"></div>
+            <div class="carousel-item card p-1 rounded-theme-capped overflow-hidden aspect-square md:aspect-[16/10]">
+              <img alt="Strength training" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
+                src="http://img.b2bpic.net/free-photo/kettlebell-chain-strength-training-dark-gym-setting_84443-84496.jpg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop';" />
+            </div>
+            <div class="carousel-item card p-1 rounded-theme-capped overflow-hidden aspect-square md:aspect-[16/10]">
+              <img alt="Modern gym interior" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
+                src="http://img.b2bpic.net/free-photo/woman-training-gym_23-2148024360.jpg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=800&auto=format&fit=crop';" />
+            </div>
+            <div class="carousel-item card p-1 rounded-theme-capped overflow-hidden aspect-square md:aspect-[16/10]">
+              <img alt="Gym equipment" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
+                src="http://img.b2bpic.net/free-photo/from-back-sexy-young-woman-sportswear-seafront-sunrise-summer-morning-tropical-country-workout-fashionable-model-fitness-happiness_197531-2913.jpg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1558611848-73f7eb4001a1?q=80&w=800&auto=format&fit=crop';" />
+            </div>
+            <div class="carousel-item card p-1 rounded-theme-capped overflow-hidden aspect-square md:aspect-[16/10]">
+              <img alt="Weight room" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
+                src="http://img.b2bpic.net/free-photo/woman-with-medical-mask-cleaning-gym-equipment-with-copy-space_23-2148766017.jpg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=800&auto=format&fit=crop';" />
+            </div>
+            <!-- Segunda sequência (Duplicada para loop infinito) -->
+            <div class="carousel-item card p-1 rounded-theme-capped overflow-hidden aspect-square md:aspect-[16/10]">
+              <img alt="Locker room" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
+                src="http://img.b2bpic.net/free-photo/woman-training-gym-pandemic-with-medical-mask_23-2148762628.jpg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=800&auto=format&fit=crop';" />
+            </div>
+            <div class="carousel-item card p-1 rounded-theme-capped overflow-hidden aspect-square md:aspect-[16/10]">
+              <img alt="Strength training" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
+                src="http://img.b2bpic.net/free-photo/kettlebell-chain-strength-training-dark-gym-setting_84443-84496.jpg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop';" />
+            </div>
+            <div class="carousel-item card p-1 rounded-theme-capped overflow-hidden aspect-square md:aspect-[16/10]">
+              <img alt="Modern gym interior" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
+                src="http://img.b2bpic.net/free-photo/woman-training-gym_23-2148024360.jpg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=800&auto=format&fit=crop';" />
+            </div>
+            <div class="carousel-item card p-1 rounded-theme-capped overflow-hidden aspect-square md:aspect-[16/10]">
+              <img alt="Gym equipment" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
+                src="http://img.b2bpic.net/free-photo/from-back-sexy-young-woman-sportswear-seafront-sunrise-summer-morning-tropical-country-workout-fashionable-model-fitness-happiness_197531-2913.jpg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1558611848-73f7eb4001a1?q=80&w=800&auto=format&fit=crop';" />
+            </div>
+            <div class="carousel-item card p-1 rounded-theme-capped overflow-hidden aspect-square md:aspect-[16/10]">
+              <img alt="Weight room" loading="lazy" class="rounded-theme-capped w-full h-full object-cover"
+                src="http://img.b2bpic.net/free-photo/woman-with-medical-mask-cleaning-gym-equipment-with-copy-space_23-2148766017.jpg"
+                onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=800&auto=format&fit=crop';" />
+            </div>
           </div>
         </div>
       </div>
