@@ -25,6 +25,7 @@
             background: 'var(--color-background)',
             foreground: 'var(--color-foreground)',
             card: 'var(--color-card)',
+            border: 'var(--color-border)',
             accent: 'var(--color-accent)',
             'primary-cta': 'var(--color-primary-cta)',
             'primary-cta-text': 'var(--color-primary-cta-text)',
@@ -60,7 +61,8 @@
       /* Cores e variáveis exatas da plataforma */
       --color-background: #003399;
       --color-foreground: #fafafa;
-      --color-card: #002277;
+      --color-card: #383838;
+      --color-border: #484848;
       --color-accent: #3b82f6;
       --color-background-accent: #1f2937;
       --color-primary-cta: #fafafa;
@@ -101,9 +103,9 @@
     /* Estilos UI da Plataforma c/ fallback robusto para color-mix */
     .card {
       position: relative;
-      background-color: #18181b;
-      background: linear-gradient(180deg, color-mix(in srgb, var(--color-card), var(--color-accent) 5%) -35%, var(--color-card) 65%);
-      box-shadow: 0px 0px 10px 4px color-mix(in srgb, var(--color-accent) 4%, transparent);
+      background-color: var(--color-card);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--color-card), white 2%) -35%, var(--color-card) 65%);
+      box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
     }
 
     .card::before {
@@ -114,10 +116,9 @@
       padding: 1px;
       border-radius: inherit;
       background: linear-gradient(160deg,
-          color-mix(in srgb, var(--color-accent) 25%, transparent) 0%,
-          color-mix(in srgb, var(--color-accent) 5%, transparent) 35%,
-          color-mix(in srgb, var(--color-foreground) 5%, transparent) 75%,
-          color-mix(in srgb, var(--color-background-accent) 15%, transparent) 100%);
+          var(--color-border) 0%,
+          color-mix(in srgb, var(--color-border), transparent 50%) 50%,
+          var(--color-border) 100%);
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -413,14 +414,14 @@
                 <p class="text-base leading-[1.4] text-foreground">Localização estratégica na cidade.</p>
               </div>
             </div>
-            <div class="relative z-1 w-full border-b border-accent/40"></div>
+            <div class="relative z-1 w-full border-b border-border/40"></div>
             <div class="relative z-1 flex flex-col gap-2">
               <div class="flex flex-col gap-0">
                 <h3 class="text-xl font-medium">Ambiente Climatizado</h3>
                 <p class="text-base leading-[1.4] text-foreground">Conforto total em qualquer estação.</p>
               </div>
             </div>
-            <div class="relative z-1 w-full border-b border-accent/40"></div>
+            <div class="relative z-1 w-full border-b border-border/40"></div>
             <div class="relative z-1 flex flex-col gap-2">
               <div class="flex flex-col gap-0">
                 <h3 class="text-xl font-medium">Tecnologia de ponta</h3>
