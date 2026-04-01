@@ -1164,19 +1164,26 @@
         updateCarousel();
       }
 
-      // 7. Loop Infinito Invisível via transitionend
+      // 7. Loop Infinito Absoluto via transitionend
       track.addEventListener('transitionend', () => {
+        // Se estivermos em um clone do final (índice originalCount * 2)
         if (currentIndex >= originalCount * 2) {
           currentIndex = originalCount;
-          updateCarousel(true);
-        } else if (currentIndex < originalCount) {
+          updateCarousel(true); // Jump instantâneo para o item real correspondente
+        } 
+        // Se estivermos em um clone do início (índice < originalCount)
+        else if (currentIndex < originalCount) {
           currentIndex = originalCount * 2 - 1;
-          updateCarousel(true);
+          updateCarousel(true); // Jump instantâneo para o item real correspondente
         }
       });
 
-      window.addEventListener('resize', () => updateCarousel(true));
+      // Função de redimensionamento otimizada
+      window.addEventListener('resize', () => {
+        updateCarousel(true);
+      });
       
+      // Clique nos cards com reinício de autoplay
       items.forEach((item, index) => {
         item.addEventListener('click', () => {
           currentIndex = index;
@@ -1186,6 +1193,7 @@
         });
       });
 
+      // Render inicial e início do autoplay
       updateCarousel(true);
       let autoPlay = setInterval(nextSlide, 3500);
     });
