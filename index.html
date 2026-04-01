@@ -1080,29 +1080,38 @@
       // 6. Lógica do Carrossel: Loop Infinito Real e Efeito Oval 3D
       const track = document.querySelector('.carousel-track');
       const container = document.querySelector('.carousel-container');
+      const originalItems = Array.from(document.querySelectorAll('.carousel-item'));
+      const originalCount = originalItems.length;
+
+      // Clonagem para Loop Infinito (Cria 2 sets de clones para garantir preenchimento)
+      originalItems.forEach(item => {
+        const cloneBefore = item.cloneNode(true);
+        const cloneAfter = item.cloneNode(true);
+        track.appendChild(cloneAfter);
+        track.insertBefore(cloneBefore, track.firstChild);
+      });
+
       let items = Array.from(document.querySelectorAll('.carousel-item'));
-      const originalCount = items.length;
-      let currentIndex = originalCount; // Começa no primeiro item real (após os clones iniciais)
-
-      // Clonagem para Loop Infinito
-      const firstClones = items.map(item => item.cloneNode(true));
-      const lastClones = items.map(item => item.cloneNode(true));
-      
-      lastClones.forEach(clone => track.appendChild(clone));
-      firstClones.reverse().forEach(clone => track.insertBefore(clone, track.firstChild));
-
-      // Atualiza a lista de itens com os clones
-      items = Array.from(document.querySelectorAll('.carousel-item'));
+      let currentIndex = originalCount; // Começa no primeiro item real
 
       function updateCarousel(instant = false) {
         const containerWidth = container.offsetWidth;
         const itemWidth = items[0].offsetWidth;
-        const gap = parseFloat(window.getComputedStyle(items[0]).marginRight) * 2;
+        // Pega a margem real computada
+        const style = window.getComputedStyle(items[0]);
+        const marginLeft = parseFloat(style.marginLeft);
+        const marginRight = parseFloat(style.marginRight);
+        const totalItemWidth = itemWidth + marginLeft + marginRight;
         
-        if (instant) track.style.transition = 'none';
-        else track.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        if (instant) {
+          track.style.transition = 'none';
+        } else {
+          track.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1.0)';
+        }
 
-        const offset = (containerWidth / 2) - (itemWidth / 2) - (currentIndex * (itemWidth + gap));
+        // Cálculo exato para centralizar o card ativo
+        // O offset base é metade do container menos metade do card (incluindo margens para simetria)
+        const offset = (containerWidth / 2) - (currentIndex * totalItemWidth) - (totalItemWidth / 2);
         track.style.transform = `translateX(${offset}px)`;
 
         items.forEach((item, index) => {
@@ -1113,23 +1122,25 @@
           
           if (diff === 0) {
             item.classList.add('active');
-            item.style.transform = `translateZ(200px) scale(1.1)`;
-            item.style.zIndex = 20;
+            item.style.transform = `translateZ(250px) scale(1.15)`;
+            item.style.zIndex = 30;
+            item.style.opacity = '1';
           } else {
-            // Efeito Oval: afasta em Z, inclina em Y e desloca levemente em Y para arco
-            const rotateY = diff * -15; // Inclinação lateral
-            const translateZ = -absDiff * 150; // Profundidade
-            const translateY = absDiff * 20; // Arco (desce conforme afasta)
-            const scale = Math.max(0.7, 1 - absDiff * 0.1);
+            // Efeito Oval Reforçado
+            const rotateY = diff * -25; // Inclinação lateral mais forte
+            const translateZ = -absDiff * 180; // Mais profundidade
+            const translateY = absDiff * 35; // Arco mais pronunciado
+            const scale = Math.max(0.65, 1 - absDiff * 0.12);
+            const opacity = Math.max(0.4, 1 - absDiff * 0.2);
             
             item.style.transform = `translateY(${translateY}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
-            item.style.zIndex = 10 - absDiff;
+            item.style.zIndex = 20 - absDiff;
+            item.style.opacity = opacity;
           }
         });
 
         if (instant) {
-          // Força reflow para aplicar o 'none' antes de restaurar a transição
-          track.offsetHeight; 
+          track.offsetHeight; // Force reflow
         }
       }
 
@@ -1146,24 +1157,27 @@
       function nextSlide() {
         currentIndex++;
         updateCarousel();
-        setTimeout(checkLoop, 800); // Aguarda o fim da transição
+        // O jump invisível ocorre logo após a transição terminar
+        setTimeout(checkLoop, 810);
       }
 
-      // Inicialização
+      // Inicialização e Eventos
       window.addEventListener('resize', () => updateCarousel(true));
-      updateCarousel(true);
-      let autoPlay = setInterval(nextSlide, 3000);
-
-      // Clique para navegar e pausa do autoplay
+      
+      // Clique nos cards
       items.forEach((item, index) => {
         item.addEventListener('click', () => {
           currentIndex = index;
           updateCarousel();
           clearInterval(autoPlay);
-          autoPlay = setInterval(nextSlide, 3000);
-          setTimeout(checkLoop, 800);
+          autoPlay = setInterval(nextSlide, 3500);
+          setTimeout(checkLoop, 810);
         });
       });
+
+      // Primeiro render instantâneo
+      updateCarousel(true);
+      let autoPlay = setInterval(nextSlide, 3500);
     });
   </script>
 <style>#beams-bg-container{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;overflow:hidden;background-color:var(--color-background,#003399)}#beams-canvas{position:absolute;inset:0;filter:blur(15px);opacity:0.8}body,main,.bg-background{background:transparent !important}</style><div id="beams-bg-container"><canvas id="beams-canvas"></canvas></div><script>(function(){const canvas=document.getElementById('beams-canvas');const ctx=canvas.getContext('2d');let beams=[];let lastWidth=window.innerWidth;function createBeam(width,height,isInitial=false){return{x:Math.random()*width*1.5-width*0.25,y:isInitial?Math.random()*height*2-height:height+200+Math.random()*200,width:40+Math.random()*80,length:height*3.5,angle:-35+Math.random()*10,speed:0.8+Math.random()*1.5,opacity:0.4+Math.random()*0.4,pulse:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.03};}function resetBeam(beam,width,height){beam.y=height+200+Math.random()*200;beam.x=Math.random()*width*1.5-width*0.25;return beam;}function updateSize(){const width=window.innerWidth;const height=window.innerHeight;if(Math.abs(width-lastWidth)<10&&beams.length>0)return;lastWidth=width;const dpr=window.devicePixelRatio||1;canvas.width=width*dpr;canvas.height=height*dpr;canvas.style.width=width+'px';canvas.style.height=height+'px';ctx.setTransform(1,0,0,1,0,0);ctx.scale(dpr,dpr);beams=Array.from({length:45},()=>createBeam(width,height,true));}function drawBeam(beam){ctx.save();ctx.translate(beam.x,beam.y);ctx.rotate((beam.angle*Math.PI)/180);const pOpacity=Math.max(0,Math.min(1,beam.opacity*(0.8+Math.sin(beam.pulse)*0.2)));const grad=ctx.createLinearGradient(0,0,0,beam.length);grad.addColorStop(0,'rgba(0,0,0,0)');grad.addColorStop(0.1,`rgba(0,0,0,${pOpacity*0.5})`);grad.addColorStop(0.4,`rgba(0,0,0,${pOpacity})`);grad.addColorStop(0.6,`rgba(0,0,0,${pOpacity})`);grad.addColorStop(0.9,`rgba(0,0,0,${pOpacity*0.5})`);grad.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=grad;ctx.fillRect(-beam.width/2,0,beam.width,beam.length);ctx.restore();}function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);const w=window.innerWidth;const h=window.innerHeight;beams.forEach((beam)=>{beam.y-=beam.speed;beam.pulse+=beam.pulseSpeed;if(beam.y+beam.length<-200){resetBeam(beam,w,h);}drawBeam(beam);});requestAnimationFrame(animate);}updateSize();window.addEventListener('resize',updateSize);animate();})();</script>
