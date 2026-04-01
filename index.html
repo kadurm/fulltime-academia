@@ -1097,7 +1097,6 @@
       function updateCarousel(instant = false) {
         const containerWidth = container.offsetWidth;
         const itemWidth = items[0].offsetWidth;
-        // Pega a margem real computada
         const style = window.getComputedStyle(items[0]);
         const marginLeft = parseFloat(style.marginLeft);
         const marginRight = parseFloat(style.marginRight);
@@ -1109,15 +1108,12 @@
           track.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1.0)';
         }
 
-        // Cálculo exato para centralizar o card ativo
-        // O offset base é metade do container menos metade do card (incluindo margens para simetria)
         const offset = (containerWidth / 2) - (currentIndex * totalItemWidth) - (totalItemWidth / 2);
         track.style.transform = `translateX(${offset}px)`;
 
         items.forEach((item, index) => {
           const diff = index - currentIndex;
           const absDiff = Math.abs(diff);
-          
           item.classList.remove('active');
           
           if (diff === 0) {
@@ -1126,10 +1122,9 @@
             item.style.zIndex = 30;
             item.style.opacity = '1';
           } else {
-            // Efeito Oval Reforçado
-            const rotateY = diff * -25; // Inclinação lateral mais forte
-            const translateZ = -absDiff * 180; // Mais profundidade
-            const translateY = absDiff * 35; // Arco mais pronunciado
+            const rotateY = diff * -25;
+            const translateZ = -absDiff * 180;
+            const translateY = absDiff * 35;
             const scale = Math.max(0.65, 1 - absDiff * 0.12);
             const opacity = Math.max(0.4, 1 - absDiff * 0.2);
             
@@ -1140,7 +1135,8 @@
         });
 
         if (instant) {
-          track.offsetHeight; // Force reflow
+          // Força o navegador a aplicar a mudança de posição sem animação
+          void track.offsetWidth; 
         }
       }
 
@@ -1157,25 +1153,22 @@
       function nextSlide() {
         currentIndex++;
         updateCarousel();
-        // O jump invisível ocorre logo após a transição terminar
-        setTimeout(checkLoop, 810);
+        // O salto invisível ocorre exatamente após a transição terminar
+        setTimeout(checkLoop, 850); 
       }
 
-      // Inicialização e Eventos
       window.addEventListener('resize', () => updateCarousel(true));
       
-      // Clique nos cards
       items.forEach((item, index) => {
         item.addEventListener('click', () => {
           currentIndex = index;
           updateCarousel();
           clearInterval(autoPlay);
           autoPlay = setInterval(nextSlide, 3500);
-          setTimeout(checkLoop, 810);
+          setTimeout(checkLoop, 850);
         });
       });
 
-      // Primeiro render instantâneo
       updateCarousel(true);
       let autoPlay = setInterval(nextSlide, 3500);
     });
