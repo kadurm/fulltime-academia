@@ -299,10 +299,10 @@
         <div class="w-content-width mx-auto">
           <div class="items-center text-center flex flex-col gap-3 md:gap-3">
             <h2 class="blur-text text-center text-6xl font-medium text-balance"
-              aria-label="Transforme Seu Corpo Supere Seus Limites">Transforme Seu Corpo Supere Seus Limites</h2>
+              aria-label="Transforme seu corpo Supere seus limites">Transforme seu corpo<br>Supere seus limites</h2>
             <p class="blur-text text-center text-base md:text-lg leading-tight"
-              aria-label="Equipamentos de última geração, ambiente 100% climatizado, aulas práticas e acompanhamento profissional. Encontre a unidade Fulltime mais próxima de você">
-              Equipamentos de última geração, ambiente 100% climatizado, aulas práticas e acompanhamento profissional. Encontre a unidade Fulltime mais próxima de você</p>
+              aria-label="Equipamentos de última geração, ambiente 100% climatizado, aulas coletivas e acompanhamento profissional. Encontre a unidade Fulltime mais próxima de você">
+              Equipamentos de última geração, ambiente 100% climatizado, aulas coletivas e acompanhamento profissional.<br><br>Encontre a unidade Fulltime mais próxima de você</p>
             <div class="w-full justify-center flex flex-wrap gap-4 max-md:justify-center mt-2">
               <button type="button" onclick="document.getElementById('contact').scrollIntoView()"
                 class="relative cursor-pointer h-9 min-w-0 w-fit max-w-full px-6 primary-button rounded-theme primary-button text-primary-cta-text">
@@ -579,7 +579,7 @@
 
   <!-- Modal de Planos -->
   <div id="modal-planos" class="fixed inset-0 z-[2000] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="absolute inset-0 bg-background/80 backdrop-blur-md"></div>
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
     <div class="relative w-full max-w-md card p-8 rounded-theme-capped flex flex-col gap-6 shadow-2xl">
       <button id="close-modal" class="absolute top-4 right-4 text-foreground/50 hover:text-foreground">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
@@ -606,12 +606,17 @@
         </div>
         <div class="flex flex-col gap-1.5">
           <label for="lead-unit" class="text-sm font-medium px-1">Unidade de Preferência</label>
-          <select id="lead-unit" required
-                  class="w-full px-4 py-3 bg-rgba(45,45,45,0.8) border border-white/10 rounded-theme text-foreground focus:outline-none focus:border-accent backdrop-blur-sm appearance-none">
-            <option value="Centro" class="bg-[#383838]">Unidade Centro</option>
-            <option value="Sul" class="bg-[#383838]">Unidade Sul</option>
-            <option value="Norte" class="bg-[#383838]">Unidade Norte</option>
-          </select>
+          <div class="relative">
+            <select id="lead-unit" required
+                    class="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-theme text-foreground focus:outline-none focus:border-accent backdrop-blur-sm appearance-none cursor-pointer">
+              <option value="Centro" class="bg-[#2d2d2d]">Unidade Centro</option>
+              <option value="Sul" class="bg-[#2d2d2d]">Unidade Sul</option>
+              <option value="Norte" class="bg-[#2d2d2d]">Unidade Norte</option>
+            </select>
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"></path></svg>
+            </div>
+          </div>
         </div>
         <button type="submit" class="relative cursor-pointer h-12 mt-4 px-6 primary-button rounded-theme text-primary-cta-text font-medium w-full shadow-lg">
           Solicitar Informações
