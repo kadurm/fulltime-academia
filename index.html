@@ -894,33 +894,15 @@
   <!-- Footer -->
   <div id="footer" data-section="footer">
     <footer role="contentinfo" aria-label="Site footer"
-      class="relative overflow-hidden w-full bg-[#003399] text-white py-15 mt-20">
-      <div class="relative w-content-width mx-auto z-10">
-        <div class="flex flex-col md:flex-row gap-10 md:gap-0 justify-between items-start mb-10">
-          <h2 class="text-4xl font-medium text-white">Fulltime Academia</h2>
-          <div class="w-full md:w-fit flex flex-wrap gap-y-10 md:gap-[calc(2.5rem/1.5)]">
-            <div class="relative z-1 w-1/2 md:w-auto flex items-start flex-col gap-4 pr-4">
-              <h3 class="text-sm font-semibold opacity-50 text-white">Fulltime Academia</h3>
-              <button type="button" onclick="document.getElementById('about').scrollIntoView()"
-                class="relative inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left text-base text-white">Sobre
-                Nós</button>
-              <button type="button" onclick="document.getElementById('pricing').scrollIntoView()"
-                class="relative inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left text-base text-white">Planos</button>
-            </div>
-            <div class="relative z-1 w-1/2 md:w-auto flex items-start flex-col gap-4">
-              <h3 class="text-sm font-semibold opacity-50 text-white">Suporte</h3>
-              <button type="button" onclick="window.open('https://wa.me/550000000000', '_blank')"
-                class="relative inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left text-base text-white">WhatsApp</button>
-              <button type="button" onclick="document.getElementById('faq').scrollIntoView()"
-                class="relative inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left text-base text-white">FAQ</button>
-            </div>
-          </div>
+      class="relative overflow-hidden w-full bg-[#003399] text-white py-10 mt-20">
+      <div class="relative w-content-width mx-auto z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="flex items-center transition-all duration-500 ease-in-out">
+          <button onclick="document.getElementById('hero').scrollIntoView()" class="cursor-pointer">
+            <img src="/logo.png" alt="Fulltime Academia" class="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" />
+          </button>
         </div>
-        <div class="w-full flex items-center justify-between pt-9 border-t border-white/20">
-          <span class="text-white/50 text-sm">© 2026 | Webild</span>
-          <button type="button" aria-label="Privacy Policy"
-            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left text-white/50">Política
-            de Privacidade</button>
+        <div class="flex items-center">
+          <span class="text-white/50 text-sm">© 2026 | KrM Corp</span>
         </div>
       </div>
     </footer>
