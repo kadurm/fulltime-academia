@@ -253,8 +253,8 @@
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Início</button>
           <button type="button" onclick="document.getElementById('about').scrollIntoView()"
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Sobre</button>
-          <button type="button" onclick="document.getElementById('pricing').scrollIntoView()"
-            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Planos</button>
+          <button type="button" onclick="document.getElementById('unidades').scrollIntoView()"
+            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Unidades</button>
           <button type="button" onclick="document.getElementById('testimonials').scrollIntoView()"
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Avaliações</button>
         </div>
@@ -312,9 +312,9 @@
           </button>
           <div class="w-full h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent"></div>
           <button
-            onclick="document.getElementById('pricing').scrollIntoView(); document.getElementById('menu-close').click();"
+            onclick="document.getElementById('unidades').scrollIntoView(); document.getElementById('menu-close').click();"
             class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Planos</p>
+            <p class="text-base font-medium">Unidades</p>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
@@ -561,160 +561,72 @@
     </section>
   </div>
 
-  <!-- Preços -->
-  <div id="pricing" data-section="pricing">
-    <section class="relative py-20 w-full" aria-label="Pricing section">
+  <!-- Unidades -->
+  <div id="unidades" data-section="unidades">
+    <section class="relative py-20 w-full" aria-label="Units section">
       <div class="w-content-width mx-auto flex flex-col gap-6">
         <div class="flex flex-col md:flex-row gap-3 md:gap-15 md:items-end">
           <div class="w-full md:w-6/10 flex flex-col gap-3">
-            <h2 class="blur-text text-balance text-6xl font-medium" aria-label="Planos para todos">Planos para todos
-            </h2>
+            <h2 class="blur-text text-balance text-6xl font-medium" aria-label="Nossas Unidades">Nossas Unidades</h2>
             <p class="blur-text text-balance text-lg leading-tight"
-              aria-label="Escolha o melhor plano para seus objetivos e venha treinar.">Escolha o melhor plano para seus
-              objetivos e venha treinar.</p>
+              aria-label="Encontre a Fulltime mais próxima de você e venha treinar.">Encontre a Fulltime mais próxima de você e venha treinar.</p>
           </div>
           <div class="w-full md:w-4/10 flex flex-col gap-3 md:items-end"></div>
         </div>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <div class="min-h-90 2xl:min-h-100">
-            <div
-              class="relative h-full card text-foreground rounded-theme-capped p-6 flex flex-col items-center gap-6 md:gap-8">
-              <div class="relative z-1 inline-flex items-center gap-2 px-4 py-2 w-fit card rounded-theme text-sm">
-                <span>Essentials</span></div>
-              <div class="relative z-1 flex flex-col gap-1 text-center">
-                <div class="text-5xl font-medium text-foreground">R$ 99,90</div>
-                <p class="text-base text-foreground">Acesso a 1 unidade</p>
+          <!-- Unidade Centro -->
+          <div class="min-h-[28rem]">
+            <div class="relative h-full card text-foreground rounded-theme-capped overflow-hidden flex flex-col">
+              <div class="h-48 w-full overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" 
+                     alt="Unidade Centro" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
               </div>
-              <div class="relative z-1 w-full flex flex-col gap-3">
-                <button type="button" onclick="document.getElementById('contact').scrollIntoView()"
-                  class="relative cursor-pointer h-9 min-w-0 max-w-full px-6 primary-button rounded-theme primary-button text-primary-cta-text w-full">
-                  <span class="text-sm block overflow-hidden truncate whitespace-nowrap text-primary-cta-text">Assinar
-                    Agora</span>
-                </button>
-              </div>
-              <div class="relative z-1 w-full h-px bg-foreground/10 my-3"></div>
-              <div class="relative z-1 flex flex-col gap-3 w-full">
-                <div class="flex items-start gap-3">
-                  <div class="h-6 w-6 aspect-square primary-button rounded-theme flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                      class="lucide lucide-check h-4/10 text-primary-cta-text" aria-hidden="true">
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </div>
-                  <span class="text-base text-foreground">Musculação</span>
-                </div>
-                <div class="flex items-start gap-3">
-                  <div class="h-6 w-6 aspect-square primary-button rounded-theme flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                      class="lucide lucide-check h-4/10 text-primary-cta-text" aria-hidden="true">
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </div>
-                  <span class="text-base text-foreground">Cardio</span>
+              <div class="p-6 flex flex-col gap-4 flex-1">
+                <h3 class="text-2xl font-medium">Unidade Centro</h3>
+                <p class="text-sm text-foreground/70 leading-relaxed">Rua Principal, 123 - Centro, Montes Claros - MG</p>
+                <div class="mt-auto">
+                  <button type="button" data-unidade="Centro" 
+                    class="btn-planos relative cursor-pointer h-10 px-6 primary-button rounded-theme primary-button text-primary-cta-text w-full flex items-center justify-center">
+                    <span class="text-sm font-medium">Ver Planos</span>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="min-h-90 2xl:min-h-100">
-            <div
-              class="relative h-full card text-foreground rounded-theme-capped p-6 flex flex-col items-center gap-6 md:gap-8">
-              <div class="relative z-1 inline-flex items-center gap-2 px-4 py-2 w-fit card rounded-theme text-sm">
-                <span>Premium</span></div>
-              <div class="relative z-1 flex flex-col gap-1 text-center">
-                <div class="text-5xl font-medium text-foreground">R$ 149,90</div>
-                <p class="text-base text-foreground">Acesso a todas unidades</p>
+          <!-- Unidade Sul -->
+          <div class="min-h-[28rem]">
+            <div class="relative h-full card text-foreground rounded-theme-capped overflow-hidden flex flex-col">
+              <div class="h-48 w-full overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=800&auto=format&fit=crop" 
+                     alt="Unidade Sul" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
               </div>
-              <div class="relative z-1 w-full flex flex-col gap-3">
-                <button type="button" onclick="document.getElementById('contact').scrollIntoView()"
-                  class="relative cursor-pointer h-9 min-w-0 max-w-full px-6 primary-button rounded-theme primary-button text-primary-cta-text w-full">
-                  <span class="text-sm block overflow-hidden truncate whitespace-nowrap text-primary-cta-text">Assinar
-                    Agora</span>
-                </button>
-              </div>
-              <div class="relative z-1 w-full h-px bg-foreground/10 my-3"></div>
-              <div class="relative z-1 flex flex-col gap-3 w-full">
-                <div class="flex items-start gap-3">
-                  <div class="h-6 w-6 aspect-square primary-button rounded-theme flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                      class="lucide lucide-check h-4/10 text-primary-cta-text" aria-hidden="true">
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </div>
-                  <span class="text-base text-foreground">Todas unidades</span>
-                </div>
-                <div class="flex items-start gap-3">
-                  <div class="h-6 w-6 aspect-square primary-button rounded-theme flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                      class="lucide lucide-check h-4/10 text-primary-cta-text" aria-hidden="true">
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </div>
-                  <span class="text-base text-foreground">Aulas Coletivas</span>
-                </div>
-                <div class="flex items-start gap-3">
-                  <div class="h-6 w-6 aspect-square primary-button rounded-theme flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                      class="lucide lucide-check h-4/10 text-primary-cta-text" aria-hidden="true">
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </div>
-                  <span class="text-base text-foreground">Reconhecimento Facial</span>
+              <div class="p-6 flex flex-col gap-4 flex-1">
+                <h3 class="text-2xl font-medium">Unidade Sul</h3>
+                <p class="text-sm text-foreground/70 leading-relaxed">Av. das Palmeiras, 456 - Bairro Sul, Montes Claros - MG</p>
+                <div class="mt-auto">
+                  <button type="button" data-unidade="Sul" 
+                    class="btn-planos relative cursor-pointer h-10 px-6 primary-button rounded-theme primary-button text-primary-cta-text w-full flex items-center justify-center">
+                    <span class="text-sm font-medium">Ver Planos</span>
+                  </button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="min-h-90 2xl:min-h-100">
-            <div
-              class="relative h-full card text-foreground rounded-theme-capped p-6 flex flex-col items-center gap-6 md:gap-8">
-              <div class="relative z-1 inline-flex items-center gap-2 px-4 py-2 w-fit card rounded-theme text-sm">
-                <span>Elite</span></div>
-              <div class="relative z-1 flex flex-col gap-1 text-center">
-                <div class="text-5xl font-medium text-foreground">R$ 199,90</div>
-                <p class="text-base text-foreground">Experiência completa</p>
+          <!-- Unidade Norte -->
+          <div class="min-h-[28rem]">
+            <div class="relative h-full card text-foreground rounded-theme-capped overflow-hidden flex flex-col">
+              <div class="h-48 w-full overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=800&auto=format&fit=crop" 
+                     alt="Unidade Norte" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
               </div>
-              <div class="relative z-1 w-full flex flex-col gap-3">
-                <button type="button" onclick="document.getElementById('contact').scrollIntoView()"
-                  class="relative cursor-pointer h-9 min-w-0 max-w-full px-6 primary-button rounded-theme primary-button text-primary-cta-text w-full">
-                  <span class="text-sm block overflow-hidden truncate whitespace-nowrap text-primary-cta-text">Assinar
-                    Agora</span>
-                </button>
-              </div>
-              <div class="relative z-1 w-full h-px bg-foreground/10 my-3"></div>
-              <div class="relative z-1 flex flex-col gap-3 w-full">
-                <div class="flex items-start gap-3">
-                  <div class="h-6 w-6 aspect-square primary-button rounded-theme flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                      class="lucide lucide-check h-4/10 text-primary-cta-text" aria-hidden="true">
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </div>
-                  <span class="text-base text-foreground">Benefícios Premium</span>
-                </div>
-                <div class="flex items-start gap-3">
-                  <div class="h-6 w-6 aspect-square primary-button rounded-theme flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                      class="lucide lucide-check h-4/10 text-primary-cta-text" aria-hidden="true">
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </div>
-                  <span class="text-base text-foreground">Consultoria VIP</span>
-                </div>
-                <div class="flex items-start gap-3">
-                  <div class="h-6 w-6 aspect-square primary-button rounded-theme flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                      class="lucide lucide-check h-4/10 text-primary-cta-text" aria-hidden="true">
-                      <path d="M20 6 9 17l-5-5"></path>
-                    </svg>
-                  </div>
-                  <span class="text-base text-foreground">Brindes</span>
+              <div class="p-6 flex flex-col gap-4 flex-1">
+                <h3 class="text-2xl font-medium">Unidade Norte</h3>
+                <p class="text-sm text-foreground/70 leading-relaxed">Rua do Comércio, 789 - Bairro Norte, Montes Claros - MG</p>
+                <div class="mt-auto">
+                  <button type="button" data-unidade="Norte" 
+                    class="btn-planos relative cursor-pointer h-10 px-6 primary-button rounded-theme primary-button text-primary-cta-text w-full flex items-center justify-center">
+                    <span class="text-sm font-medium">Ver Planos</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -722,6 +634,44 @@
         </div>
       </div>
     </section>
+  </div>
+
+  <!-- Modal de Planos -->
+  <div id="modal-planos" class="fixed inset-0 z-[2000] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="absolute inset-0 bg-background/80 backdrop-blur-md"></div>
+    <div class="relative w-full max-w-md card p-8 rounded-theme-capped flex flex-col gap-6 shadow-2xl">
+      <button id="close-modal" class="absolute top-4 right-4 text-foreground/50 hover:text-foreground">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+      </button>
+      <div class="text-center">
+        <h2 class="text-3xl font-medium mb-2">Interesse em Planos</h2>
+        <p class="text-sm text-foreground/70">Deixe seus dados e entraremos em contato com as melhores opções para você.</p>
+      </div>
+      <form id="lead-form" class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1.5">
+          <label for="lead-name" class="text-sm font-medium px-1">Nome Completo</label>
+          <input type="text" id="lead-name" placeholder="Ex: João Silva" required
+                 class="w-full px-4 py-3 bg-white/5 border border-border rounded-theme text-foreground focus:outline-none focus:border-accent">
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="lead-phone" class="text-sm font-medium px-1">WhatsApp</label>
+          <input type="tel" id="lead-phone" placeholder="(38) 99999-9999" required
+                 class="w-full px-4 py-3 bg-white/5 border border-border rounded-theme text-foreground focus:outline-none focus:border-accent">
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="lead-unit" class="text-sm font-medium px-1">Unidade de Preferência</label>
+          <select id="lead-unit" required
+                  class="w-full px-4 py-3 bg-[#383838] border border-border rounded-theme text-foreground focus:outline-none focus:border-accent">
+            <option value="Centro">Unidade Centro</option>
+            <option value="Sul">Unidade Sul</option>
+            <option value="Norte">Unidade Norte</option>
+          </select>
+        </div>
+        <button type="submit" class="relative cursor-pointer h-12 mt-4 px-6 primary-button rounded-theme text-primary-cta-text font-medium w-full shadow-lg">
+          Solicitar Informações
+        </button>
+      </form>
+    </div>
   </div>
 
   <!-- Testemunhos -->
@@ -1193,9 +1143,40 @@
         });
       });
 
-      // Render inicial e início do autoplay
-      updateCarousel(true);
-      let autoPlay = setInterval(nextSlide, 3500);
+      // 8. Lógica do Modal de Unidades
+      const modal = document.getElementById('modal-planos');
+      const closeBtn = document.getElementById('close-modal');
+      const unitSelect = document.getElementById('lead-unit');
+      const planoBtns = document.querySelectorAll('.btn-planos');
+
+      function openModal(unidade) {
+        if (unidade) unitSelect.value = unidade;
+        modal.classList.remove('opacity-0', 'pointer-events-none');
+        document.body.style.overflow = 'hidden'; // Trava scroll
+      }
+
+      function closeModal() {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+        document.body.style.overflow = ''; // Destrava scroll
+      }
+
+      planoBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const unidade = btn.getAttribute('data-unidade');
+          openModal(unidade);
+        });
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      document.getElementById('lead-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Obrigado pelo interesse! Nossa equipe entrará em contato em breve via WhatsApp.');
+        closeModal();
+      });
     });
   </script>
 <style>#beams-bg-container{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;overflow:hidden;background-color:var(--color-background,#003399)}#beams-canvas{position:absolute;inset:0;filter:blur(15px);opacity:0.8}body,main,.bg-background{background:transparent !important}</style><div id="beams-bg-container"><canvas id="beams-canvas"></canvas></div><script>(function(){const canvas=document.getElementById('beams-canvas');const ctx=canvas.getContext('2d');let beams=[];let lastWidth=window.innerWidth;function createBeam(width,height,isInitial=false){return{x:Math.random()*width*1.5-width*0.25,y:isInitial?Math.random()*height*2-height:height+200+Math.random()*200,width:40+Math.random()*80,length:height*3.5,angle:-35+Math.random()*10,speed:0.8+Math.random()*1.5,opacity:0.4+Math.random()*0.4,pulse:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.03};}function resetBeam(beam,width,height){beam.y=height+200+Math.random()*200;beam.x=Math.random()*width*1.5-width*0.25;return beam;}function updateSize(){const width=window.innerWidth;const height=window.innerHeight;if(Math.abs(width-lastWidth)<10&&beams.length>0)return;lastWidth=width;const dpr=window.devicePixelRatio||1;canvas.width=width*dpr;canvas.height=height*dpr;canvas.style.width=width+'px';canvas.style.height=height+'px';ctx.setTransform(1,0,0,1,0,0);ctx.scale(dpr,dpr);beams=Array.from({length:45},()=>createBeam(width,height,true));}function drawBeam(beam){ctx.save();ctx.translate(beam.x,beam.y);ctx.rotate((beam.angle*Math.PI)/180);const pOpacity=Math.max(0,Math.min(1,beam.opacity*(0.8+Math.sin(beam.pulse)*0.2)));const grad=ctx.createLinearGradient(0,0,0,beam.length);grad.addColorStop(0,'rgba(0,0,0,0)');grad.addColorStop(0.1,`rgba(0,0,0,${pOpacity*0.5})`);grad.addColorStop(0.4,`rgba(0,0,0,${pOpacity})`);grad.addColorStop(0.6,`rgba(0,0,0,${pOpacity})`);grad.addColorStop(0.9,`rgba(0,0,0,${pOpacity*0.5})`);grad.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=grad;ctx.fillRect(-beam.width/2,0,beam.width,beam.length);ctx.restore();}function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);const w=window.innerWidth;const h=window.innerHeight;beams.forEach((beam)=>{beam.y-=beam.speed;beam.pulse+=beam.pulseSpeed;if(beam.y+beam.length<-200){resetBeam(beam,w,h);}drawBeam(beam);});requestAnimationFrame(animate);}updateSize();window.addEventListener('resize',updateSize);animate();})();</script>
