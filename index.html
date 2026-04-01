@@ -100,6 +100,10 @@
       text-rendering: optimizeSpeed;
     }
 
+    h1, h2, h3, .section-subtitle, .blur-text {
+      text-align: center !important;
+    }
+
     /* Estilos UI da Plataforma c/ fallback robusto para color-mix */
     .card {
       position: relative;
@@ -1154,9 +1158,18 @@
       function nextSlide() {
         currentIndex++;
         updateCarousel();
-        // O salto invisível ocorre exatamente após a transição terminar
-        setTimeout(checkLoop, 850); 
       }
+
+      // 7. Loop Infinito Invisível via transitionend
+      track.addEventListener('transitionend', () => {
+        if (currentIndex >= originalCount * 2) {
+          currentIndex = originalCount;
+          updateCarousel(true);
+        } else if (currentIndex < originalCount) {
+          currentIndex = originalCount * 2 - 1;
+          updateCarousel(true);
+        }
+      });
 
       window.addEventListener('resize', () => updateCarousel(true));
       
@@ -1166,7 +1179,6 @@
           updateCarousel();
           clearInterval(autoPlay);
           autoPlay = setInterval(nextSlide, 3500);
-          setTimeout(checkLoop, 850);
         });
       });
 
