@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Fulltime Academia | Loja de Suplementos</title>
+  <meta name="description"
+    content="Potencialize Seus Resultados. Suplementação premium para levar o seu treino ao próximo nível." />
+
+  <!-- Fonte Original -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: 'var(--color-background)',
+            foreground: 'var(--color-foreground)',
+            card: 'var(--color-card)',
+            border: 'var(--color-border)',
+            accent: 'var(--color-accent)',
+            'primary-cta': 'var(--color-primary-cta)',
+            'primary-cta-text': 'var(--color-primary-cta-text)',
+            'secondary-cta': 'var(--color-secondary-cta)',
+            'secondary-cta-text': 'var(--color-secondary-cta-text)',
+          },
+          width: {
+            'content-width': 'var(--width-content-width)',
+          },
+          borderRadius: {
+            'theme': 'var(--theme-border-radius)',
+            'theme-capped': 'var(--theme-border-radius-capped)',
+          },
+          padding: {
+            'hero-page-padding': '8rem',
+          },
+          spacing: {
+            '15': '3.75rem',
+            '90': '22.5rem',
+            '100': '25rem',
+            '4/10': '40%',
+            '6/10': '60%',
+            '3/10': '30%',
+            '7/10': '70%',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      /* Cores e variáveis exatas da plataforma */
+      --color-background: #003399;
+      --color-foreground: #fafafa;
+      --color-card: #383838;
+      --color-border: #484848;
+      --color-accent: #3b82f6;
+      --color-background-accent: #1f2937;
+      --color-primary-cta: #fafafa;
+      --color-primary-cta-text: #09090b;
+      --color-secondary-cta: #27272a;
+      --color-secondary-cta-text: #fafafa;
+
+      --radius-lg: 1rem;
+      --theme-border-radius: var(--radius-lg);
+      --theme-border-radius-capped: var(--radius-lg);
+      --width-content-width: clamp(40rem, 75vw, 100rem);
+      --width-content-width-expanded: clamp(calc(40rem - (40rem - 100vw) / 2), 87.5vw, calc(100rem + (100vw - 100rem) / 2));
+      --vw: clamp(0.5rem, 0.92vw, 1rem);
+
+      --text-base: clamp(0.875rem, 1.058vw, 1rem);
+      --width-10: 2.5rem;
+      --width-5: 1.25rem;
+      --width-17_5: 4.375rem;
+      --vw-0_75: 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --width-content-width: 85vw;
+        --width-content-width-expanded: 90vw;
+      }
+      h2 {
+        font-size: 1.75rem !important;
+      }
+      h3 {
+        font-size: 1.25rem !important;
+      }
+      .section-subtitle {
+        font-size: 1rem !important;
+      }
+    }
+
+    body {
+      font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--color-background);
+      color: var(--color-foreground);
+      overflow-x: hidden;
+      font-kerning: none;
+      text-rendering: optimizeSpeed;
+    }
+
+    h1, h2, h3, .section-subtitle, .blur-text {
+      text-align: center !important;
+    }
+
+    /* Estilos UI da Plataforma c/ Glassmorphism para os cards de produtos */
+    .card {
+      position: relative;
+      background: rgba(45, 45, 45, 0.6) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-radius: 16px;
+      text-align: center;
+      padding: 1.5rem;
+      box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .primary-button {
+      background-color: var(--color-primary-cta);
+      background: linear-gradient(to bottom, color-mix(in srgb, var(--color-primary-cta), transparent 25%), var(--color-primary-cta));
+      box-shadow: color-mix(in srgb, var(--color-background) 25%, transparent) 0px 1px 1px 0px inset, color-mix(in srgb, var(--color-primary-cta) 15%, transparent) 3px 3px 3px 0px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+
+<body class="antialiased flex flex-col min-h-screen">
+
+  <!-- Fundo azul escuro global -->
+  <div class="bg-background fixed inset-0 -z-10 w-full h-full" aria-hidden="true">
+    <div style="position:relative;width:100%;height:100%;overflow:hidden;pointer-events:auto">
+      <div style="width:100%;height:100%">
+        <canvas id="bg-canvas" style="display:block"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <div id="nav" data-section="nav">
+    <nav class="fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/80 backdrop-blur-md border-b border-white/5 h-20">
+      <div class="relative flex items-center justify-between h-full w-content-width mx-auto">
+        <div class="flex items-center transition-all duration-500 ease-in-out">
+          <a href="index.html" class="cursor-pointer">
+            <img src="/logo.png" alt="Fulltime Academia" class="h-12 md:h-16 w-auto object-contain transition-transform hover:scale-105" />
+          </a>
+        </div>
+        <div class="flex items-center gap-6 transition-all duration-500 ease-in-out">
+          <a href="index.html" class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Início</a>
+          <button class="relative cursor-pointer flex items-center justify-center p-2 rounded-full hover:bg-white/10 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart text-foreground">
+              <circle cx="8" cy="21" r="1"/>
+              <circle cx="19" cy="21" r="1"/>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="relative pt-32 pb-12 w-full flex items-center justify-center">
+    <div class="w-content-width mx-auto text-center flex flex-col gap-4">
+      <h1 class="text-4xl md:text-6xl font-medium text-foreground">Potencialize Seus Resultados</h1>
+      <p class="text-base md:text-lg text-foreground/80 max-w-2xl mx-auto section-subtitle">Suplementação premium para levar o seu treino ao próximo nível.</p>
+    </div>
+  </section>
+
+  <!-- Grid de Produtos -->
+  <section class="relative pb-24 w-full flex-1">
+    <div class="w-content-width mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Produto 1 -->
+        <div class="card">
+          <div class="w-full h-48 bg-white/5 rounded-theme flex items-center justify-center overflow-hidden mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/20"><path d="m2 22 1-18h18l1 18Z"/><path d="M16 8a4 4 0 0 0-8 0"/></svg>
+          </div>
+          <h3 class="text-xl font-medium text-foreground !text-left">Whey Protein Isolado 900g</h3>
+          <p class="text-2xl font-bold text-accent !text-left">R$ 159,90</p>
+          <button class="primary-button rounded-theme px-6 py-3 text-primary-cta-text font-medium mt-auto w-full transition-transform hover:scale-105 cursor-pointer">Adicionar ao Carrinho</button>
+        </div>
+        <!-- Produto 2 -->
+        <div class="card">
+          <div class="w-full h-48 bg-white/5 rounded-theme flex items-center justify-center overflow-hidden mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/20"><path d="m2 22 1-18h18l1 18Z"/><path d="M16 8a4 4 0 0 0-8 0"/></svg>
+          </div>
+          <h3 class="text-xl font-medium text-foreground !text-left">Creatina Monohidratada 300g</h3>
+          <p class="text-2xl font-bold text-accent !text-left">R$ 89,90</p>
+          <button class="primary-button rounded-theme px-6 py-3 text-primary-cta-text font-medium mt-auto w-full transition-transform hover:scale-105 cursor-pointer">Adicionar ao Carrinho</button>
+        </div>
+        <!-- Produto 3 -->
+        <div class="card">
+          <div class="w-full h-48 bg-white/5 rounded-theme flex items-center justify-center overflow-hidden mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/20"><path d="m2 22 1-18h18l1 18Z"/><path d="M16 8a4 4 0 0 0-8 0"/></svg>
+          </div>
+          <h3 class="text-xl font-medium text-foreground !text-left">BCAA 2400 120 Cápsulas</h3>
+          <p class="text-2xl font-bold text-accent !text-left">R$ 45,90</p>
+          <button class="primary-button rounded-theme px-6 py-3 text-primary-cta-text font-medium mt-auto w-full transition-transform hover:scale-105 cursor-pointer">Adicionar ao Carrinho</button>
+        </div>
+        <!-- Produto 4 -->
+        <div class="card">
+          <div class="w-full h-48 bg-white/5 rounded-theme flex items-center justify-center overflow-hidden mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/20"><path d="m2 22 1-18h18l1 18Z"/><path d="M16 8a4 4 0 0 0-8 0"/></svg>
+          </div>
+          <h3 class="text-xl font-medium text-foreground !text-left">Pré-Treino Explosive 300g</h3>
+          <p class="text-2xl font-bold text-accent !text-left">R$ 119,90</p>
+          <button class="primary-button rounded-theme px-6 py-3 text-primary-cta-text font-medium mt-auto w-full transition-transform hover:scale-105 cursor-pointer">Adicionar ao Carrinho</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div id="footer" data-section="footer">
+    <footer role="contentinfo" aria-label="Site footer" class="relative overflow-hidden w-full bg-[#003399] text-white py-10 mt-auto">
+      <div class="relative w-content-width mx-auto z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="flex items-center transition-all duration-500 ease-in-out">
+          <a href="index.html" class="cursor-pointer">
+            <img src="/logo.png" alt="Fulltime Academia" class="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" />
+          </a>
+        </div>
+        <div class="flex items-center">
+          <span class="text-white/50 text-sm">© 2026 | KrM Corp</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Canvas Animado sutil ao fundo
+    document.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('bg-canvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let time = 0;
+
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function animate() {
+          time += 0.005;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          const cx = canvas.width / 2 + Math.sin(time) * (canvas.width * 0.1);
+          const cy = canvas.height / 2 + Math.cos(time * 0.8) * (canvas.height * 0.1);
+          const radius = Math.max(canvas.width, canvas.height) * 0.6;
+
+          const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+          gradient.addColorStop(0, 'rgba(59, 130, 246, 0.04)');
+          gradient.addColorStop(1, 'rgba(0, 51, 153, 0)');
+
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          requestAnimationFrame(animate);
+        }
+        animate();
+      }
+    });
+  </script>
+</body>
+
+</html>
