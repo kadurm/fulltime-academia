@@ -227,36 +227,40 @@
     }
     .review-card {
       flex: 0 0 auto;
-      width: 300px;
-      margin: 0 1rem;
-      padding: 1.5rem;
-      border-radius: 1rem;
-      background: rgba(45, 45, 45, 0.6);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      width: 350px;
+      margin: 0 2rem;
+      padding: 1rem;
+      background: transparent !important;
+      border: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border-radius: 0 !important;
       display: flex;
-      flex-col: column;
-      gap: 0.75rem;
+      flex-direction: column;
+      gap: 0.5rem;
       text-align: center;
+      align-items: center;
+      box-shadow: none !important;
     }
     .review-stars {
       color: #FFD700;
       font-size: 1.25rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
     .review-text {
-      font-size: 1rem;
-      line-height: 1.5;
+      font-size: 1.125rem;
+      line-height: 1.6;
       color: var(--color-foreground);
-      font-style: italic;
+      text-align: center;
+      font-style: normal !important;
     }
     .review-author {
-      font-size: 0.875rem;
+      font-size: 1rem;
       font-weight: 600;
       color: var(--color-foreground);
       margin-top: 0.5rem;
       display: block;
+      text-align: center;
     }
   </style>
 </head>
@@ -744,58 +748,58 @@
         
         <div class="marquee-container">
           <div class="marquee-track">
-            <!-- Sequência 1 (5 Cards) -->
+            <!-- Sequência 1 (5 Cards Originais) -->
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              <p class="review-text">"A melhor estrutura de Montes Claros. Equipamentos sempre novos e ambiente climatizado nota 10!"</p>
-              <span class="review-author">Ricardo Oliveira</span>
+              <p class="review-text">"A melhor academia que já frequentei em Montes Claros! Infraestrutura impecável e atendimento nota 10."</p>
+              <span class="review-author">Mariana Silva</span>
             </div>
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              <p class="review-text">"O acompanhamento dos professores faz toda a diferença. Me sinto muito motivada a treinar todos os dias."</p>
-              <span class="review-author">Beatriz Soares</span>
+              <p class="review-text">"Equipamentos de última geração e ambiente muito agradável. Recomendo a todos!"</p>
+              <span class="review-author">João Santos</span>
             </div>
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Unidades super bem localizadas. Consigo treinar perto do trabalho ou de casa sem complicações."</p>
-              <span class="review-author">Marcos Vinícius</span>
+              <p class="review-text">"O reconhecimento facial facilita demais a entrada. Academia muito moderna e organizada."</p>
+              <span class="review-author">Lucas Souza</span>
             </div>
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Sistema de reconhecimento facial é muito prático e rápido. A academia é realmente tecnológica."</p>
+              <p class="review-text">"Professores atenciosos e aulas coletivas maravilhosas. Melhor escolha que fiz!"</p>
               <span class="review-author">Ana Clara</span>
             </div>
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              <p class="review-text">"O plano Elite vale cada centavo. Aulas coletivas super animadas e profissionais excelentes."</p>
-              <span class="review-author">Pedro Henrique</span>
+              <p class="review-text">"Ambiente climatizado e limpo. Treinar aqui é outra experiência. Nota 10!"</p>
+              <span class="review-author">Carlos Eduardo</span>
             </div>
             
-            <!-- Sequência 2 (Clones para Loop Infinito) -->
+            <!-- Sequência 2 (Clones para Loop Perfeito) -->
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              <p class="review-text">"A melhor estrutura de Montes Claros. Equipamentos sempre novos e ambiente climatizado nota 10!"</p>
-              <span class="review-author">Ricardo Oliveira</span>
+              <p class="review-text">"A melhor academia que já frequentei em Montes Claros! Infraestrutura impecável e atendimento nota 10."</p>
+              <span class="review-author">Mariana Silva</span>
             </div>
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              <p class="review-text">"O acompanhamento dos professores faz toda a diferença. Me sinto muito motivada a treinar todos os dias."</p>
-              <span class="review-author">Beatriz Soares</span>
+              <p class="review-text">"Equipamentos de última geração e ambiente muito agradável. Recomendo a todos!"</p>
+              <span class="review-author">João Santos</span>
             </div>
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Unidades super bem localizadas. Consigo treinar perto do trabalho ou de casa sem complicações."</p>
-              <span class="review-author">Marcos Vinícius</span>
+              <p class="review-text">"O reconhecimento facial facilita demais a entrada. Academia muito moderna e organizada."</p>
+              <span class="review-author">Lucas Souza</span>
             </div>
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Sistema de reconhecimento facial é muito prático e rápido. A academia é realmente tecnológica."</p>
+              <p class="review-text">"Professores atenciosos e aulas coletivas maravilhosas. Melhor escolha que fiz!"</p>
               <span class="review-author">Ana Clara</span>
             </div>
             <div class="review-card">
               <div class="review-stars">★★★★★</div>
-              <p class="review-text">"O plano Elite vale cada centavo. Aulas coletivas super animadas e profissionais excelentes."</p>
-              <span class="review-author">Pedro Henrique</span>
+              <p class="review-text">"Ambiente climatizado e limpo. Treinar aqui é outra experiência. Nota 10!"</p>
+              <span class="review-author">Carlos Eduardo</span>
             </div>
           </div>
         </div>
