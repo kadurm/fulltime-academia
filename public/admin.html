@@ -629,7 +629,6 @@
         renderizarProdutos();
       } catch (error) {
         console.error('Erro ao carregar produtos:', error);
-        alert("Erro capturado: " + error.message);
       }
     }
 
@@ -645,7 +644,6 @@
         if (!response.ok) throw new Error("Falha ao salvar no banco: " + text);
       } catch (error) {
         console.error('Erro ao salvar produtos:', error);
-        alert("Erro capturado: " + error.message);
       }
     }
 
@@ -712,7 +710,7 @@
           await salvarProdutosNoBanco();
         }
       } catch (error) {
-        alert("Erro capturado: " + error.message);
+        console.error(error);
       }
     }
 
@@ -753,7 +751,6 @@
         return data.secure_url;
       } catch (error) {
         console.error('Erro no upload:', error);
-        alert('Erro capturado: ' + error.message);
         return null;
       }
     }
@@ -776,13 +773,15 @@
 
         // Se houver novo arquivo selecionado, fazer upload para Cloudinary
         if (imageInput.files && imageInput.files[0]) {
-          const base64Image = await fileToBase64(imageInput.files[0]);
-          const uploadedUrl = await uploadImagemCloudinary(base64Image);
+          try {
+            const base64Image = await fileToBase64(imageInput.files[0]);
+            const uploadedUrl = await uploadImagemCloudinary(base64Image);
 
-          if (uploadedUrl) {
-            imagem = uploadedUrl;
-          } else {
-            throw new Error("Falha no upload da imagem. O produto não será salvo.");
+            if (uploadedUrl) {
+              imagem = uploadedUrl;
+            }
+          } catch (uploadErr) {
+            console.error("Erro no processo de upload, mas continuaremos com o salvamento:", uploadErr);
           }
         }
 
@@ -803,7 +802,6 @@
         fecharModal();
       } catch (error) {
         console.error('Erro ao salvar produto:', error);
-        alert('Erro capturado: ' + error.message);
       } finally {
         btnSalvar.textContent = textoOriginal;
         btnSalvar.disabled = false;
