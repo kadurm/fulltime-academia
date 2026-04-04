@@ -623,24 +623,29 @@
     async function carregarProdutos() {
       try {
         const response = await fetch('/api/produtos');
-        produtos = await response.json();
+        const text = await response.text();
+        if (!response.ok) throw new Error("Erro ao carregar produtos: " + text);
+        produtos = JSON.parse(text);
         renderizarProdutos();
       } catch (error) {
         console.error('Erro ao carregar produtos:', error);
+        alert("Erro capturado: " + error.message);
       }
     }
 
     // Salvar produtos no banco
     async function salvarProdutosNoBanco() {
       try {
-        const res = await fetch('/api/produtos', {
+        const response = await fetch('/api/produtos', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ produtos })
         });
-        if (!res.ok) throw new Error("Falha ao salvar no banco");
+        const text = await response.text();
+        if (!response.ok) throw new Error("Falha ao salvar no banco: " + text);
       } catch (error) {
         console.error('Erro ao salvar produtos:', error);
+        alert("Erro capturado: " + error.message);
       }
     }
 
@@ -700,10 +705,14 @@
 
     // Excluir produto
     async function excluirProduto(id) {
-      if (confirm('Tem certeza que deseja excluir este produto?')) {
-        produtos = produtos.filter(p => p.id !== id);
-        renderizarProdutos();
-        await salvarProdutosNoBanco();
+      try {
+        if (confirm('Tem certeza que deseja excluir este produto?')) {
+          produtos = produtos.filter(p => p.id !== id);
+          renderizarProdutos();
+          await salvarProdutosNoBanco();
+        }
+      } catch (error) {
+        alert("Erro capturado: " + error.message);
       }
     }
 
@@ -735,16 +744,16 @@
           body: JSON.stringify({ imageStr: base64Image })
         });
 
+        const text = await response.text();
         if (!response.ok) {
-          const error = await response.json().catch(() => ({ error: 'Resposta não é JSON' }));
-          throw new Error(error.error || error.details || 'Falha no upload');
+          throw new Error("Servidor recusou upload: " + text);
         }
 
-        const data = await response.json();
+        const data = JSON.parse(text);
         return data.secure_url;
       } catch (error) {
         console.error('Erro no upload:', error);
-        alert('Erro detalhado: ' + error);
+        alert('Erro capturado: ' + error.message);
         return null;
       }
     }
@@ -772,6 +781,8 @@
 
           if (uploadedUrl) {
             imagem = uploadedUrl;
+          } else {
+            throw new Error("Falha no upload da imagem. O produto não será salvo.");
           }
         }
 
@@ -792,7 +803,7 @@
         fecharModal();
       } catch (error) {
         console.error('Erro ao salvar produto:', error);
-        alert('Erro ao salvar produto: ' + error.message);
+        alert('Erro capturado: ' + error.message);
       } finally {
         btnSalvar.textContent = textoOriginal;
         btnSalvar.disabled = false;
