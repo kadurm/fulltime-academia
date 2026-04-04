@@ -633,14 +633,14 @@
     // Salvar produtos no banco
     async function salvarProdutosNoBanco() {
       try {
-        await fetch('/api/produtos', {
+        const res = await fetch('/api/produtos', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ produtos })
         });
+        if (!res.ok) throw new Error("Falha ao salvar no banco");
       } catch (error) {
         console.error('Erro ao salvar produtos:', error);
-        alert('Erro ao persistir dados no banco.');
       }
     }
 
