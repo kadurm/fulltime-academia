@@ -145,6 +145,12 @@
       box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.3);
       border-radius: 16px;
       transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      
+      /* Padronização de Tamanho */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 420px;
     }
 
     .glass-card:hover {
@@ -219,8 +225,20 @@
       aspect-ratio: 1/1;
       overflow: hidden;
       border-radius: 12px;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       background: rgba(255, 255, 255, 0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 180px; /* Altura fixa padronizada */
+      width: 100%;
+    }
+
+    .img-container div, .img-container img {
+      height: 180px;
+      width: 100%;
+      border-radius: 8px;
+      object-fit: cover;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -239,9 +257,38 @@
       z-index: 5;
     }
 
+    /* Tipografia dos Cards */
+    .glass-card h3 {
+      font-size: 1.1rem;
+      line-height: 1.4;
+      height: 2.8em;
+      margin: 0.75rem 0 0.25rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center !important;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: #ccc;
+      line-height: 1.4;
+      height: 2.8em;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+
     .product-price {
       font-weight: 800;
       color: #3b82f6; /* Accent color for price */
+      margin-bottom: 1rem;
     }
 
     /* Animações nativas */
@@ -335,557 +382,4 @@
       overflow-y: auto;
       padding: 1rem 0;
       display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 1rem;
-      border-radius: 8px;
-    }
-
-    .cart-item-info h4 {
-      margin: 0 0 0.5rem 0;
-      font-size: 0.9rem;
-      text-align: left !important;
-    }
-
-    .cart-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .cart-controls button {
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: #fff;
-      width: 24px;
-      height: 24px;
-      border-radius: 4px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .cart-controls button:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-  </style>
-</head>
-
-<body class="antialiased">
-
-  <!-- Fundo animado (Canvas simulando Webild) -->
-  <div class="bg-background fixed inset-0 -z-10 w-full h-full" aria-hidden="true">
-    <div style="position:relative;width:100%;height:100%;overflow:hidden;pointer-events:auto">
-      <div style="width:100%;height:100%">
-        <canvas id="bg-canvas" style="display:block"></canvas>
-      </div>
-    </div>
-  </div>
-
-  <!-- Navegação -->
-  <div id="nav" data-section="nav">
-    <nav
-      class="fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/0 backdrop-blur-0 h-20">
-      <div class="relative flex items-center justify-between h-full w-content-width mx-auto">
-        <div class="flex items-center transition-all duration-500 ease-in-out">
-          <a href="index.html" class="cursor-pointer">
-            <img src="/logo.png" alt="Fulltime Academia" class="h-12 md:h-16 w-auto object-contain transition-transform hover:scale-105" />
-          </a>
-        </div>
-        <div class="hidden md:flex items-center gap-6 transition-all duration-500 ease-in-out" role="navigation">
-          <a href="index.html"
-            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Voltar</a>
-          <a href="index.html#hero"
-            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Início</a>
-          <button id="checkout-btn" class="relative text-sm font-bold bg-white text-blue-900 px-4 py-2 rounded-lg cursor-pointer transition-transform hover:scale-105">
-            🛒 Carrinho (0)
-          </button>
-        </div>
-        <button id="menu-toggle"
-          class="flex md:hidden shrink-0 h-8 aspect-square rounded-theme bg-foreground items-center justify-center cursor-pointer"
-          aria-label="Toggle menu">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-plus w-1/2 h-1/2 text-background transition-transform duration-300 rotate-0">
-            <path d="M5 12h14"></path>
-            <path d="M12 5v14"></path>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Menu Mobile -->
-      <div id="mobile-menu"
-        class="md:hidden z-10 fixed top-3 left-3 right-3 h-fit rounded-theme-capped card p-6 flex flex-col gap-6 opacity-0 pointer-events-none translate-y-[-10px]"
-        style="width:calc(100vw - var(--vw-0_75) * 2)">
-        <div class="w-full flex justify-between items-center">
-          <p class="text-xl text-foreground">Menu</p>
-          <button id="menu-close"
-            class="shrink-0 h-8 aspect-square rounded-theme bg-foreground flex items-center justify-center cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-plus w-1/2 h-1/2 text-background rotate-45">
-              <path d="M5 12h14"></path>
-              <path d="M12 5v14"></path>
-            </svg>
-          </button>
-        </div>
-        <div class="flex flex-col gap-4">
-          <a href="index.html" class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Voltar</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </a>
-        </div>
-      </div>
-    </nav>
-  </div>
-
-  <!-- Hero -->
-  <div id="hero" data-section="hero">
-    <section class="relative w-full h-fit flex items-center justify-center py-hero-page-padding">
-      <div class="w-full flex flex-col gap-14 relative z-10">
-        <div class="w-content-width mx-auto">
-          <div class="items-center text-center flex flex-col gap-3">
-            <h2 class="blur-text text-center text-6xl font-medium text-balance">Potencialize Seus Resultados</h2>
-            <p class="blur-text text-center text-base md:text-lg leading-tight">Suplementação premium para levar o seu treino ao próximo nível.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- Categorias -->
-  <div class="categories blur-text">
-    <button class="cat-btn active" data-filter="todos">Todos</button>
-    <button class="cat-btn" data-filter="proteina">Proteínas</button>
-    <button class="cat-btn" data-filter="creatina">Creatinas</button>
-    <button class="cat-btn" data-filter="pre">Pré-Treinos</button>
-  </div>
-
-  <!-- Grid de Produtos -->
-  <div id="store-grid" class="relative py-10 w-full">
-    <div class="w-content-width mx-auto">
-      <div class="grid">
-        <!-- Proteínas -->
-        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="proteina">
-          <div class="badge">MAIS VENDIDO</div>
-          <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto Whey</div>
-          </div>
-          <h3 class="product-name text-xl font-medium mb-2">Whey Protein Isolado 900g</h3>
-          <p class="product-price text-lg mb-4">R$ 159,90</p>
-          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-        </div>
-        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="proteina">
-          <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto Whey Blend</div>
-          </div>
-          <h3 class="product-name text-xl font-medium mb-2">Whey Blend 2kg</h3>
-          <p class="product-price text-lg mb-4">R$ 119,90</p>
-          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-        </div>
-        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="proteina">
-          <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto Caseína</div>
-          </div>
-          <h3 class="product-name text-xl font-medium mb-2">Caseína Micellar 900g</h3>
-          <p class="product-price text-lg mb-4">R$ 179,90</p>
-          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-        </div>
-        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="proteina">
-          <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto Whey Hydro</div>
-          </div>
-          <h3 class="product-name text-xl font-medium mb-2">Whey Hidrolisado 900g</h3>
-          <p class="product-price text-lg mb-4">R$ 210,00</p>
-          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-        </div>
-
-        <!-- Creatinas -->
-        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="creatina">
-          <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto Creatina</div>
-          </div>
-          <h3 class="product-name text-xl font-medium mb-2">Creatina Monohidratada 300g</h3>
-          <p class="product-price text-lg mb-4">R$ 89,90</p>
-          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-        </div>
-        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="creatina">
-          <div class="badge">PUREZA 100%</div>
-          <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto Creatina Creapure</div>
-          </div>
-          <h3 class="product-name text-xl font-medium mb-2">Creatina Creapure 300g</h3>
-          <p class="product-price text-lg mb-4">R$ 139,90</p>
-          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-        </div>
-        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="creatina">
-          <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto Creatina 1kg</div>
-          </div>
-          <h3 class="product-name text-xl font-medium mb-2">Creatina Monohidratada 1kg</h3>
-          <p class="product-price text-lg mb-4">R$ 249,90</p>
-          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-        </div>
-        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="creatina">
-          <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto Creatina Caps</div>
-          </div>
-          <h3 class="product-name text-xl font-medium mb-2">Creatina 120 Cápsulas</h3>
-          <p class="product-price text-lg mb-4">R$ 75,00</p>
-          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-        </div>
-
-        <!-- Pré-Treinos -->
-        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="pre">
-          <div class="badge">PROMOÇÃO</div>
-          <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto Pré-Treino</div>
-          </div>
-          <h3 class="product-name text-xl font-medium mb-2">Pré-Treino Explosive 300g</h3>
-          <p class="product-price text-lg mb-4">R$ 129,90</p>
-          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-        </div>
-        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="pre">
-          <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto Pré-Treino Focus</div>
-          </div>
-          <h3 class="product-name text-xl font-medium mb-2">Pré-Treino Focus & Mind</h3>
-          <p class="product-price text-lg mb-4">R$ 145,00</p>
-          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-        </div>
-        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="pre">
-          <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto Termogênico</div>
-          </div>
-          <h3 class="product-name text-xl font-medium mb-2">Termogênico Fire Burn</h3>
-          <p class="product-price text-lg mb-4">R$ 99,00</p>
-          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-        </div>
-        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="pre">
-          <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto Beta Alanina</div>
-          </div>
-          <h3 class="product-name text-xl font-medium mb-2">Beta Alanina Pura 200g</h3>
-          <p class="product-price text-lg mb-4">R$ 85,00</p>
-          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div id="footer" data-section="footer">
-    <footer role="contentinfo" aria-label="Site footer"
-      class="relative overflow-hidden w-full bg-[#003399] text-white py-10 mt-20">
-      <div class="relative w-content-width mx-auto z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-        <div class="flex items-center transition-all duration-500 ease-in-out">
-          <a href="index.html" class="cursor-pointer">
-            <img src="/logo.png" alt="Fulltime Academia" class="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" />
-          </a>
-        </div>
-        <div class="flex items-center">
-          <span class="text-white/50 text-sm">© 2026 | KrM Corp</span>
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Carrinho (Drawer) -->
-  <div class="cart-overlay" id="cartOverlay"></div>
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header">
-      <h2 class="text-xl font-bold">Seu Carrinho</h2>
-      <button class="close-cart" id="closeCartBtn">✖</button>
-    </div>
-    <div class="cart-items" id="cartItemsContainer"></div>
-    <div class="cart-footer" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
-      <h3 style="display:flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem;">
-        Total: <span id="cartTotalDisplay">R$ 0,00</span>
-      </h3>
-      <button class="btn" id="checkoutBtnModal" style="width: 100%;">Finalizar Compra</button>
-    </div>
-  </div>
-
-  <!-- Script Integrado e Carrinho -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // 1. Navbar no Scroll
-      const nav = document.querySelector('nav');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 20) {
-          nav.classList.add('nav-scrolled');
-        } else {
-          nav.classList.remove('nav-scrolled');
-        }
-      });
-
-      // 2. Mobile Menu Toggle
-      const menuToggle = document.getElementById('menu-toggle');
-      const menuClose = document.getElementById('menu-close');
-      const mobileMenu = document.getElementById('mobile-menu');
-
-      function toggleMenu() {
-        const isOpen = mobileMenu.classList.contains('opacity-100');
-        if (!isOpen) {
-          mobileMenu.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-          mobileMenu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
-        } else {
-          mobileMenu.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-          mobileMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
-        }
-      }
-
-      menuToggle?.addEventListener('click', toggleMenu);
-      menuClose?.addEventListener('click', toggleMenu);
-
-      // 3. Animação de entrada
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.15 });
-
-      document.querySelectorAll('.blur-text').forEach(el => observer.observe(el));
-
-      // 4. Canvas de Fundo
-      const canvas = document.getElementById('bg-canvas');
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let time = 0;
-        function resize() {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-        function animate() {
-          time += 0.005;
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          const cx = canvas.width / 2 + Math.sin(time) * (canvas.width * 0.1);
-          const cy = canvas.height / 2 + Math.cos(time * 0.8) * (canvas.height * 0.1);
-          const radius = Math.max(canvas.width, canvas.height) * 0.6;
-          const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
-          gradient.addColorStop(0, 'rgba(59, 130, 246, 0.04)');
-          gradient.addColorStop(1, 'rgba(0, 51, 153, 0)');
-          ctx.fillStyle = gradient;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          requestAnimationFrame(animate);
-        }
-        animate();
-      }
-
-      // --- LOGICA DE FILTRO ---
-      const catBtns = document.querySelectorAll('.cat-btn');
-      const productCards = document.querySelectorAll('.glass-card');
-
-      catBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          catBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-
-          const filter = btn.getAttribute('data-filter');
-
-          productCards.forEach(card => {
-            const category = card.getAttribute('data-category');
-            if (filter === 'todos' || category === filter) {
-              card.style.display = 'flex';
-            } else {
-              card.style.display = 'none';
-            }
-          });
-        });
-      });
-
-      // --- LOGICA DO CARRINHO (DRAWER) ---
-      let cart = [];
-      const checkoutBtn = document.getElementById('checkout-btn');
-      const cartDrawer = document.getElementById('cartDrawer');
-      const cartOverlay = document.getElementById('cartOverlay');
-      const closeCartBtn = document.getElementById('closeCartBtn');
-      const cartItemsContainer = document.getElementById('cartItemsContainer');
-      const cartTotalDisplay = document.getElementById('cartTotalDisplay');
-      const checkoutBtnModal = document.getElementById('checkoutBtnModal');
-
-      const openCart = () => {
-        cartDrawer.classList.add('open');
-        cartOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      };
-
-      const closeCart = () => {
-        cartDrawer.classList.remove('open');
-        cartOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      };
-
-      const renderCart = () => {
-        cartItemsContainer.innerHTML = '';
-        let total = 0;
-        let totalItems = 0;
-
-        cart.forEach((item, index) => {
-          const itemPrice = parseFloat(item.price.replace('R$', '').replace(',', '.'));
-          total += itemPrice * item.quantity;
-          totalItems += item.quantity;
-
-          const itemEl = document.createElement('div');
-          itemEl.className = 'cart-item';
-          itemEl.innerHTML = `
-            <div class="cart-item-info">
-              <h4 class="font-medium">${item.name}</h4>
-              <span class="text-sm opacity-70">${item.price}</span>
-            </div>
-            <div class="cart-controls">
-              <button onclick="window.updateQty(${index}, -1)">-</button>
-              <span>${item.quantity}</span>
-              <button onclick="window.updateQty(${index}, 1)">+</button>
-            </div>
-          `;
-          cartItemsContainer.appendChild(itemEl);
-        });
-
-        cartTotalDisplay.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-        checkoutBtn.innerText = `🛒 Carrinho (${totalItems})`;
-      };
-
-      window.updateQty = (index, change) => {
-        cart[index].quantity += change;
-        if (cart[index].quantity <= 0) {
-          cart.splice(index, 1);
-        }
-        renderCart();
-      };
-
-      document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', () => {
-          const card = button.closest('.card');
-          const name = card.querySelector('.product-name').innerText;
-          const price = card.querySelector('.product-price').innerText;
-
-          const existingItem = cart.find(item => item.name === name);
-          if (existingItem) {
-            existingItem.quantity++;
-          } else {
-            cart.push({ name, price, quantity: 1 });
-          }
-
-          renderCart();
-          openCart();
-          
-          // Feedback visual simples no botão
-          const originalText = button.innerText;
-          button.innerText = 'Adicionado!';
-          button.style.background = '#4BB543';
-          setTimeout(() => {
-            button.innerText = originalText;
-            button.style.background = '';
-          }, 1000);
-        });
-      });
-
-      checkoutBtn.addEventListener('click', openCart);
-      closeCartBtn.addEventListener('click', closeCart);
-      cartOverlay.addEventListener('click', closeCart);
-
-      checkoutBtnModal.addEventListener('click', async () => {
-        if (cart.length === 0) {
-          alert('Seu carrinho está vazio!');
-          return;
-        }
-
-        checkoutBtnModal.innerText = 'Processando...';
-        checkoutBtnModal.disabled = true;
-
-        try {
-          const response = await fetch('/api/checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ cart })
-          });
-
-          const data = await response.json();
-          if (data.url) {
-            window.location.href = data.url;
-          } else {
-            throw new Error(data.error || 'Erro ao criar sessão de checkout');
-          }
-        } catch (error) {
-          console.error('Erro:', error);
-          alert('Erro ao finalizar compra. Tente novamente.');
-          checkoutBtnModal.innerText = 'Finalizar Compra';
-          checkoutBtnModal.disabled = false;
-        }
-      });
-    });
-  </script>
-
-  <!-- Beams Background -->
-  <style>#beams-bg-container{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;overflow:hidden;background-color:var(--color-background,#003399)}#beams-canvas{position:absolute;inset:0;filter:blur(15px);opacity:0.8}body,main,.bg-background{background:transparent !important}</style>
-  <div id="beams-bg-container"><canvas id="beams-canvas"></canvas></div>
-  <script>
-    (function(){
-      const canvas=document.getElementById('beams-canvas');
-      const ctx=canvas.getContext('2d');
-      let beams=[];
-      let lastWidth=window.innerWidth;
-      function createBeam(width,height,isInitial=false){
-        return{x:Math.random()*width*1.5-width*0.25,y:isInitial?Math.random()*height*2-height:height+200+Math.random()*200,width:40+Math.random()*80,length:height*3.5,angle:-35+Math.random()*10,speed:0.8+Math.random()*1.5,opacity:0.4+Math.random()*0.4,pulse:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.03};
-      }
-      function updateSize(){
-        const width=window.innerWidth;
-        const height=window.innerHeight;
-        const dpr=window.devicePixelRatio||1;
-        canvas.width=width*dpr;
-        canvas.height=height*dpr;
-        canvas.style.width=width+'px';
-        canvas.style.height=height+'px';
-        ctx.scale(dpr,dpr);
-        beams=Array.from({length:45},()=>createBeam(width,height,true));
-      }
-      function draw(){
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        beams.forEach(beam=>{
-          beam.y-=beam.speed;
-          beam.pulse+=beam.pulseSpeed;
-          if(beam.y+beam.length<0) {
-            beam.y=window.innerHeight+200;
-            beam.x=Math.random()*window.innerWidth*1.5-window.innerWidth*0.25;
-          }
-          ctx.save();
-          ctx.translate(beam.x,beam.y);
-          ctx.rotate((beam.angle*Math.PI)/180);
-          const pOpacity=Math.max(0,Math.min(1,beam.opacity*(0.8+Math.sin(beam.pulse)*0.2)));
-          const grad=ctx.createLinearGradient(0,0,0,beam.length);
-          grad.addColorStop(0,'rgba(0,0,0,0)');
-          grad.addColorStop(0.5,`rgba(0,0,0,${pOpacity})`);
-          grad.addColorStop(1,'rgba(0,0,0,0)');
-          ctx.fillStyle=grad;
-          ctx.fillRect(-beam.width/2,0,beam.width,beam.length);
-          ctx.restore();
-        });
-        requestAnimationFrame(draw);
-      }
-      window.addEventListener('resize',updateSize);
-      updateSize();
-      draw();
-    })();
-  </script>
-</body>
-
-</html>
+      flex-direction: column; gap: 1rem; } .cart-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 8px; } .cart-item-info h4 { margin: 0 0 0.5rem 0; font-size: 0.9rem; text-align: left !important; } .cart-controls { display: flex; align-items: center; gap: 0.5rem; } .cart-controls button { background: rgba(255, 255, 255, 0.1); border: none; color: #fff; width: 24px; height: 24px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; } .cart-controls button:hover { background: rgba(255, 255, 255, 0.2); } </style> </head> <body class="antialiased"> <!-- Fundo animado (Canvas simulando Webild) --> <div class="bg-background fixed inset-0 -z-10 w-full h-full" aria-hidden="true"> <div style="position:relative;width:100%;height:100%;overflow:hidden;pointer-events:auto"> <div style="width:100%;height:100%"> <canvas id="bg-canvas" style="display:block"></canvas> </div> </div> </div> <!-- Navegação --> <div id="nav" data-section="nav"> <nav class="fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/0 backdrop-blur-0 h-20"> <div class="relative flex items-center justify-between h-full w-content-width mx-auto"> <div class="flex items-center transition-all duration-500 ease-in-out"> <a href="index.html" class="cursor-pointer"> <img src="/logo.png" alt="Fulltime Academia" class="h-12 md:h-16 w-auto object-contain transition-transform hover:scale-105" /> </a> </div> <div class="hidden md:flex items-center gap-6 transition-all duration-500 ease-in-out" role="navigation"> <a href="index.html" class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Voltar</a> <a href="index.html#hero" class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Início</a> <button id="checkout-btn" class="relative text-sm font-bold bg-white text-blue-900 px-4 py-2 rounded-lg cursor-pointer transition-transform hover:scale-105"> 🛒 Carrinho (0) </button> </div> <button id="menu-toggle" class="flex md:hidden shrink-0 h-8 aspect-square rounded-theme bg-foreground items-center justify-center cursor-pointer" aria-label="Toggle menu"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus w-1/2 h-1/2 text-background transition-transform duration-300 rotate-0"> <path d="M5 12h14"></path> <path d="M12 5v14"></path> </svg> </button> </div> <!-- Menu Mobile --> <div id="mobile-menu" class="md:hidden z-10 fixed top-3 left-3 right-3 h-fit rounded-theme-capped card p-6 flex flex-col gap-6 opacity-0 pointer-events-none translate-y-[-10px]" style="width:calc(100vw - var(--vw-0_75) * 2)"> <div class="w-full flex justify-between items-center"> <p class="text-xl text-foreground">Menu</p> <button id="menu-close" class="shrink-0 h-8 aspect-square rounded-theme bg-foreground flex items-center justify-center cursor-pointer"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus w-1/2 h-1/2 text-background rotate-45"> <path d="M5 12h14"></path> <path d="M12 5v14"></path> </svg> </button> </div> <div class="flex flex-col gap-4"> <a href="index.html" class="w-full h-fit flex justify-between items-center cursor-pointer"> <p class="text-base font-medium">Voltar</p> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground"> <path d="M5 12h14"></path> <path d="m12 5 7 7-7 7"></path> </svg> </a> </div> </div> </nav> </div> <!-- Hero --> <div id="hero" data-section="hero"> <section class="relative w-full h-fit flex items-center justify-center py-hero-page-padding"> <div class="w-full flex flex-col gap-14 relative z-10"> <div class="w-content-width mx-auto"> <div class="items-center text-center flex flex-col gap-3"> <h2 class="blur-text text-center text-6xl font-medium text-balance">Potencialize Seus Resultados</h2> <p class="blur-text text-center text-base md:text-lg leading-tight">Suplementação premium para levar o seu treino ao próximo nível.</p> </div> </div> </div> </section> </div> <!-- Categorias --> <div class="categories blur-text"> <button class="cat-btn active" data-filter="todos">Todos</button> <button class="cat-btn" data-filter="proteina">Proteínas</button> <button class="cat-btn" data-filter="creatina">Creatinas</button> <button class="cat-btn" data-filter="pre">Pré-Treinos</button> </div> <!-- Grid de Produtos --> <div id="store-grid" class="relative py-10 w-full"> <div class="w-content-width mx-auto"> <div class="grid"> <!-- Proteínas --> <div class="glass-card card p-6 blur-text" data-category="proteina"> <div class="badge">MAIS VENDIDO</div> <div class="img-container"> <div class="text-white/40 text-sm">Foto Whey</div> </div> <h3 class="product-name">Whey Protein Isolado 900g</h3> <p class="card-desc">Acelere sua recuperação muscular com alta absorção e pureza.</p> <p class="product-price">R$ 159,90</p> <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button> </div> <div class="glass-card card p-6 blur-text" data-category="proteina"> <div class="img-container"> <div class="text-white/40 text-sm">Foto Whey Blend</div> </div> <h3 class="product-name">Whey Blend 2kg - Ganho de Massa</h3> <p class="card-desc">Mix completo de proteínas para manter o anabolismo por mais tempo.</p> <p class="product-price">R$ 119,90</p> <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button> </div> <div class="glass-card card p-6 blur-text" data-category="proteina"> <div class="img-container"> <div class="text-white/40 text-sm">Foto Caseína</div> </div> <h3 class="product-name">Caseína Micellar 900g - Noturna</h3> <p class="card-desc">Proteína de absorção lenta ideal para consumo antes de dormir.</p> <p class="product-price">R$ 179,90</p> <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button> </div> <div class="glass-card card p-6 blur-text" data-category="proteina"> <div class="img-container"> <div class="text-white/40 text-sm">Foto Whey Hydro</div> </div> <h3 class="product-name">Whey Hidrolisado 900g Premium</h3> <p class="card-desc">A forma mais pura e rápida de absorção para atletas de elite.</p> <p class="product-price">R$ 210,00</p> <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button> </div> <!-- Creatinas --> <div class="glass-card card p-6 blur-text" data-category="creatina"> <div class="img-container"> <div class="text-white/40 text-sm">Foto Creatina</div> </div> <h3 class="product-name">Creatina Monohidratada 300g</h3> <p class="card-desc">Aumento de força e explosão muscular comprovado cientificamente.</p> <p class="product-price">R$ 89,90</p> <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button> </div> <div class="glass-card card p-6 blur-text" data-category="creatina"> <div class="badge">PUREZA 100%</div> <div class="img-container"> <div class="text-white/40 text-sm">Foto Creatina Creapure</div> </div> <h3 class="product-name">Creatina Creapure 300g Importada</h3> <p class="card-desc">O selo de pureza mais rigoroso do mundo para seus resultados.</p> <p class="product-price">R$ 139,90</p> <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button> </div> <div class="glass-card card p-6 blur-text" data-category="creatina"> <div class="img-container"> <div class="text-white/40 text-sm">Foto Creatina 1kg</div> </div> <h3 class="product-name">Creatina Monohidratada 1kg (Refil)</h3> <p class="card-desc">O melhor custo-benefício para sua suplementação contínua.</p> <p class="product-price">R$ 249,90</p> <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button> </div> <div class="glass-card card p-6 blur-text" data-category="creatina"> <div class="img-container"> <div class="text-white/40 text-sm">Foto Creatina Caps</div> </div> <h3 class="product-name">Creatina 120 Cápsulas Praticidade</h3> <p class="card-desc">Toda a força da creatina em cápsulas fáceis de consumir.</p> <p class="product-price">R$ 75,00</p> <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button> </div> <!-- Pré-Treinos --> <div class="glass-card card p-6 blur-text" data-category="pre"> <div class="badge">PROMOÇÃO</div> <div class="img-container"> <div class="text-white/40 text-sm">Foto Pré-Treino</div> </div> <h3 class="product-name">Pré-Treino Explosive 300g Fruit</h3> <p class="card-desc">Energia extrema e foco total para esmagar seus treinos.</p> <p class="product-price">R$ 129,90</p> <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button> </div> <div class="glass-card card p-6 blur-text" data-category="pre"> <div class="img-container"> <div class="text-white/40 text-sm">Foto Pré-Treino Focus</div> </div> <h3 class="product-name">Pré-Treino Focus & Mind No-Crash</h3> <p class="card-desc">Energia limpa e prolongada sem efeito rebote após o treino.</p> <p class="product-price">R$ 145,00</p> <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button> </div> <div class="glass-card card p-6 blur-text" data-category="pre"> <div class="img-container"> <div class="text-white/40 text-sm">Foto Termogênico</div> </div> <h3 class="product-name">Termogênico Fire Burn Fat Killer</h3> <p class="card-desc">Acelere seu metabolismo e queime gordura de forma eficiente.</p> <p class="product-price">R$ 99,00</p> <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button> </div> <div class="glass-card card p-6 blur-text" data-category="pre"> <div class="img-container"> <div class="text-white/40 text-sm">Foto Beta Alanina</div> </div> <h3 class="product-name">Beta Alanina Pura 200g - Endurance</h3> <p class="card-desc">Reduza a fadiga muscular e treine por muito mais tempo.</p> <p class="product-price">R$ 85,00</p> <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button> </div> </div> </div> </div> <!-- Footer --> <div id="footer" data-section="footer"> <footer role="contentinfo" aria-label="Site footer" class="relative overflow-hidden w-full bg-[#003399] text-white py-10 mt-20"> <div class="relative w-content-width mx-auto z-10 flex flex-col md:flex-row items-center justify-between gap-8"> <div class="flex items-center transition-all duration-500 ease-in-out"> <a href="index.html" class="cursor-pointer"> <img src="/logo.png" alt="Fulltime Academia" class="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" /> </a> </div> <div class="flex items-center"> <span class="text-white/50 text-sm">© 2026 | KrM Corp</span> </div> </div> </footer> </div> <!-- Carrinho (Drawer) --> <div class="cart-overlay" id="cartOverlay"></div> <div class="cart-drawer" id="cartDrawer"> <div class="cart-header"> <h2 class="text-xl font-bold">Seu Carrinho</h2> <button class="close-cart" id="closeCartBtn">✖</button> </div> <div class="cart-items" id="cartItemsContainer"></div> <div class="cart-footer" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;"> <h3 style="display:flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem;"> Total: <span id="cartTotalDisplay">R$ 0,00</span> </h3> <button class="btn" id="checkoutBtnModal" style="width: 100%;">Finalizar Compra</button> </div> </div> <!-- Script Integrado e Carrinho --> <script> document.addEventListener('DOMContentLoaded', () => { // 1. Navbar no Scroll const nav = document.querySelector('nav'); window.addEventListener('scroll', () => { if (window.scrollY > 20) { nav.classList.add('nav-scrolled'); } else { nav.classList.remove('nav-scrolled'); } }); // 2. Mobile Menu Toggle const menuToggle = document.getElementById('menu-toggle'); const menuClose = document.getElementById('menu-close'); const mobileMenu = document.getElementById('mobile-menu'); function toggleMenu() { const isOpen = mobileMenu.classList.contains('opacity-100'); if (!isOpen) { mobileMenu.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]'); mobileMenu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0'); } else { mobileMenu.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]'); mobileMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0'); } } menuToggle?.addEventListener('click', toggleMenu); menuClose?.addEventListener('click', toggleMenu); // 3. Animação de entrada const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('in-view'); observer.unobserve(entry.target); } }); }, { threshold: 0.15 }); document.querySelectorAll('.blur-text').forEach(el => observer.observe(el)); // 4. Canvas de Fundo const canvas = document.getElementById('bg-canvas'); if (canvas) { const ctx = canvas.getContext('2d'); let time = 0; function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; } window.addEventListener('resize', resize); resize(); function animate() { time += 0.005; ctx.clearRect(0, 0, canvas.width, canvas.height); const cx = canvas.width / 2 + Math.sin(time) * (canvas.width * 0.1); const cy = canvas.height / 2 + Math.cos(time * 0.8) * (canvas.height * 0.1); const radius = Math.max(canvas.width, canvas.height) * 0.6; const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius); gradient.addColorStop(0, 'rgba(59, 130, 246, 0.04)'); gradient.addColorStop(1, 'rgba(0, 51, 153, 0)'); ctx.fillStyle = gradient; ctx.fillRect(0, 0, canvas.width, canvas.height); requestAnimationFrame(animate); } animate(); } // --- LOGICA DE FILTRO --- const catBtns = document.querySelectorAll('.cat-btn'); const productCards = document.querySelectorAll('.glass-card'); catBtns.forEach(btn => { btn.addEventListener('click', () => { catBtns.forEach(b => b.classList.remove('active')); btn.classList.add('active'); const filter = btn.getAttribute('data-filter'); productCards.forEach(card => { const category = card.getAttribute('data-category'); if (filter === 'todos' || category === filter) { card.style.display = 'flex'; } else { card.style.display = 'none'; } }); }); }); // --- LOGICA DO CARRINHO (DRAWER) --- let cart = []; const checkoutBtn = document.getElementById('checkout-btn'); const cartDrawer = document.getElementById('cartDrawer'); const cartOverlay = document.getElementById('cartOverlay'); const closeCartBtn = document.getElementById('closeCartBtn'); const cartItemsContainer = document.getElementById('cartItemsContainer'); const cartTotalDisplay = document.getElementById('cartTotalDisplay'); const checkoutBtnModal = document.getElementById('checkoutBtnModal'); const openCart = () => { cartDrawer.classList.add('open'); cartOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }; const closeCart = () => { cartDrawer.classList.remove('open'); cartOverlay.classList.remove('active'); document.body.style.overflow = ''; }; const renderCart = () => { cartItemsContainer.innerHTML = ''; let total = 0; let totalItems = 0; cart.forEach((item, index) => { const itemPrice = parseFloat(item.price.replace('R$', '').replace(',', '.')); total += itemPrice * item.quantity; totalItems += item.quantity; const itemEl = document.createElement('div'); itemEl.className = 'cart-item'; itemEl.innerHTML = ` <div class="cart-item-info"> <h4 class="font-medium">${item.name}</h4> <span class="text-sm opacity-70">${item.price}</span> </div> <div class="cart-controls"> <button onclick="window.updateQty(${index}, -1)">-</button> <span>${item.quantity}</span> <button onclick="window.updateQty(${index}, 1)">+</button> </div> `; cartItemsContainer.appendChild(itemEl); }); cartTotalDisplay.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`; checkoutBtn.innerText = `🛒 Carrinho (${totalItems})`; }; window.updateQty = (index, change) => { cart[index].quantity += change; if (cart[index].quantity <= 0) { cart.splice(index, 1); } renderCart(); }; document.querySelectorAll('.add-to-cart').forEach(button => { button.addEventListener('click', () => { const card = button.closest('.card'); const name = card.querySelector('.product-name').innerText; const price = card.querySelector('.product-price').innerText; const existingItem = cart.find(item => item.name === name); if (existingItem) { existingItem.quantity++; } else { cart.push({ name, price, quantity: 1 }); } renderCart(); openCart(); // Feedback visual simples no botão const originalText = button.innerText; button.innerText = 'Adicionado!'; button.style.background = '#4BB543'; setTimeout(() => { button.innerText = originalText; button.style.background = ''; }, 1000); }); }); checkoutBtn.addEventListener('click', openCart); closeCartBtn.addEventListener('click', closeCart); cartOverlay.addEventListener('click', closeCart); checkoutBtnModal.addEventListener('click', async () => { if (cart.length === 0) { alert('Seu carrinho está vazio!'); return; } checkoutBtnModal.innerText = 'Processando...'; checkoutBtnModal.disabled = true; try { const response = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cart }) }); const data = await response.json(); if (data.url) { window.location.href = data.url; } else { throw new Error(data.error || 'Erro ao criar sessão de checkout'); } } catch (error) { console.error('Erro:', error); alert('Erro ao finalizar compra. Tente novamente.'); checkoutBtnModal.innerText = 'Finalizar Compra'; checkoutBtnModal.disabled = false; } }); }); </script> <!-- Beams Background --> <style>#beams-bg-container{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;overflow:hidden;background-color:var(--color-background,#003399)}#beams-canvas{position:absolute;inset:0;filter:blur(15px);opacity:0.8}body,main,.bg-background{background:transparent !important}</style> <div id="beams-bg-container"><canvas id="beams-canvas"></canvas></div> <script> (function(){ const canvas=document.getElementById('beams-canvas'); const ctx=canvas.getContext('2d'); let beams=[]; let lastWidth=window.innerWidth; function createBeam(width,height,isInitial=false){ return{x:Math.random()*width*1.5-width*0.25,y:isInitial?Math.random()*height*2-height:height+200+Math.random()*200,width:40+Math.random()*80,length:height*3.5,angle:-35+Math.random()*10,speed:0.8+Math.random()*1.5,opacity:0.4+Math.random()*0.4,pulse:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.03}; } function updateSize(){ const width=window.innerWidth; const height=window.innerHeight; const dpr=window.devicePixelRatio||1; canvas.width=width*dpr; canvas.height=height*dpr; canvas.style.width=width+'px'; canvas.style.height=height+'px'; ctx.scale(dpr,dpr); beams=Array.from({length:45},()=>createBeam(width,height,true)); } function draw(){ ctx.clearRect(0,0,canvas.width,canvas.height); beams.forEach(beam=>{ beam.y-=beam.speed; beam.pulse+=beam.pulseSpeed; if(beam.y+beam.length<0) { beam.y=window.innerHeight+200; beam.x=Math.random()*window.innerWidth*1.5-window.innerWidth*0.25; } ctx.save(); ctx.translate(beam.x,beam.y); ctx.rotate((beam.angle*Math.PI)/180); const pOpacity=Math.max(0,Math.min(1,beam.opacity*(0.8+Math.sin(beam.pulse)*0.2))); const grad=ctx.createLinearGradient(0,0,0,beam.length); grad.addColorStop(0,'rgba(0,0,0,0)'); grad.addColorStop(0.5,`rgba(0,0,0,${pOpacity})`); grad.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=grad; ctx.fillRect(-beam.width/2,0,beam.width,beam.length); ctx.restore(); }); requestAnimationFrame(draw); } window.addEventListener('resize',updateSize); updateSize(); draw(); })(); </script> </body> </html>
