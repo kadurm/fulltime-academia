@@ -585,27 +585,32 @@
   </div>
 
   <script>
-    // Mock Data - Produtos (Estes podem ser substituídos pela lógica de API real futuramente)
-    let produtos = [
-      {
-        id: 1,
-        nome: 'Whey Protein Isolado 900g',
-        preco: 'R$ 159,90',
-        imagem: 'https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?w=200&h=200&fit=crop'
-      },
-      {
-        id: 2,
-        nome: 'Creatina Monohidratada 300g',
-        preco: 'R$ 89,90',
-        imagem: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=200&h=200&fit=crop'
-      },
-      {
-        id: 3,
-        nome: 'Pré-Treino Explosive 300g',
-        preco: 'R$ 129,90',
-        imagem: 'https://images.unsplash.com/photo-1546483875-ad902392910b?w=200&h=200&fit=crop'
+    let produtos = [];
+
+    // Carregar produtos do banco
+    async function carregarProdutos() {
+      try {
+        const response = await fetch('/api/produtos');
+        produtos = await response.json();
+        renderizarProdutos();
+      } catch (error) {
+        console.error('Erro ao carregar produtos:', error);
       }
-    ];
+    }
+
+    // Salvar produtos no banco
+    async function salvarProdutosNoBanco() {
+      try {
+        await fetch('/api/produtos', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ produtos })
+        });
+      } catch (error) {
+        console.error('Erro ao salvar produtos:', error);
+        alert('Erro ao persistir dados no banco.');
+      }
+    }
 
     // Renderizar produtos
     function renderizarProdutos() {
@@ -660,10 +665,11 @@
     }
 
     // Excluir produto
-    function excluirProduto(id) {
+    async function excluirProduto(id) {
       if (confirm('Tem certeza que deseja excluir este produto?')) {
         produtos = produtos.filter(p => p.id !== id);
         renderizarProdutos();
+        await salvarProdutosNoBanco();
       }
     }
 
@@ -736,11 +742,12 @@
           }
         } else {
           // Novo produto
-          const novoId = Math.max(...produtos.map(p => p.id), 0) + 1;
+          const novoId = produtos.length > 0 ? Math.max(...produtos.map(p => p.id)) + 1 : 1;
           produtos.push({ id: novoId, nome, preco, imagem });
         }
 
         renderizarProdutos();
+        await salvarProdutosNoBanco();
         fecharModal();
       } catch (error) {
         console.error('Erro ao salvar produto:', error);
@@ -860,7 +867,7 @@
     })();
 
     // Inicializar renderização
-    renderizarProdutos();
+    carregarProdutos();
   </script>
 </body>
 
