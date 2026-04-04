@@ -605,29 +605,88 @@
       }
     }
 
-    // Salvar produto (novo ou edição)
-    document.getElementById('product-form').addEventListener('submit', function(e) {
+    // Converter arquivo para Base64
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    // Upload para Cloudinary
+    async function uploadImagemCloudinary(base64Image) {
+      try {
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ imageStr: base64Image })
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.details || 'Falha no upload');
+        }
+
+        const data = await response.json();
+        return data.secure_url;
+      } catch (error) {
+        console.error('Erro no upload:', error);
+        alert('Erro ao fazer upload da imagem: ' + error.message);
+        return null;
+      }
+    }
+
+    // Salvar produto (novo ou edição) com upload Cloudinary
+    document.getElementById('product-form').addEventListener('submit', async function(e) {
       e.preventDefault();
 
-      const id = document.getElementById('product-id').value;
-      const nome = document.getElementById('product-name').value;
-      const preco = document.getElementById('product-price').value;
-      const imagem = document.getElementById('product-image').value;
+      const btnSalvar = this.querySelector('.btn-salvar');
+      const textoOriginal = btnSalvar.textContent;
+      btnSalvar.textContent = 'Salvando...';
+      btnSalvar.disabled = true;
 
-      if (id) {
-        // Editar existente
-        const index = produtos.findIndex(p => p.id == id);
-        if (index !== -1) {
-          produtos[index] = { id: Number(id), nome, preco, imagem };
+      try {
+        const id = document.getElementById('product-id').value;
+        const nome = document.getElementById('product-name').value;
+        const preco = document.getElementById('product-price').value;
+
+        let imagem = document.getElementById('product-image').value;
+
+        // Se houver novo arquivo selecionado, fazer upload para Cloudinary
+        if (imageInput.files && imageInput.files[0]) {
+          const base64Image = await fileToBase64(imageInput.files[0]);
+          const uploadedUrl = await uploadImagemCloudinary(base64Image);
+
+          if (uploadedUrl) {
+            imagem = uploadedUrl;
+          }
         }
-      } else {
-        // Novo produto
-        const novoId = Math.max(...produtos.map(p => p.id), 0) + 1;
-        produtos.push({ id: novoId, nome, preco, imagem });
-      }
 
-      renderizarProdutos();
-      fecharModal();
+        if (id) {
+          // Editar existente
+          const index = produtos.findIndex(p => p.id == id);
+          if (index !== -1) {
+            produtos[index] = { id: Number(id), nome, preco, imagem };
+          }
+        } else {
+          // Novo produto
+          const novoId = Math.max(...produtos.map(p => p.id), 0) + 1;
+          produtos.push({ id: novoId, nome, preco, imagem });
+        }
+
+        renderizarProdutos();
+        fecharModal();
+      } catch (error) {
+        console.error('Erro ao salvar produto:', error);
+        alert('Erro ao salvar produto: ' + error.message);
+      } finally {
+        btnSalvar.textContent = textoOriginal;
+        btnSalvar.disabled = false;
+      }
     });
 
     // Fechar modal ao clicar fora
