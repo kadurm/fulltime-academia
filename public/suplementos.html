@@ -169,11 +169,50 @@
     /* Grade de Produtos Refinada */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(1, 1fr);
       gap: 2.5rem;
       padding: 3rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
+    }
+
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .grid {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 1400px;
+      }
+    }
+
+    /* Categorias */
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+
+    .cat-btn.active, .cat-btn:hover {
+      background: #FFD700;
+      color: #000;
+      border-color: #FFD700;
     }
 
     .img-container {
@@ -427,12 +466,20 @@
     </section>
   </div>
 
+  <!-- Categorias -->
+  <div class="categories blur-text">
+    <button class="cat-btn active" data-filter="todos">Todos</button>
+    <button class="cat-btn" data-filter="proteina">Proteínas</button>
+    <button class="cat-btn" data-filter="creatina">Creatinas</button>
+    <button class="cat-btn" data-filter="pre">Pré-Treinos</button>
+  </div>
+
   <!-- Grid de Produtos -->
-  <div id="store-grid" class="relative py-20 w-full">
+  <div id="store-grid" class="relative py-10 w-full">
     <div class="w-content-width mx-auto">
       <div class="grid">
-        <!-- Card 1 -->
-        <div class="glass-card card flex flex-col items-center p-6 blur-text">
+        <!-- Proteínas -->
+        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="proteina">
           <div class="badge">MAIS VENDIDO</div>
           <div class="img-container w-full">
             <div class="text-white/40 text-sm">Foto Whey</div>
@@ -441,8 +488,33 @@
           <p class="product-price text-lg mb-4">R$ 159,90</p>
           <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
         </div>
-        <!-- Card 2 -->
-        <div class="glass-card card flex flex-col items-center p-6 blur-text">
+        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="proteina">
+          <div class="img-container w-full">
+            <div class="text-white/40 text-sm">Foto Whey Blend</div>
+          </div>
+          <h3 class="product-name text-xl font-medium mb-2">Whey Blend 2kg</h3>
+          <p class="product-price text-lg mb-4">R$ 119,90</p>
+          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+        </div>
+        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="proteina">
+          <div class="img-container w-full">
+            <div class="text-white/40 text-sm">Foto Caseína</div>
+          </div>
+          <h3 class="product-name text-xl font-medium mb-2">Caseína Micellar 900g</h3>
+          <p class="product-price text-lg mb-4">R$ 179,90</p>
+          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+        </div>
+        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="proteina">
+          <div class="img-container w-full">
+            <div class="text-white/40 text-sm">Foto Whey Hydro</div>
+          </div>
+          <h3 class="product-name text-xl font-medium mb-2">Whey Hidrolisado 900g</h3>
+          <p class="product-price text-lg mb-4">R$ 210,00</p>
+          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+        </div>
+
+        <!-- Creatinas -->
+        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="creatina">
           <div class="img-container w-full">
             <div class="text-white/40 text-sm">Foto Creatina</div>
           </div>
@@ -450,8 +522,34 @@
           <p class="product-price text-lg mb-4">R$ 89,90</p>
           <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
         </div>
-        <!-- Card 3 -->
-        <div class="glass-card card flex flex-col items-center p-6 blur-text">
+        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="creatina">
+          <div class="badge">PUREZA 100%</div>
+          <div class="img-container w-full">
+            <div class="text-white/40 text-sm">Foto Creatina Creapure</div>
+          </div>
+          <h3 class="product-name text-xl font-medium mb-2">Creatina Creapure 300g</h3>
+          <p class="product-price text-lg mb-4">R$ 139,90</p>
+          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+        </div>
+        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="creatina">
+          <div class="img-container w-full">
+            <div class="text-white/40 text-sm">Foto Creatina 1kg</div>
+          </div>
+          <h3 class="product-name text-xl font-medium mb-2">Creatina Monohidratada 1kg</h3>
+          <p class="product-price text-lg mb-4">R$ 249,90</p>
+          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+        </div>
+        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="creatina">
+          <div class="img-container w-full">
+            <div class="text-white/40 text-sm">Foto Creatina Caps</div>
+          </div>
+          <h3 class="product-name text-xl font-medium mb-2">Creatina 120 Cápsulas</h3>
+          <p class="product-price text-lg mb-4">R$ 75,00</p>
+          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+        </div>
+
+        <!-- Pré-Treinos -->
+        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="pre">
           <div class="badge">PROMOÇÃO</div>
           <div class="img-container w-full">
             <div class="text-white/40 text-sm">Foto Pré-Treino</div>
@@ -460,13 +558,28 @@
           <p class="product-price text-lg mb-4">R$ 129,90</p>
           <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
         </div>
-        <!-- Card 4 -->
-        <div class="glass-card card flex flex-col items-center p-6 blur-text">
+        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="pre">
           <div class="img-container w-full">
-            <div class="text-white/40 text-sm">Foto BCAA</div>
+            <div class="text-white/40 text-sm">Foto Pré-Treino Focus</div>
           </div>
-          <h3 class="product-name text-xl font-medium mb-2">BCAA 2:1:1 120 Cápsulas</h3>
-          <p class="product-price text-lg mb-4">R$ 69,90</p>
+          <h3 class="product-name text-xl font-medium mb-2">Pré-Treino Focus & Mind</h3>
+          <p class="product-price text-lg mb-4">R$ 145,00</p>
+          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+        </div>
+        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="pre">
+          <div class="img-container w-full">
+            <div class="text-white/40 text-sm">Foto Termogênico</div>
+          </div>
+          <h3 class="product-name text-xl font-medium mb-2">Termogênico Fire Burn</h3>
+          <p class="product-price text-lg mb-4">R$ 99,00</p>
+          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+        </div>
+        <div class="glass-card card flex flex-col items-center p-6 blur-text" data-category="pre">
+          <div class="img-container w-full">
+            <div class="text-white/40 text-sm">Foto Beta Alanina</div>
+          </div>
+          <h3 class="product-name text-xl font-medium mb-2">Beta Alanina Pura 200g</h3>
+          <p class="product-price text-lg mb-4">R$ 85,00</p>
           <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
         </div>
       </div>
@@ -576,6 +689,28 @@
         }
         animate();
       }
+
+      // --- LOGICA DE FILTRO ---
+      const catBtns = document.querySelectorAll('.cat-btn');
+      const productCards = document.querySelectorAll('.glass-card');
+
+      catBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          catBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filter = btn.getAttribute('data-filter');
+
+          productCards.forEach(card => {
+            const category = card.getAttribute('data-category');
+            if (filter === 'todos' || category === filter) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
 
       // --- LOGICA DO CARRINHO (DRAWER) ---
       let cart = [];
