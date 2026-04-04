@@ -618,12 +618,22 @@
 
       // --- LOGICA DE PRODUTOS DINÂMICOS ---
       async function carregarProdutosLoja() {
+        const grid = document.getElementById('produtos-grid');
+        grid.innerHTML = '<p style="color: white; text-align: center; grid-column: 1 / -1;">Carregando suplementos...</p>';
+        
         try {
           const response = await fetch('/api/produtos');
           const produtos = await response.json();
+          
+          if (produtos.length === 0) {
+            grid.innerHTML = '<p style="color: white; text-align: center; grid-column: 1 / -1;">Nenhum produto disponível no momento.</p>';
+            return;
+          }
+
           renderizarProdutosLoja(produtos);
         } catch (error) {
           console.error('Erro ao carregar produtos:', error);
+          grid.innerHTML = '<p style="color: white; text-align: center; grid-column: 1 / -1;">Erro ao carregar produtos.</p>';
         }
       }
 
