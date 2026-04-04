@@ -6,22 +6,30 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+};
+
 exports.default = async (request, response) => {
-  // Configurar CORS
-  response.setHeader('Access-Control-Allow-Origin', '*');
-  response.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
-  // Handle preflight
-  if (request.method === 'OPTIONS') {
-    return response.status(200).end();
-  }
-
-  if (request.method !== 'POST') {
-    return response.status(405).json({ error: 'Method not allowed' });
-  }
-
   try {
+    // Configurar CORS
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Handle preflight
+    if (request.method === 'OPTIONS') {
+      return response.status(200).end();
+    }
+
+    if (request.method !== 'POST') {
+      return response.status(405).json({ error: 'Method not allowed' });
+    }
+
     const { imageStr } = request.body;
 
     if (!imageStr) {
@@ -41,8 +49,7 @@ exports.default = async (request, response) => {
   } catch (error) {
     console.error('Cloudinary upload error:', error);
     return response.status(500).json({
-      error: 'Failed to upload image',
-      details: error.message
+      error: error.message || 'Failed to upload image'
     });
   }
 };

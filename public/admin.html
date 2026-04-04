@@ -702,6 +702,13 @@
 
     // Upload para Cloudinary
     async function uploadImagemCloudinary(base64Image) {
+      if (!base64Image) {
+        console.error('String Base64 vazia');
+        return null;
+      }
+
+      console.log("Iniciando upload...");
+      
       try {
         const response = await fetch('/api/upload', {
           method: 'POST',
@@ -712,15 +719,15 @@
         });
 
         if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.details || 'Falha no upload');
+          const error = await response.json().catch(() => ({ error: 'Resposta não é JSON' }));
+          throw new Error(error.error || error.details || 'Falha no upload');
         }
 
         const data = await response.json();
         return data.secure_url;
       } catch (error) {
         console.error('Erro no upload:', error);
-        alert('Erro ao fazer upload da imagem: ' + error.message);
+        alert('Erro detalhado: ' + error);
         return null;
       }
     }
