@@ -186,6 +186,111 @@
       backdrop-filter: blur(12px) !important;
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
+
+    /* --- ESTILOS DO CARRINHO (DRAWER) --- */
+    .cart-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 99;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .cart-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      max-width: 380px;
+      height: 100vh;
+      background: rgba(25, 25, 25, 0.85);
+      backdrop-filter: blur(16px);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 100;
+      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      box-sizing: border-box;
+      color: #fff;
+    }
+
+    .cart-drawer.open {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 1rem;
+    }
+
+    .close-cart {
+      cursor: pointer;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      color: #fff;
+    }
+
+    .cart-items {
+      flex-grow: 1;
+      overflow-y: auto;
+      padding: 1rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .cart-item-info h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.9rem;
+      text-align: left !important;
+    }
+
+    .cart-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .cart-controls button {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-controls button:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
   </style>
 </head>
 
@@ -216,7 +321,7 @@
           <a href="index.html#hero"
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Início</a>
           <button id="checkout-btn" class="relative text-sm font-bold bg-white text-blue-900 px-4 py-2 rounded-lg cursor-pointer transition-transform hover:scale-105">
-            🛒 Carrinho (0) - Finalizar
+            🛒 Carrinho (0)
           </button>
         </div>
         <button id="menu-toggle"
@@ -329,6 +434,22 @@
     </footer>
   </div>
 
+  <!-- Carrinho (Drawer) -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h2 class="text-xl font-bold">Seu Carrinho</h2>
+      <button class="close-cart" id="closeCartBtn">✖</button>
+    </div>
+    <div class="cart-items" id="cartItemsContainer"></div>
+    <div class="cart-footer" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
+      <h3 style="display:flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem;">
+        Total: <span id="cartTotalDisplay">R$ 0,00</span>
+      </h3>
+      <button class="btn" id="checkoutBtnModal" style="width: 100%;">Finalizar Compra</button>
+    </div>
+  </div>
+
   <!-- Script Integrado e Carrinho -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -400,9 +521,65 @@
         animate();
       }
 
-      // --- LOGICA DO CARRINHO ---
+      // --- LOGICA DO CARRINHO (DRAWER) ---
       let cart = [];
       const checkoutBtn = document.getElementById('checkout-btn');
+      const cartDrawer = document.getElementById('cartDrawer');
+      const cartOverlay = document.getElementById('cartOverlay');
+      const closeCartBtn = document.getElementById('closeCartBtn');
+      const cartItemsContainer = document.getElementById('cartItemsContainer');
+      const cartTotalDisplay = document.getElementById('cartTotalDisplay');
+      const checkoutBtnModal = document.getElementById('checkoutBtnModal');
+
+      const openCart = () => {
+        cartDrawer.classList.add('open');
+        cartOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeCart = () => {
+        cartDrawer.classList.remove('open');
+        cartOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      const renderCart = () => {
+        cartItemsContainer.innerHTML = '';
+        let total = 0;
+        let totalItems = 0;
+
+        cart.forEach((item, index) => {
+          const itemPrice = parseFloat(item.price.replace('R$', '').replace(',', '.'));
+          total += itemPrice * item.quantity;
+          totalItems += item.quantity;
+
+          const itemEl = document.createElement('div');
+          itemEl.className = 'cart-item';
+          itemEl.innerHTML = `
+            <div class="cart-item-info">
+              <h4 class="font-medium">${item.name}</h4>
+              <span class="text-sm opacity-70">${item.price}</span>
+            </div>
+            <div class="cart-controls">
+              <button onclick="window.updateQty(${index}, -1)">-</button>
+              <span>${item.quantity}</span>
+              <button onclick="window.updateQty(${index}, 1)">+</button>
+            </div>
+          `;
+          cartItemsContainer.appendChild(itemEl);
+        });
+
+        cartTotalDisplay.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        checkoutBtn.innerText = `🛒 Carrinho (${totalItems})`;
+      };
+
+      window.updateQty = (index, change) => {
+        cart[index].quantity += change;
+        if (cart[index].quantity <= 0) {
+          cart.splice(index, 1);
+        }
+        renderCart();
+      };
 
       document.querySelectorAll('.add-to-cart').forEach(button => {
         button.addEventListener('click', () => {
@@ -410,27 +587,39 @@
           const name = card.querySelector('.product-name').innerText;
           const price = card.querySelector('.product-price').innerText;
 
-          cart.push({ name, price });
-          checkoutBtn.innerText = `🛒 Carrinho (${cart.length}) - Finalizar`;
+          const existingItem = cart.find(item => item.name === name);
+          if (existingItem) {
+            existingItem.quantity++;
+          } else {
+            cart.push({ name, price, quantity: 1 });
+          }
+
+          renderCart();
+          openCart();
           
-          // Feedback visual simples
+          // Feedback visual simples no botão
+          const originalText = button.innerText;
           button.innerText = 'Adicionado!';
           button.style.background = '#4BB543';
           setTimeout(() => {
-            button.innerText = 'Adicionar ao Carrinho';
+            button.innerText = originalText;
             button.style.background = '';
           }, 1000);
         });
       });
 
-      checkoutBtn.addEventListener('click', async () => {
+      checkoutBtn.addEventListener('click', openCart);
+      closeCartBtn.addEventListener('click', closeCart);
+      cartOverlay.addEventListener('click', closeCart);
+
+      checkoutBtnModal.addEventListener('click', async () => {
         if (cart.length === 0) {
           alert('Seu carrinho está vazio!');
           return;
         }
 
-        checkoutBtn.innerText = 'Processando...';
-        checkoutBtn.disabled = true;
+        checkoutBtnModal.innerText = 'Processando...';
+        checkoutBtnModal.disabled = true;
 
         try {
           const response = await fetch('/api/checkout', {
@@ -448,8 +637,8 @@
         } catch (error) {
           console.error('Erro:', error);
           alert('Erro ao finalizar compra. Tente novamente.');
-          checkoutBtn.innerText = `🛒 Carrinho (${cart.length}) - Finalizar`;
-          checkoutBtn.disabled = false;
+          checkoutBtnModal.innerText = 'Finalizar Compra';
+          checkoutBtnModal.disabled = false;
         }
       });
     });
