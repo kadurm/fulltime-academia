@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Admin - Gestão de Produtos</title>
+
+  <!-- Fonte -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: 'var(--color-background)',
+            foreground: 'var(--color-foreground)',
+            card: 'var(--color-card)',
+            border: 'var(--color-border)',
+            accent: 'var(--color-accent)',
+            'primary-cta': 'var(--color-primary-cta)',
+            'primary-cta-text': 'var(--color-primary-cta-text)',
+            'secondary-cta': 'var(--color-secondary-cta)',
+            'secondary-cta-text': 'var(--color-secondary-cta-text)',
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --color-background: #003399;
+      --color-foreground: #fafafa;
+      --color-card: #383838;
+      --color-border: #484848;
+      --color-accent: #3b82f6;
+      --color-background-accent: #1f2937;
+      --color-primary-cta: #fafafa;
+      --color-primary-cta-text: #09090b;
+      --color-secondary-cta: #27272a;
+      --color-secondary-cta-text: #fafafa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter Tight', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #003399 100%);
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(45, 45, 45, 0.6);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 2px;
+    }
+
+    .btn-sair {
+      padding: 0.5rem 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-sair:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Container Principal */
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+    }
+
+    .btn-adicionar {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-adicionar:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+
+    /* Tabela Glassmorphism */
+    .products-table {
+      background: rgba(45, 45, 45, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      overflow: hidden;
+    }
+
+    .table-header {
+      display: grid;
+      grid-template-columns: 80px 1fr 120px 200px;
+      gap: 1rem;
+      padding: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 120px 200px;
+      gap: 1rem;
+      padding: 1rem;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.3s ease;
+    }
+
+    .table-row:last-child {
+      border-bottom: none;
+    }
+
+    .table-row:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .product-thumb {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .product-name {
+      font-weight: 500;
+    }
+
+    .product-price {
+      color: #4ade80;
+      font-weight: 600;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-editar {
+      padding: 0.5rem 1rem;
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 6px;
+      color: #60a5fa;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-editar:hover {
+      background: rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-excluir {
+      padding: 0.5rem 1rem;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 6px;
+      color: #f87171;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-excluir:hover {
+      background: rgba(239, 68, 68, 0.3);
+    }
+
+    /* Modal Glassmorphism */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: rgba(45, 45, 45, 0.8);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal h2 {
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      font-family: 'Inter Tight', sans-serif;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-cancelar {
+      flex: 1;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-cancelar:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-salvar {
+      flex: 1;
+      padding: 0.75rem;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-salvar:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .table-header,
+      .table-row {
+        grid-template-columns: 60px 1fr 100px;
+      }
+
+      .table-header span:last-child,
+      .table-row .actions {
+        grid-column: 1 / -1;
+        margin-top: 0.5rem;
+      }
+
+      .header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">KrM</div>
+    <button class="btn-sair" onclick="alert('Saindo...')">Sair</button>
+  </nav>
+
+  <!-- Container Principal -->
+  <div class="container">
+    <div class="header">
+      <h1>Gestão de Produtos</h1>
+      <button class="btn-adicionar" onclick="abrirModalNovo()">+ Adicionar Produto</button>
+    </div>
+
+    <!-- Tabela de Produtos -->
+    <div class="products-table">
+      <div class="table-header">
+        <span>Foto</span>
+        <span>Nome</span>
+        <span>Preço</span>
+        <span>Ações</span>
+      </div>
+      <div id="products-list"></div>
+    </div>
+  </div>
+
+  <!-- Modal de Edição -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <h2 id="modal-title">Editar Produto</h2>
+      <form id="product-form">
+        <input type="hidden" id="product-id">
+        <div class="form-group">
+          <label for="product-name">Nome</label>
+          <input type="text" id="product-name" placeholder="Nome do produto" required>
+        </div>
+        <div class="form-group">
+          <label for="product-price">Preço</label>
+          <input type="text" id="product-price" placeholder="R$ 0,00" required>
+        </div>
+        <div class="form-group">
+          <label for="product-image">URL da Foto</label>
+          <input type="url" id="product-image" placeholder="https://exemplo.com/foto.jpg" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
+          <button type="submit" class="btn-salvar">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Mock Data - Produtos
+    let produtos = [
+      {
+        id: 1,
+        nome: 'Whey Protein Concentrado',
+        preco: 'R$ 149,90',
+        imagem: 'https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?w=200&h=200&fit=crop'
+      },
+      {
+        id: 2,
+        nome: 'Creatina Monohidratada',
+        preco: 'R$ 89,90',
+        imagem: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=200&h=200&fit=crop'
+      },
+      {
+        id: 3,
+        nome: 'Pré-Treino Explosive',
+        preco: 'R$ 119,90',
+        imagem: 'https://images.unsplash.com/photo-1546483875-ad902392910b?w=200&h=200&fit=crop'
+      }
+    ];
+
+    // Renderizar produtos
+    function renderizarProdutos() {
+      const list = document.getElementById('products-list');
+      list.innerHTML = produtos.map(p => `
+        <div class="table-row">
+          <img src="${p.imagem}" alt="${p.nome}" class="product-thumb">
+          <span class="product-name">${p.nome}</span>
+          <span class="product-price">${p.preco}</span>
+          <div class="actions">
+            <button class="btn-editar" onclick="editarProduto(${p.id})">Editar</button>
+            <button class="btn-excluir" onclick="excluirProduto(${p.id})">Excluir</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Abrir modal para novo produto
+    function abrirModalNovo() {
+      document.getElementById('modal-title').textContent = 'Novo Produto';
+      document.getElementById('product-id').value = '';
+      document.getElementById('product-name').value = '';
+      document.getElementById('product-price').value = '';
+      document.getElementById('product-image').value = '';
+      document.getElementById('modal-overlay').classList.add('active');
+    }
+
+    // Editar produto
+    function editarProduto(id) {
+      const produto = produtos.find(p => p.id === id);
+      if (produto) {
+        document.getElementById('modal-title').textContent = 'Editar Produto';
+        document.getElementById('product-id').value = produto.id;
+        document.getElementById('product-name').value = produto.nome;
+        document.getElementById('product-price').value = produto.preco;
+        document.getElementById('product-image').value = produto.imagem;
+        document.getElementById('modal-overlay').classList.add('active');
+      }
+    }
+
+    // Fechar modal
+    function fecharModal() {
+      document.getElementById('modal-overlay').classList.remove('active');
+    }
+
+    // Excluir produto
+    function excluirProduto(id) {
+      if (confirm('Tem certeza que deseja excluir este produto?')) {
+        produtos = produtos.filter(p => p.id !== id);
+        renderizarProdutos();
+      }
+    }
+
+    // Salvar produto (novo ou edição)
+    document.getElementById('product-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const id = document.getElementById('product-id').value;
+      const nome = document.getElementById('product-name').value;
+      const preco = document.getElementById('product-price').value;
+      const imagem = document.getElementById('product-image').value;
+
+      if (id) {
+        // Editar existente
+        const index = produtos.findIndex(p => p.id == id);
+        if (index !== -1) {
+          produtos[index] = { id: Number(id), nome, preco, imagem };
+        }
+      } else {
+        // Novo produto
+        const novoId = Math.max(...produtos.map(p => p.id), 0) + 1;
+        produtos.push({ id: novoId, nome, preco, imagem });
+      }
+
+      renderizarProdutos();
+      fecharModal();
+    });
+
+    // Fechar modal ao clicar fora
+    document.getElementById('modal-overlay').addEventListener('click', function(e) {
+      if (e.target === this) {
+        fecharModal();
+      }
+    });
+
+    // Inicializar
+    renderizarProdutos();
+  </script>
+</body>
+
+</html>
