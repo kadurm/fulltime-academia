@@ -12,7 +12,7 @@
   <!-- Fonte Original -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
 
   <!-- Tailwind CSS -->
@@ -144,6 +144,13 @@
       border: 1px solid rgba(255, 255, 255, 0.1) !important;
       box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.3);
       border-radius: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(255, 255, 255, 0.3) !important;
+      box-shadow: 0px 12px 48px rgba(0, 0, 0, 0.5);
     }
 
     .primary-button, .btn {
@@ -157,6 +164,45 @@
 
     .primary-button:hover, .btn:hover {
       filter: brightness(0.9);
+    }
+
+    /* Grade de Produtos Refinada */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2.5rem;
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .img-container {
+      aspect-ratio: 1/1;
+      overflow: hidden;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #FFD700;
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 4px;
+      z-index: 5;
+    }
+
+    .product-price {
+      font-weight: 800;
+      color: #3b82f6; /* Accent color for price */
     }
 
     /* Animações nativas */
@@ -384,33 +430,43 @@
   <!-- Grid de Produtos -->
   <div id="store-grid" class="relative py-20 w-full">
     <div class="w-content-width mx-auto">
-      <div class="grid flex flex-wrap gap-8 justify-center">
+      <div class="grid">
         <!-- Card 1 -->
-        <div class="glass-card card flex flex-col items-center p-6 w-[280px] text-center blur-text">
-          <div class="img-placeholder bg-white/5 rounded-lg h-[200px] w-full mb-4 flex items-center justify-center text-white/40 text-sm">Foto Whey</div>
+        <div class="glass-card card flex flex-col items-center p-6 blur-text">
+          <div class="badge">MAIS VENDIDO</div>
+          <div class="img-container w-full">
+            <div class="text-white/40 text-sm">Foto Whey</div>
+          </div>
           <h3 class="product-name text-xl font-medium mb-2">Whey Protein Isolado 900g</h3>
-          <p class="product-price text-lg mb-4 text-white/80">R$ 159,90</p>
+          <p class="product-price text-lg mb-4">R$ 159,90</p>
           <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
         </div>
         <!-- Card 2 -->
-        <div class="glass-card card flex flex-col items-center p-6 w-[280px] text-center blur-text">
-          <div class="img-placeholder bg-white/5 rounded-lg h-[200px] w-full mb-4 flex items-center justify-center text-white/40 text-sm">Foto Creatina</div>
+        <div class="glass-card card flex flex-col items-center p-6 blur-text">
+          <div class="img-container w-full">
+            <div class="text-white/40 text-sm">Foto Creatina</div>
+          </div>
           <h3 class="product-name text-xl font-medium mb-2">Creatina Monohidratada 300g</h3>
-          <p class="product-price text-lg mb-4 text-white/80">R$ 89,90</p>
+          <p class="product-price text-lg mb-4">R$ 89,90</p>
           <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
         </div>
         <!-- Card 3 -->
-        <div class="glass-card card flex flex-col items-center p-6 w-[280px] text-center blur-text">
-          <div class="img-placeholder bg-white/5 rounded-lg h-[200px] w-full mb-4 flex items-center justify-center text-white/40 text-sm">Foto Pré-Treino</div>
+        <div class="glass-card card flex flex-col items-center p-6 blur-text">
+          <div class="badge">PROMOÇÃO</div>
+          <div class="img-container w-full">
+            <div class="text-white/40 text-sm">Foto Pré-Treino</div>
+          </div>
           <h3 class="product-name text-xl font-medium mb-2">Pré-Treino Explosive 300g</h3>
-          <p class="product-price text-lg mb-4 text-white/80">R$ 129,90</p>
+          <p class="product-price text-lg mb-4">R$ 129,90</p>
           <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
         </div>
         <!-- Card 4 -->
-        <div class="glass-card card flex flex-col items-center p-6 w-[280px] text-center blur-text">
-          <div class="img-placeholder bg-white/5 rounded-lg h-[200px] w-full mb-4 flex items-center justify-center text-white/40 text-sm">Foto BCAA</div>
+        <div class="glass-card card flex flex-col items-center p-6 blur-text">
+          <div class="img-container w-full">
+            <div class="text-white/40 text-sm">Foto BCAA</div>
+          </div>
           <h3 class="product-name text-xl font-medium mb-2">BCAA 2:1:1 120 Cápsulas</h3>
-          <p class="product-price text-lg mb-4 text-white/80">R$ 69,90</p>
+          <p class="product-price text-lg mb-4">R$ 69,90</p>
           <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
         </div>
       </div>
