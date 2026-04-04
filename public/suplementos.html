@@ -215,12 +215,9 @@
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Voltar</a>
           <a href="index.html#hero"
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Início</a>
-          <a href="index.html#about"
-            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Sobre</a>
-          <a href="index.html#unidades"
-            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Unidades</a>
-          <a href="suplementos.html"
-            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base font-bold text-foreground">Loja</a>
+          <button id="checkout-btn" class="relative text-sm font-bold bg-white text-blue-900 px-4 py-2 rounded-lg cursor-pointer transition-transform hover:scale-105">
+            🛒 Carrinho (0) - Finalizar
+          </button>
         </div>
         <button id="menu-toggle"
           class="flex md:hidden shrink-0 h-8 aspect-square rounded-theme bg-foreground items-center justify-center cursor-pointer"
@@ -260,16 +257,6 @@
               <path d="m12 5 7 7-7 7"></path>
             </svg>
           </a>
-          <div class="w-full h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent"></div>
-          <a href="suplementos.html" class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Loja</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </a>
         </div>
       </div>
     </nav>
@@ -296,30 +283,30 @@
         <!-- Card 1 -->
         <div class="glass-card card flex flex-col items-center p-6 w-[280px] text-center blur-text">
           <div class="img-placeholder bg-white/5 rounded-lg h-[200px] w-full mb-4 flex items-center justify-center text-white/40 text-sm">Foto Whey</div>
-          <h3 class="text-xl font-medium mb-2">Whey Protein Isolado 900g</h3>
-          <p class="text-lg mb-4 text-white/80">R$ 159,90</p>
-          <button class="primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+          <h3 class="product-name text-xl font-medium mb-2">Whey Protein Isolado 900g</h3>
+          <p class="product-price text-lg mb-4 text-white/80">R$ 159,90</p>
+          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
         </div>
         <!-- Card 2 -->
         <div class="glass-card card flex flex-col items-center p-6 w-[280px] text-center blur-text">
           <div class="img-placeholder bg-white/5 rounded-lg h-[200px] w-full mb-4 flex items-center justify-center text-white/40 text-sm">Foto Creatina</div>
-          <h3 class="text-xl font-medium mb-2">Creatina Monohidratada 300g</h3>
-          <p class="text-lg mb-4 text-white/80">R$ 89,90</p>
-          <button class="primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+          <h3 class="product-name text-xl font-medium mb-2">Creatina Monohidratada 300g</h3>
+          <p class="product-price text-lg mb-4 text-white/80">R$ 89,90</p>
+          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
         </div>
         <!-- Card 3 -->
         <div class="glass-card card flex flex-col items-center p-6 w-[280px] text-center blur-text">
           <div class="img-placeholder bg-white/5 rounded-lg h-[200px] w-full mb-4 flex items-center justify-center text-white/40 text-sm">Foto Pré-Treino</div>
-          <h3 class="text-xl font-medium mb-2">Pré-Treino Explosive 300g</h3>
-          <p class="text-lg mb-4 text-white/80">R$ 129,90</p>
-          <button class="primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+          <h3 class="product-name text-xl font-medium mb-2">Pré-Treino Explosive 300g</h3>
+          <p class="product-price text-lg mb-4 text-white/80">R$ 129,90</p>
+          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
         </div>
         <!-- Card 4 -->
         <div class="glass-card card flex flex-col items-center p-6 w-[280px] text-center blur-text">
           <div class="img-placeholder bg-white/5 rounded-lg h-[200px] w-full mb-4 flex items-center justify-center text-white/40 text-sm">Foto BCAA</div>
-          <h3 class="text-xl font-medium mb-2">BCAA 2:1:1 120 Cápsulas</h3>
-          <p class="text-lg mb-4 text-white/80">R$ 69,90</p>
-          <button class="primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+          <h3 class="product-name text-xl font-medium mb-2">BCAA 2:1:1 120 Cápsulas</h3>
+          <p class="product-price text-lg mb-4 text-white/80">R$ 69,90</p>
+          <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
         </div>
       </div>
     </div>
@@ -342,7 +329,7 @@
     </footer>
   </div>
 
-  <!-- Script Integrado -->
+  <!-- Script Integrado e Carrinho -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // 1. Navbar no Scroll
@@ -412,6 +399,59 @@
         }
         animate();
       }
+
+      // --- LOGICA DO CARRINHO ---
+      let cart = [];
+      const checkoutBtn = document.getElementById('checkout-btn');
+
+      document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', () => {
+          const card = button.closest('.card');
+          const name = card.querySelector('.product-name').innerText;
+          const price = card.querySelector('.product-price').innerText;
+
+          cart.push({ name, price });
+          checkoutBtn.innerText = `🛒 Carrinho (${cart.length}) - Finalizar`;
+          
+          // Feedback visual simples
+          button.innerText = 'Adicionado!';
+          button.style.background = '#4BB543';
+          setTimeout(() => {
+            button.innerText = 'Adicionar ao Carrinho';
+            button.style.background = '';
+          }, 1000);
+        });
+      });
+
+      checkoutBtn.addEventListener('click', async () => {
+        if (cart.length === 0) {
+          alert('Seu carrinho está vazio!');
+          return;
+        }
+
+        checkoutBtn.innerText = 'Processando...';
+        checkoutBtn.disabled = true;
+
+        try {
+          const response = await fetch('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cart })
+          });
+
+          const data = await response.json();
+          if (data.url) {
+            window.location.href = data.url;
+          } else {
+            throw new Error(data.error || 'Erro ao criar sessão de checkout');
+          }
+        } catch (error) {
+          console.error('Erro:', error);
+          alert('Erro ao finalizar compra. Tente novamente.');
+          checkoutBtn.innerText = `🛒 Carrinho (${cart.length}) - Finalizar`;
+          checkoutBtn.disabled = false;
+        }
+      });
     });
   </script>
 
