@@ -1,1 +1,471 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Loja | Fulltime Academia</title><style>body { margin: 0; background-color: var(--color-background, #003399); font-family: sans-serif; color: #fff; } .navbar { display: flex; justify-content: space-between; padding: 1.5rem 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); } .navbar a { color: #fff; text-decoration: none; font-weight: bold; } .hero { text-align: center; padding: 4rem 1rem 2rem; display: flex; flex-direction: column; align-items: center; } .hero h1 { margin-bottom: 0.5rem; font-size: 2.5rem; } .grid { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; padding: 2rem; max-width: 1200px; margin: 0 auto; } .glass-card { background: rgba(45, 45, 45, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; width: 280px; text-align: center; } .img-placeholder { height: 200px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #888; } .btn { background: #fff; color: #000; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: bold; display: inline-block; margin-top: 1rem; cursor: pointer; border: none; width: 100%; transition: background 0.3s; } .btn:hover { background: #ddd; }</style></head><body> <div class="navbar"><a href="index.html">KrM Corp</a><a href="index.html">← Voltar à Academia</a></div> <div class="hero"><h1>Potencialize Seus Resultados</h1><p>Suplementação premium para levar o seu treino ao próximo nível.</p></div> <div class="grid"> <div class="glass-card"><div class="img-placeholder">Foto Whey</div><h3>Whey Protein Isolado 900g</h3><p>R$ 159,90</p><button class="btn">Adicionar ao Carrinho</button></div> <div class="glass-card"><div class="img-placeholder">Foto Creatina</div><h3>Creatina Monohidratada 300g</h3><p>R$ 89,90</p><button class="btn">Adicionar ao Carrinho</button></div> <div class="glass-card"><div class="img-placeholder">Foto Pré-Treino</div><h3>Pré-Treino Explosive 200g</h3><p>R$ 119,90</p><button class="btn">Adicionar ao Carrinho</button></div> </div> </body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Loja | Fulltime Academia</title>
+  <meta name="description"
+    content="Transforme seu corpo na Fulltime Academia. Equipamentos premium, reconhecimento facial e unidades climatizadas em Montes Claros." />
+
+  <!-- Fonte Original -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: 'var(--color-background)',
+            foreground: 'var(--color-foreground)',
+            card: 'var(--color-card)',
+            border: 'var(--color-border)',
+            accent: 'var(--color-accent)',
+            'primary-cta': 'var(--color-primary-cta)',
+            'primary-cta-text': 'var(--color-primary-cta-text)',
+            'secondary-cta': 'var(--color-secondary-cta)',
+            'secondary-cta-text': 'var(--color-secondary-cta-text)',
+          },
+          width: {
+            'content-width': 'var(--width-content-width)',
+          },
+          borderRadius: {
+            'theme': 'var(--theme-border-radius)',
+            'theme-capped': 'var(--theme-border-radius-capped)',
+          },
+          padding: {
+            'hero-page-padding': '8rem',
+          },
+          spacing: {
+            '15': '3.75rem',
+            '90': '22.5rem',
+            '100': '25rem',
+            '4/10': '40%',
+            '6/10': '60%',
+            '3/10': '30%',
+            '7/10': '70%',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      /* Cores e variáveis exatas da plataforma */
+      --color-background: #003399;
+      --color-foreground: #fafafa;
+      --color-card: #383838;
+      --color-border: #484848;
+      --color-accent: #3b82f6;
+      --color-background-accent: #1f2937;
+      --color-primary-cta: #fafafa;
+      --color-primary-cta-text: #09090b;
+      --color-secondary-cta: #27272a;
+      --color-secondary-cta-text: #fafafa;
+
+      --radius-lg: 1rem;
+      --theme-border-radius: var(--radius-lg);
+      --theme-border-radius-capped: var(--radius-lg);
+      --width-content-width: clamp(40rem, 75vw, 100rem);
+      --width-content-width-expanded: clamp(calc(40rem - (40rem - 100vw) / 2), 87.5vw, calc(100rem + (100vw - 100rem) / 2));
+      --vw: clamp(0.5rem, 0.92vw, 1rem);
+
+      --text-base: clamp(0.875rem, 1.058vw, 1rem);
+      --width-10: 2.5rem;
+      --width-5: 1.25rem;
+      --width-17_5: 4.375rem;
+      --vw-0_75: 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --width-content-width: 85vw;
+        --width-content-width-expanded: 90vw;
+      }
+      #hero h2 {
+        font-size: 2.5rem !important;
+        line-height: 1.1;
+      }
+      h2 {
+        font-size: 1.75rem !important;
+      }
+      h3 {
+        font-size: 1.25rem !important;
+      }
+      .section-subtitle {
+        font-size: 1rem !important;
+      }
+    }
+
+    body {
+      font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--color-background);
+      color: var(--color-foreground);
+      overflow-x: hidden;
+      font-kerning: none;
+      text-rendering: optimizeSpeed;
+    }
+
+    h1, h2, h3, .section-subtitle, .blur-text {
+      text-align: center !important;
+    }
+
+    h2 {
+      font-size: 2.5rem !important;
+      line-height: 1.3 !important;
+      margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.75rem !important;
+      line-height: 1.3 !important;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem !important;
+      line-height: 1.6 !important;
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    /* Estilos UI da Plataforma c/ Glassmorphism */
+    .card, .glass-card {
+      position: relative;
+      background-color: rgba(45, 45, 45, 0.6) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.3);
+      border-radius: 16px;
+    }
+
+    .primary-button, .btn {
+      background-color: var(--color-primary-cta);
+      background: linear-gradient(to bottom, color-mix(in srgb, var(--color-primary-cta), transparent 25%), var(--color-primary-cta));
+      box-shadow: color-mix(in srgb, var(--color-background) 25%, transparent) 0px 1px 1px 0px inset, color-mix(in srgb, var(--color-primary-cta) 15%, transparent) 3px 3px 3px 0px;
+      color: var(--color-primary-cta-text);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .primary-button:hover, .btn:hover {
+      filter: brightness(0.9);
+    }
+
+    /* Animações nativas */
+    .blur-text {
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(15px);
+      transition: opacity 0.8s ease-out, filter 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .blur-text.in-view {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    #mobile-menu {
+      transition: all 0.3s ease;
+    }
+
+    .nav-scrolled {
+      background-color: rgba(0, 51, 153, 0.85) !important;
+      backdrop-filter: blur(12px) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <!-- Fundo animado (Canvas simulando Webild) -->
+  <div class="bg-background fixed inset-0 -z-10 w-full h-full" aria-hidden="true">
+    <div style="position:relative;width:100%;height:100%;overflow:hidden;pointer-events:auto">
+      <div style="width:100%;height:100%">
+        <canvas id="bg-canvas" style="display:block"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navegação -->
+  <div id="nav" data-section="nav">
+    <nav
+      class="fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/0 backdrop-blur-0 h-20">
+      <div class="relative flex items-center justify-between h-full w-content-width mx-auto">
+        <div class="flex items-center transition-all duration-500 ease-in-out">
+          <a href="index.html" class="cursor-pointer">
+            <img src="/logo.png" alt="Fulltime Academia" class="h-12 md:h-16 w-auto object-contain transition-transform hover:scale-105" />
+          </a>
+        </div>
+        <div class="hidden md:flex items-center gap-6 transition-all duration-500 ease-in-out" role="navigation">
+          <a href="index.html"
+            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Voltar</a>
+          <a href="index.html#hero"
+            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Início</a>
+          <a href="index.html#about"
+            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Sobre</a>
+          <a href="index.html#unidades"
+            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Unidades</a>
+          <a href="suplementos.html"
+            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base font-bold text-foreground">Loja</a>
+        </div>
+        <button id="menu-toggle"
+          class="flex md:hidden shrink-0 h-8 aspect-square rounded-theme bg-foreground items-center justify-center cursor-pointer"
+          aria-label="Toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+            class="lucide lucide-plus w-1/2 h-1/2 text-background transition-transform duration-300 rotate-0">
+            <path d="M5 12h14"></path>
+            <path d="M12 5v14"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Menu Mobile -->
+      <div id="mobile-menu"
+        class="md:hidden z-10 fixed top-3 left-3 right-3 h-fit rounded-theme-capped card p-6 flex flex-col gap-6 opacity-0 pointer-events-none translate-y-[-10px]"
+        style="width:calc(100vw - var(--vw-0_75) * 2)">
+        <div class="w-full flex justify-between items-center">
+          <p class="text-xl text-foreground">Menu</p>
+          <button id="menu-close"
+            class="shrink-0 h-8 aspect-square rounded-theme bg-foreground flex items-center justify-center cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-plus w-1/2 h-1/2 text-background rotate-45">
+              <path d="M5 12h14"></path>
+              <path d="M12 5v14"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="flex flex-col gap-4">
+          <a href="index.html" class="w-full h-fit flex justify-between items-center cursor-pointer">
+            <p class="text-base font-medium">Voltar</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+          <div class="w-full h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent"></div>
+          <a href="suplementos.html" class="w-full h-fit flex justify-between items-center cursor-pointer">
+            <p class="text-base font-medium">Loja</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Hero -->
+  <div id="hero" data-section="hero">
+    <section class="relative w-full h-fit flex items-center justify-center py-hero-page-padding">
+      <div class="w-full flex flex-col gap-14 relative z-10">
+        <div class="w-content-width mx-auto">
+          <div class="items-center text-center flex flex-col gap-3">
+            <h2 class="blur-text text-center text-6xl font-medium text-balance">Potencialize Seus Resultados</h2>
+            <p class="blur-text text-center text-base md:text-lg leading-tight">Suplementação premium para levar o seu treino ao próximo nível.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Grid de Produtos -->
+  <div id="store-grid" class="relative py-20 w-full">
+    <div class="w-content-width mx-auto">
+      <div class="grid flex flex-wrap gap-8 justify-center">
+        <!-- Card 1 -->
+        <div class="glass-card card flex flex-col items-center p-6 w-[280px] text-center blur-text">
+          <div class="img-placeholder bg-white/5 rounded-lg h-[200px] w-full mb-4 flex items-center justify-center text-white/40 text-sm">Foto Whey</div>
+          <h3 class="text-xl font-medium mb-2">Whey Protein Isolado 900g</h3>
+          <p class="text-lg mb-4 text-white/80">R$ 159,90</p>
+          <button class="primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+        </div>
+        <!-- Card 2 -->
+        <div class="glass-card card flex flex-col items-center p-6 w-[280px] text-center blur-text">
+          <div class="img-placeholder bg-white/5 rounded-lg h-[200px] w-full mb-4 flex items-center justify-center text-white/40 text-sm">Foto Creatina</div>
+          <h3 class="text-xl font-medium mb-2">Creatina Monohidratada 300g</h3>
+          <p class="text-lg mb-4 text-white/80">R$ 89,90</p>
+          <button class="primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+        </div>
+        <!-- Card 3 -->
+        <div class="glass-card card flex flex-col items-center p-6 w-[280px] text-center blur-text">
+          <div class="img-placeholder bg-white/5 rounded-lg h-[200px] w-full mb-4 flex items-center justify-center text-white/40 text-sm">Foto Pré-Treino</div>
+          <h3 class="text-xl font-medium mb-2">Pré-Treino Explosive 300g</h3>
+          <p class="text-lg mb-4 text-white/80">R$ 129,90</p>
+          <button class="primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+        </div>
+        <!-- Card 4 -->
+        <div class="glass-card card flex flex-col items-center p-6 w-[280px] text-center blur-text">
+          <div class="img-placeholder bg-white/5 rounded-lg h-[200px] w-full mb-4 flex items-center justify-center text-white/40 text-sm">Foto BCAA</div>
+          <h3 class="text-xl font-medium mb-2">BCAA 2:1:1 120 Cápsulas</h3>
+          <p class="text-lg mb-4 text-white/80">R$ 69,90</p>
+          <button class="primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div id="footer" data-section="footer">
+    <footer role="contentinfo" aria-label="Site footer"
+      class="relative overflow-hidden w-full bg-[#003399] text-white py-10 mt-20">
+      <div class="relative w-content-width mx-auto z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="flex items-center transition-all duration-500 ease-in-out">
+          <a href="index.html" class="cursor-pointer">
+            <img src="/logo.png" alt="Fulltime Academia" class="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" />
+          </a>
+        </div>
+        <div class="flex items-center">
+          <span class="text-white/50 text-sm">© 2026 | KrM Corp</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Script Integrado -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Navbar no Scroll
+      const nav = document.querySelector('nav');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          nav.classList.add('nav-scrolled');
+        } else {
+          nav.classList.remove('nav-scrolled');
+        }
+      });
+
+      // 2. Mobile Menu Toggle
+      const menuToggle = document.getElementById('menu-toggle');
+      const menuClose = document.getElementById('menu-close');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      function toggleMenu() {
+        const isOpen = mobileMenu.classList.contains('opacity-100');
+        if (!isOpen) {
+          mobileMenu.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+          mobileMenu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        } else {
+          mobileMenu.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+          mobileMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+        }
+      }
+
+      menuToggle?.addEventListener('click', toggleMenu);
+      menuClose?.addEventListener('click', toggleMenu);
+
+      // 3. Animação de entrada
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.blur-text').forEach(el => observer.observe(el));
+
+      // 4. Canvas de Fundo
+      const canvas = document.getElementById('bg-canvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let time = 0;
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+        function animate() {
+          time += 0.005;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          const cx = canvas.width / 2 + Math.sin(time) * (canvas.width * 0.1);
+          const cy = canvas.height / 2 + Math.cos(time * 0.8) * (canvas.height * 0.1);
+          const radius = Math.max(canvas.width, canvas.height) * 0.6;
+          const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
+          gradient.addColorStop(0, 'rgba(59, 130, 246, 0.04)');
+          gradient.addColorStop(1, 'rgba(0, 51, 153, 0)');
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          requestAnimationFrame(animate);
+        }
+        animate();
+      }
+    });
+  </script>
+
+  <!-- Beams Background -->
+  <style>#beams-bg-container{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;overflow:hidden;background-color:var(--color-background,#003399)}#beams-canvas{position:absolute;inset:0;filter:blur(15px);opacity:0.8}body,main,.bg-background{background:transparent !important}</style>
+  <div id="beams-bg-container"><canvas id="beams-canvas"></canvas></div>
+  <script>
+    (function(){
+      const canvas=document.getElementById('beams-canvas');
+      const ctx=canvas.getContext('2d');
+      let beams=[];
+      let lastWidth=window.innerWidth;
+      function createBeam(width,height,isInitial=false){
+        return{x:Math.random()*width*1.5-width*0.25,y:isInitial?Math.random()*height*2-height:height+200+Math.random()*200,width:40+Math.random()*80,length:height*3.5,angle:-35+Math.random()*10,speed:0.8+Math.random()*1.5,opacity:0.4+Math.random()*0.4,pulse:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.03};
+      }
+      function updateSize(){
+        const width=window.innerWidth;
+        const height=window.innerHeight;
+        const dpr=window.devicePixelRatio||1;
+        canvas.width=width*dpr;
+        canvas.height=height*dpr;
+        canvas.style.width=width+'px';
+        canvas.style.height=height+'px';
+        ctx.scale(dpr,dpr);
+        beams=Array.from({length:45},()=>createBeam(width,height,true));
+      }
+      function draw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        beams.forEach(beam=>{
+          beam.y-=beam.speed;
+          beam.pulse+=beam.pulseSpeed;
+          if(beam.y+beam.length<0) {
+            beam.y=window.innerHeight+200;
+            beam.x=Math.random()*window.innerWidth*1.5-window.innerWidth*0.25;
+          }
+          ctx.save();
+          ctx.translate(beam.x,beam.y);
+          ctx.rotate((beam.angle*Math.PI)/180);
+          const pOpacity=Math.max(0,Math.min(1,beam.opacity*(0.8+Math.sin(beam.pulse)*0.2)));
+          const grad=ctx.createLinearGradient(0,0,0,beam.length);
+          grad.addColorStop(0,'rgba(0,0,0,0)');
+          grad.addColorStop(0.5,`rgba(0,0,0,${pOpacity})`);
+          grad.addColorStop(1,'rgba(0,0,0,0)');
+          ctx.fillStyle=grad;
+          ctx.fillRect(-beam.width/2,0,beam.width,beam.length);
+          ctx.restore();
+        });
+        requestAnimationFrame(draw);
+      }
+      window.addEventListener('resize',updateSize);
+      updateSize();
+      draw();
+    })();
+  </script>
+</body>
+
+</html>
