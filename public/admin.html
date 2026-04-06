@@ -139,24 +139,6 @@
       letter-spacing: 2px;
     }
 
-    .btn-sair {
-      padding: 0.5rem 1.5rem;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: var(--theme-border-radius);
-      color: var(--color-foreground);
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 0.875rem;
-    }
-
-    .btn-sair:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px);
-    }
-
     /* Container Principal */
     .container {
       max-width: 1000px;
@@ -337,6 +319,8 @@
       max-width: 500px;
       box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
       color: #fff;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     .modal h2 {
@@ -358,7 +342,7 @@
       font-family: 'Inter Tight', sans-serif;
     }
 
-    .form-group input {
+    .form-group input, .form-group select, .form-group textarea {
       width: 100%;
       padding: 0.75rem 1rem;
       background: rgba(0, 0, 0, 0.2);
@@ -370,13 +354,9 @@
       transition: border-color 0.3s ease;
     }
 
-    .form-group input:focus {
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
       outline: none;
       border-color: var(--color-accent);
-    }
-
-    .form-group input::placeholder {
-      color: rgba(255, 255, 255, 0.2);
     }
 
     /* Upload Zone */
@@ -404,11 +384,6 @@
       color: rgba(255, 255, 255, 0.7);
     }
 
-    .upload-content p {
-      margin: 0;
-      font-size: 0.875rem;
-    }
-
     .modal-actions {
       display: flex;
       gap: 1rem;
@@ -428,10 +403,6 @@
       font-size: 0.875rem;
     }
 
-    .btn-cancelar:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
     .btn-salvar {
       flex: 1;
       padding: 0.75rem;
@@ -444,11 +415,6 @@
       transition: all 0.3s ease;
       font-family: 'Inter Tight', sans-serif;
       font-size: 0.875rem;
-    }
-
-    .btn-salvar:hover {
-      filter: brightness(1.1);
-      transform: translateY(-1px);
     }
 
     /* Responsividade */
@@ -492,54 +458,6 @@
           <a href="#" id="logoutBtn"
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground opacity-70 hover:opacity-100">Sair</a>
         </div>
-        <button id="menu-toggle"
-          class="flex md:hidden shrink-0 h-8 aspect-square rounded-theme bg-foreground items-center justify-center cursor-pointer"
-          aria-label="Toggle menu">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-plus w-1/2 h-1/2 text-background transition-transform duration-300 rotate-0">
-            <path d="M5 12h14"></path>
-            <path d="M12 5v14"></path>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Menu Mobile -->
-      <div id="mobile-menu"
-        class="md:hidden z-10 fixed top-3 left-3 right-3 h-fit rounded-theme-capped card p-6 flex flex-col gap-6 opacity-0 pointer-events-none translate-y-[-10px]"
-        style="width:calc(100vw - var(--vw-0_75) * 2)">
-        <div class="w-full flex justify-between items-center">
-          <p class="text-xl text-foreground">Menu</p>
-          <button id="menu-close"
-            class="shrink-0 h-8 aspect-square rounded-theme bg-foreground flex items-center justify-center cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-plus w-1/2 h-1/2 text-background rotate-45">
-              <path d="M5 12h14"></path>
-              <path d="M12 5v14"></path>
-            </svg>
-          </button>
-        </div>
-        <div class="flex flex-col gap-4">
-          <a href="suplementos.html" class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Ver Loja</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </a>
-          <a href="index.html" class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Sair</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </a>
-        </div>
       </div>
     </nav>
   </div>
@@ -551,6 +469,12 @@
       <button class="btn-adicionar" onclick="abrirModalNovo()">➕ Adicionar Produto</button>
     </div>
 
+    <!-- Barra de Ferramentas -->
+    <div style="display:flex; gap:10px; margin-bottom:1.5rem; width:100%;">
+      <input type="text" id="searchAdmin" placeholder="Buscar produto pelo nome..." style="flex:1; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#fff; font-size:1rem;">
+      <button id="btnNovaCat" style="padding:12px 20px; background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); border-radius:8px; cursor:pointer; font-weight:bold; transition:0.3s;">+ Nova Categoria</button>
+    </div>
+
     <!-- Área de Produtos -->
     <div class="products-area">
       <table>
@@ -558,6 +482,7 @@
           <tr>
             <th class="col-foto">Foto</th>
             <th class="col-nome">Nome</th>
+            <th>Categoria</th>
             <th class="col-preco">Preço</th>
             <th class="col-acoes">Ações</th>
           </tr>
@@ -578,6 +503,14 @@
         <div class="form-group">
           <label for="product-name">Nome</label>
           <input type="text" id="product-name" placeholder="Nome do produto" required>
+        </div>
+        <div class="form-group">
+          <label for="produtoCategoria">Categoria</label>
+          <select id="produtoCategoria" required></select>
+        </div>
+        <div class="form-group">
+          <label for="produtoDescricao">Descrição</label>
+          <textarea id="produtoDescricao" placeholder="Descrição completa do produto" required></textarea>
         </div>
         <div class="form-group">
           <label for="product-price">Preço</label>
@@ -618,13 +551,63 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => { if (sessionStorage.getItem("krm_admin_auth") === "true") { document.getElementById("loginOverlay").style.display = "none"; } });
+    document.addEventListener("DOMContentLoaded", () => { 
+      if (sessionStorage.getItem("krm_admin_auth") === "true") { 
+        document.getElementById("loginOverlay").style.display = "none"; 
+      } 
+      loadCategorias();
+    });
 
-    document.getElementById("loginBtn").addEventListener("click", () => { const u = document.getElementById("adminUser").value; const p = document.getElementById("adminPass").value; if(u === "AdminFulltime" && p === "AdminFulltime") { sessionStorage.setItem("krm_admin_auth", "true"); document.getElementById("loginOverlay").style.display = "none"; } else { document.getElementById("loginError").style.display = "block"; } });
+    document.getElementById("loginBtn").addEventListener("click", () => { 
+      const u = document.getElementById("adminUser").value; 
+      const p = document.getElementById("adminPass").value; 
+      if(u === "AdminFulltime" && p === "AdminFulltime") { 
+        sessionStorage.setItem("krm_admin_auth", "true"); 
+        document.getElementById("loginOverlay").style.display = "none"; 
+      } else { 
+        document.getElementById("loginError").style.display = "block"; 
+      } 
+    });
 
-    const logoutBtn = document.getElementById("logoutBtn"); if(logoutBtn) { logoutBtn.addEventListener("click", function(e) { e.preventDefault(); sessionStorage.removeItem("krm_admin_auth"); window.location.reload(); }); }
+    const logoutBtn = document.getElementById("logoutBtn"); 
+    if(logoutBtn) { 
+      logoutBtn.addEventListener("click", function(e) { 
+        e.preventDefault(); 
+        sessionStorage.removeItem("krm_admin_auth"); 
+        window.location.reload(); 
+      }); 
+    }
 
     let produtos = [];
+    let categorias = [];
+
+    async function loadCategorias() {
+      try {
+        const res = await fetch('/api/categorias');
+        categorias = await res.json();
+        const select = document.getElementById('produtoCategoria');
+        select.innerHTML = categorias.map(c => `<option value="${c}">${c}</option>`).join('');
+      } catch (error) {
+        console.error('Erro ao carregar categorias:', error);
+      }
+    }
+
+    document.getElementById('btnNovaCat').addEventListener('click', async () => {
+      const nova = prompt("Digite o nome da nova categoria:");
+      if (nova && !categorias.includes(nova)) {
+        categorias.push(nova);
+        try {
+          await fetch('/api/categorias', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ categorias })
+          });
+          loadCategorias();
+        } catch (error) {
+          console.error('Erro ao salvar nova categoria:', error);
+        }
+      }
+    });
 
     // Carregar produtos do banco
     async function carregarProdutos() {
@@ -642,25 +625,31 @@
     // Salvar produtos no banco
     async function salvarProdutosNoBanco() {
       try {
-        const response = await fetch('/api/produtos', {
+        await fetch('/api/produtos', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ produtos })
         });
-        const text = await response.text();
-        if (!response.ok) throw new Error("Falha ao salvar no banco: " + text);
       } catch (error) {
         console.error('Erro ao salvar produtos:', error);
       }
     }
 
     // Renderizar produtos
-    function renderizarProdutos() {
+    function renderizarProdutos(filtro = "") {
       const list = document.getElementById('products-list');
-      list.innerHTML = produtos.map(p => `
+      let filtrados = produtos;
+      if (filtro) {
+        filtrados = produtos.filter(p => p.nome.toLowerCase().includes(filtro.toLowerCase()));
+      }
+
+      filtrados.sort((a,b) => (a.categoria || "").localeCompare(b.categoria || ""));
+
+      list.innerHTML = filtrados.map(p => `
         <tr>
           <td><img src="${p.imagem}" alt="${p.nome}" class="img-thumb"></td>
           <td class="product-name">${p.nome}</td>
+          <td style="color:#aaa; font-size:0.9rem;">${p.categoria || 'Sem Categoria'}</td>
           <td class="product-price">${p.preco}</td>
           <td class="col-acoes">
             <div class="actions">
@@ -672,11 +661,17 @@
       `).join('');
     }
 
+    document.getElementById('searchAdmin').addEventListener('input', (e) => {
+      renderizarProdutos(e.target.value);
+    });
+
     // Abrir modal para novo produto
     function abrirModalNovo() {
       document.getElementById('modal-title').textContent = 'Novo Produto';
       document.getElementById('product-id').value = '';
       document.getElementById('product-name').value = '';
+      document.getElementById('produtoCategoria').value = categorias[0] || '';
+      document.getElementById('produtoDescricao').value = '';
       document.getElementById('product-price').value = '';
       document.getElementById('product-image').value = '';
       imageInput.value = '';
@@ -693,9 +688,10 @@
         document.getElementById('modal-title').textContent = 'Editar Produto';
         document.getElementById('product-id').value = produto.id;
         document.getElementById('product-name').value = produto.nome;
+        document.getElementById('produtoCategoria').value = produto.categoria || '';
+        document.getElementById('produtoDescricao').value = produto.descricao || '';
         document.getElementById('product-price').value = produto.preco;
         document.getElementById('product-image').value = produto.imagem;
-        // Mostrar preview da imagem existente
         imagePreview.src = produto.imagem;
         imagePreview.style.display = 'block';
         uploadContent.style.display = 'none';
@@ -721,7 +717,6 @@
       }
     }
 
-    // Converter arquivo para Base64
     function fileToBase64(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -731,29 +726,16 @@
       });
     }
 
-    // Upload para Cloudinary
     async function uploadImagemCloudinary(base64Image) {
-      if (!base64Image) {
-        console.error('String Base64 vazia');
-        return null;
-      }
-
-      console.log("Iniciando upload...");
-      
+      if (!base64Image) return null;
       try {
         const response = await fetch('/api/upload', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ imageStr: base64Image })
         });
-
         const text = await response.text();
-        if (!response.ok) {
-          throw new Error("Servidor recusou upload: " + text);
-        }
-
+        if (!response.ok) throw new Error("Servidor recusou upload: " + text);
         const data = JSON.parse(text);
         return data.secure_url;
       } catch (error) {
@@ -762,10 +744,9 @@
       }
     }
 
-    // Salvar produto (novo ou edição) com upload Cloudinary
+    // Salvar produto
     document.getElementById('product-form').addEventListener('submit', async function(e) {
       e.preventDefault();
-
       const btnSalvar = this.querySelector('.btn-salvar');
       const textoOriginal = btnSalvar.textContent;
       btnSalvar.textContent = 'Salvando...';
@@ -774,34 +755,29 @@
       try {
         const id = document.getElementById('product-id').value;
         const nome = document.getElementById('product-name').value;
+        const categoria = document.getElementById('produtoCategoria').value;
+        const descricao = document.getElementById('produtoDescricao').value;
         const preco = document.getElementById('product-price').value;
-
         let imagem = document.getElementById('product-image').value;
 
-        // Se houver novo arquivo selecionado, fazer upload para Cloudinary
         if (imageInput.files && imageInput.files[0]) {
           try {
             const base64Image = await fileToBase64(imageInput.files[0]);
             const uploadedUrl = await uploadImagemCloudinary(base64Image);
-
-            if (uploadedUrl) {
-              imagem = uploadedUrl;
-            }
-          } catch (uploadErr) {
-            console.error("Erro no processo de upload, mas continuaremos com o salvamento:", uploadErr);
-          }
+            if (uploadedUrl) imagem = uploadedUrl;
+          } catch (err) { console.error(err); }
         }
 
+        const produtoData = { 
+          id: id ? Number(id) : (produtos.length > 0 ? Math.max(...produtos.map(p => p.id)) + 1 : 1),
+          nome, categoria, descricao, preco, imagem 
+        };
+
         if (id) {
-          // Editar existente
           const index = produtos.findIndex(p => p.id == id);
-          if (index !== -1) {
-            produtos[index] = { id: Number(id), nome, preco, imagem };
-          }
+          if (index !== -1) produtos[index] = produtoData;
         } else {
-          // Novo produto
-          const novoId = produtos.length > 0 ? Math.max(...produtos.map(p => p.id)) + 1 : 1;
-          produtos.push({ id: novoId, nome, preco, imagem });
+          produtos.push(produtoData);
         }
 
         renderizarProdutos();
@@ -815,23 +791,17 @@
       }
     });
 
-    // Fechar modal ao clicar fora
     document.getElementById('modal-overlay').addEventListener('click', function(e) {
-      if (e.target === this) {
-        fecharModal();
-      }
+      if (e.target === this) fecharModal();
     });
 
-    // Upload de Imagem
     const uploadZone = document.getElementById('uploadZone');
     const imageInput = document.getElementById('imageInput');
     const imagePreview = document.getElementById('imagePreview');
     const uploadContent = document.getElementById('uploadContent');
     const productImageInput = document.getElementById('product-image');
 
-    uploadZone.addEventListener('click', function() {
-      imageInput.click();
-    });
+    uploadZone.addEventListener('click', () => imageInput.click());
 
     imageInput.addEventListener('change', function(e) {
       const file = e.target.files[0];
@@ -841,32 +811,21 @@
           const img = new Image();
           img.onload = function() {
             const canvas = document.createElement('canvas');
-            let width = img.width;
-            let height = img.height;
+            let { width, height } = img;
             const maxSize = 800;
-
             if (width > height) {
-              if (width > maxSize) {
-                height *= maxSize / width;
-                width = maxSize;
-              }
+              if (width > maxSize) { height *= maxSize / width; width = maxSize; }
             } else {
-              if (height > maxSize) {
-                width *= maxSize / height;
-                height = maxSize;
-              }
+              if (height > maxSize) { width *= maxSize / height; height = maxSize; }
             }
-
-            canvas.width = width;
-            canvas.height = height;
+            canvas.width = width; canvas.height = height;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, width, height);
-
-            const compressedBase64 = canvas.toDataURL("image/jpeg", 0.8);
-            imagePreview.src = compressedBase64;
+            const compressed = canvas.toDataURL("image/jpeg", 0.8);
+            imagePreview.src = compressed;
             imagePreview.style.display = 'block';
             uploadContent.style.display = 'none';
-            productImageInput.value = compressedBase64;
+            productImageInput.value = compressed;
           };
           img.src = event.target.result;
         };
@@ -874,16 +833,12 @@
       }
     });
 
-    // --- ANIMAÇÕES DE FUNDO (Canvas + Beams) ---
-    // 1. Canvas Simulação Webild
+    // Canvas Background
     const canvas = document.getElementById('bg-canvas');
     if (canvas) {
       const ctx = canvas.getContext('2d');
       let time = 0;
-      function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
+      function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
       window.addEventListener('resize', resize);
       resize();
       function animate() {
@@ -902,55 +857,39 @@
       animate();
     }
 
-    // 2. Beams Animation
+    // Beams Animation
     (function(){
       const canvas=document.getElementById('beams-canvas');
       const ctx=canvas.getContext('2d');
       let beams=[];
-      let lastWidth=window.innerWidth;
       function createBeam(width,height,isInitial=false){
         return{x:Math.random()*width*1.5-width*0.25,y:isInitial?Math.random()*height*2-height:height+200+Math.random()*200,width:40+Math.random()*80,length:height*3.5,angle:-35+Math.random()*10,speed:0.8+Math.random()*1.5,opacity:0.4+Math.random()*0.4,pulse:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.03};
       }
       function updateSize(){
-        const width=window.innerWidth;
-        const height=window.innerHeight;
+        const width=window.innerWidth; const height=window.innerHeight;
         const dpr=window.devicePixelRatio||1;
-        canvas.width=width*dpr;
-        canvas.height=height*dpr;
-        canvas.style.width=width+'px';
-        canvas.style.height=height+'px';
+        canvas.width=width*dpr; canvas.height=height*dpr;
+        canvas.style.width=width+'px'; canvas.style.height=height+'px';
         ctx.scale(dpr,dpr);
         beams=Array.from({length:45},()=>createBeam(width,height,true));
       }
       function draw(){
         ctx.clearRect(0,0,canvas.width,canvas.height);
         beams.forEach(beam=>{
-          beam.y-=beam.speed;
-          beam.pulse+=beam.pulseSpeed;
-          if(beam.y+beam.length<0) {
-            beam.y=window.innerHeight+200;
-            beam.x=Math.random()*window.innerWidth*1.5-window.innerWidth*0.25;
-          }
-          ctx.save();
-          ctx.translate(beam.x,beam.y);
-          ctx.rotate((beam.angle*Math.PI)/180);
+          beam.y-=beam.speed; beam.pulse+=beam.pulseSpeed;
+          if(beam.y+beam.length<0) { beam.y=window.innerHeight+200; beam.x=Math.random()*window.innerWidth*1.5-window.innerWidth*0.25; }
+          ctx.save(); ctx.translate(beam.x,beam.y); ctx.rotate((beam.angle*Math.PI)/180);
           const pOpacity=Math.max(0,Math.min(1,beam.opacity*(0.8+Math.sin(beam.pulse)*0.2)));
           const grad=ctx.createLinearGradient(0,0,0,beam.length);
-          grad.addColorStop(0,'rgba(0,0,0,0)');
-          grad.addColorStop(0.5,`rgba(0,0,0,${pOpacity})`);
-          grad.addColorStop(1,'rgba(0,0,0,0)');
-          ctx.fillStyle=grad;
-          ctx.fillRect(-beam.width/2,0,beam.width,beam.length);
-          ctx.restore();
+          grad.addColorStop(0,'rgba(0,0,0,0)'); grad.addColorStop(0.5,`rgba(0,0,0,${pOpacity})`); grad.addColorStop(1,'rgba(0,0,0,0)');
+          ctx.fillStyle=grad; ctx.fillRect(-beam.width/2,0,beam.width,beam.length); ctx.restore();
         });
         requestAnimationFrame(draw);
       }
       window.addEventListener('resize',updateSize);
-      updateSize();
-      draw();
+      updateSize(); draw();
     })();
 
-    // Inicializar renderização
     carregarProdutos();
   </script>
 </body>
