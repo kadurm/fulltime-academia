@@ -293,8 +293,8 @@
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Sobre</button>
           <button type="button" onclick="document.getElementById('unidades').scrollIntoView()"
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Unidades</button>
-          <button type="button" onclick="document.getElementById('testimonials').scrollIntoView()"
-            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Avaliações</button>
+          <button type="button" onclick="document.getElementById('contato').scrollIntoView()"
+            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Fale Conosco</button>
           <a href="suplementos.html"
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Loja</a>
         </div>
@@ -364,9 +364,9 @@
           </button>
           <div class="w-full h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent"></div>
           <button
-            onclick="document.getElementById('testimonials').scrollIntoView(); document.getElementById('menu-close').click();"
+            onclick="document.getElementById('contato').scrollIntoView(); document.getElementById('menu-close').click();"
             class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Avaliações</p>
+            <p class="text-base font-medium">Fale Conosco</p>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
@@ -401,15 +401,14 @@
               aria-label="Equipamentos de última geração, ambiente 100% climatizado, aulas coletivas e acompanhamento profissional. Encontre a unidade Fulltime mais próxima de você">
               Equipamentos de última geração, ambiente 100% climatizado, aulas coletivas e acompanhamento profissional.<br><br>Encontre a unidade Fulltime mais próxima de você.</p>
             <div class="w-full justify-center flex flex-wrap gap-4 max-md:justify-center mt-2">
-              <button type="button" onclick="document.getElementById('contact').scrollIntoView()"
+              <button type="button" onclick="document.getElementById('unidades').scrollIntoView()"
                 class="relative cursor-pointer h-9 min-w-0 w-fit max-w-full px-6 primary-button rounded-theme primary-button text-primary-cta-text">
                 <span class="text-sm block overflow-hidden truncate whitespace-nowrap text-primary-cta-text">Encontrar
                   Unidade</span>
               </button>
-              <button type="button" onclick="document.getElementById('testimonials').scrollIntoView()"
+              <button type="button" onclick="document.getElementById('contato').scrollIntoView()"
                 class="relative cursor-pointer h-9 min-w-0 w-fit max-w-full px-6 secondary-button rounded-theme text-secondary-cta-text">
-                <span class="text-sm block overflow-hidden truncate whitespace-nowrap text-secondary-cta-text">Ver
-                  Avaliações</span>
+                <span class="text-sm block overflow-hidden truncate whitespace-nowrap text-secondary-cta-text">Fale Conosco</span>
               </button>
             </div>
           </div>
@@ -738,72 +737,7 @@
     </div>
   </div>
 
-  <!-- Testemunhos -->
-  <div id="testimonials" data-section="testimonials">
-    <section aria-label="Testimonial section" class="relative py-20 w-full bg-foreground">
-      <div class="w-full flex flex-col items-center gap-10">
-        <h2 class="blur-text text-background" aria-label="Avaliações">Avaliações</h2>
-        
-        <div class="marquee-container">
-          <div class="marquee-track">
-            <!-- Sequência 1 (5 Cards Originais) -->
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"A melhor academia que já frequentei em Montes Claros! Infraestrutura impecável e atendimento nota 10."</p>
-              <span class="review-author">Mariana Silva</span>
-            </div>
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Equipamentos de última geração e ambiente muito agradável. Recomendo a todos!"</p>
-              <span class="review-author">João Santos</span>
-            </div>
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"O reconhecimento facial facilita demais a entrada. Academia muito moderna e organizada."</p>
-              <span class="review-author">Lucas Souza</span>
-            </div>
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Sistema de reconhecimento facial é muito prático e rápido. A academia é realmente tecnológica."</p>
-              <span class="review-author">Ana Clara</span>
-            </div>
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"O plano Elite vale cada centavo. Aulas coletivas super animadas e profissionais excelentes."</p>
-              <span class="review-author">Pedro Henrique</span>
-            </div>
-            
-            <!-- Sequência 2 (Clones para Loop) -->
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"A melhor academia que já frequentei em Montes Claros! Infraestrutura impecável e atendimento nota 10."</p>
-              <span class="review-author">Mariana Silva</span>
-            </div>
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Equipamentos de última geração e ambiente muito agradável. Recomendo a todos!"</p>
-              <span class="review-author">João Santos</span>
-            </div>
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"O reconhecimento facial facilita demais a entrada. Academia muito moderna e organizada."</p>
-              <span class="review-author">Lucas Souza</span>
-            </div>
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Sistema de reconhecimento facial é muito prático e rápido. A academia é realmente tecnológica."</p>
-              <span class="review-author">Ana Clara</span>
-            </div>
-            <div class="review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"O plano Elite vale cada centavo. Aulas coletivas super animadas e profissionais excelentes."</p>
-              <span class="review-author">Pedro Henrique</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+
 
   <!-- FAQ -->
   <div id="faq" data-section="faq">
@@ -890,7 +824,7 @@
   </div>
 
   <!-- Contato -->
-  <div id="contact" data-section="contact">
+  <div id="contato" data-section="contact">
     <section aria-label="Contact section" class="relative py-20 w-full bg-foreground">
       <div class="w-content-width mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:auto-rows-fr">
