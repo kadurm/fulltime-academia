@@ -388,6 +388,42 @@
       background: rgba(255, 255, 255, 0.2);
     }
   </style>
+  <style>
+    nav, .navbar { 
+      position: sticky !important; 
+      top: 0 !important; 
+      z-index: 9999 !important; 
+      background: rgba(4, 9, 20, 0.95) !important; 
+      backdrop-filter: blur(12px) !important; 
+      border-bottom: 1px solid rgba(255,255,255,0.1) !important; 
+    } 
+    .cart-drawer { z-index: 10000 !important; } 
+    .cart-header { align-items: flex-start !important; margin-bottom: 1rem !important; } 
+    .cart-header h2 { 
+      font-size: 1.5rem !important; 
+      line-height: 1.2 !important; 
+      width: 80% !important; 
+      white-space: normal !important; 
+      margin: 0 !important; 
+      padding-top: 5px !important; 
+    } 
+    #checkoutBtnModal { 
+      background: #FFD700 !important; 
+      color: #000 !important; 
+      font-weight: 800 !important; 
+      font-size: 1.1rem !important; 
+      padding: 14px !important; 
+      border-radius: 8px !important; 
+      margin-top: 15px !important; 
+      border: none !important; 
+      width: 100% !important; 
+      transition: transform 0.2s !important; 
+    } 
+    #checkoutBtnModal:hover { 
+      transform: scale(1.02) !important; 
+      background: #e6c200 !important; 
+    } 
+  </style>
 </head>
 
 <body class="antialiased">
@@ -693,7 +729,7 @@
             }
 
             renderCart();
-            openCart();
+            // openCart(); // REMOVIDO para adição silenciosa
             
             const originalText = button.innerText;
             button.innerText = 'Adicionado!';
