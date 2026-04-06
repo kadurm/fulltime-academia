@@ -895,23 +895,23 @@
       <div class="w-content-width mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:auto-rows-fr">
           <div class="bg-[#003399] text-white rounded-theme-capped p-8 md:p-12 flex items-center justify-center">
-            <form class="relative z-1 w-full flex flex-col gap-6" onsubmit="event.preventDefault();">
+            <form id="formConsultarPlanos" class="relative z-1 w-full flex flex-col gap-6">
               <div class="w-full flex flex-col gap-2 text-center">
                 <h2 class="blur-text text-white"
-                  aria-label="Fale Conosco">Fale Conosco</h2>
+                  aria-label="Consultar Planos">Consultar Planos</h2>
                 <p class="blur-text section-subtitle text-white/80"
-                  aria-label="Entre em contato via WhatsApp e tire suas dúvidas agora.">Entre em contato via WhatsApp e
-                  tire suas dúvidas agora.</p>
+                  aria-label="Entre em contato para saber mais">Entre em contato para saber mais</p>
               </div>
               <div class="w-full flex flex-col gap-4">
                 <div class="w-full">
-                  <input type="text" placeholder="Nome" aria-label="Nome"
+                  <input id="nomeConsulta" type="text" placeholder="Nome" aria-label="Nome"
                     class="w-full relative z-1 px-4 py-3 bg-white/10 border border-white/20 rounded-theme text-base text-white placeholder:text-white/60 focus:outline-none" />
                 </div>
                 <div class="w-full">
-                  <input type="email" placeholder="Email" aria-label="Email"
+                  <input id="emailConsulta" type="email" placeholder="Email" aria-label="Email"
                     class="w-full relative z-1 px-4 py-3 bg-white/10 border border-white/20 rounded-theme text-base text-white placeholder:text-white/60 focus:outline-none" />
                 </div>
+                <select id="unidadeConsulta" required style="width: 100%; padding: 12px; margin-bottom: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: #fff; font-size: 1rem; outline: none;"><option value="" disabled selected style="color:#000;">Unidade de Preferência</option><option value="Sede" style="color:#000;">Sede</option><option value="Unidade 2" style="color:#000;">Unidade 2</option><option value="Unidade 3" style="color:#000;">Unidade 3</option><option value="Unidade 4" style="color:#000;">Unidade 4</option></select>
                 <button type="submit" aria-label="Submit"
                   class="relative cursor-pointer h-10 mt-2 min-w-0 max-w-full px-6 bg-white rounded-theme text-[#003399] font-medium w-full">
                   <span
@@ -1090,6 +1090,7 @@
     });
   </script>
 <style>#beams-bg-container{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;overflow:hidden;background-color:var(--color-background,#003399)}#beams-canvas{position:absolute;inset:0;filter:blur(15px);opacity:0.8}body,main,.bg-background{background:transparent !important}</style><div id="beams-bg-container"><canvas id="beams-canvas"></canvas></div><script>(function(){const canvas=document.getElementById('beams-canvas');const ctx=canvas.getContext('2d');let beams=[];let lastWidth=window.innerWidth;function createBeam(width,height,isInitial=false){return{x:Math.random()*width*1.5-width*0.25,y:isInitial?Math.random()*height*2-height:height+200+Math.random()*200,width:40+Math.random()*80,length:height*3.5,angle:-35+Math.random()*10,speed:0.8+Math.random()*1.5,opacity:0.4+Math.random()*0.4,pulse:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.03};}function resetBeam(beam,width,height){beam.y=height+200+Math.random()*200;beam.x=Math.random()*width*1.5-width*0.25;return beam;}function updateSize(){const width=window.innerWidth;const height=window.innerHeight;if(Math.abs(width-lastWidth)<10&&beams.length>0)return;lastWidth=width;const dpr=window.devicePixelRatio||1;canvas.width=width*dpr;canvas.height=height*dpr;canvas.style.width=width+'px';canvas.style.height=height+'px';ctx.setTransform(1,0,0,1,0,0);ctx.scale(dpr,dpr);beams=Array.from({length:45},()=>createBeam(width,height,true));}function drawBeam(beam){ctx.save();ctx.translate(beam.x,beam.y);ctx.rotate((beam.angle*Math.PI)/180);const pOpacity=Math.max(0,Math.min(1,beam.opacity*(0.8+Math.sin(beam.pulse)*0.2)));const grad=ctx.createLinearGradient(0,0,0,beam.length);grad.addColorStop(0,'rgba(0,0,0,0)');grad.addColorStop(0.1,`rgba(0,0,0,${pOpacity*0.5})`);grad.addColorStop(0.4,`rgba(0,0,0,${pOpacity})`);grad.addColorStop(0.6,`rgba(0,0,0,${pOpacity})`);grad.addColorStop(0.9,`rgba(0,0,0,${pOpacity*0.5})`);grad.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=grad;ctx.fillRect(-beam.width/2,0,beam.width,beam.length);ctx.restore();}function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);const w=window.innerWidth;const h=window.innerHeight;beams.forEach((beam)=>{beam.y-=beam.speed;beam.pulse+=beam.pulseSpeed;if(beam.y+beam.length<-200){resetBeam(beam,w,h);}drawBeam(beam);});requestAnimationFrame(animate);}updateSize();window.addEventListener('resize',updateSize);animate();})();</script>
+  <script>const formConsulta = document.getElementById("formConsultarPlanos"); if(formConsulta) { formConsulta.addEventListener("submit", function(e) { e.preventDefault(); const nome = document.getElementById("nomeConsulta").value; const email = document.getElementById("emailConsulta").value; const unidade = document.getElementById("unidadeConsulta").value; const numeroZap = "5538999999999"; const textoBot = `Olá! Gostaria de consultar os planos. Meu nome é ${nome}, e-mail: ${email}. Tenho interesse na unidade: ${unidade}. Poderiam me passar mais opções e informações?`; window.open(`https://wa.me/${numeroZap}?text=${encodeURIComponent(textoBot)}`, "_blank"); }); }</script>
 </body>
 
 </html>

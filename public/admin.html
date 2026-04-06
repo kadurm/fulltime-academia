@@ -592,8 +592,12 @@
       }
     }
 
-    document.getElementById('btnNovaCat').addEventListener('click', async () => {
-      const nova = prompt("Digite o nome da nova categoria:");
+    document.getElementById('btnNovaCat').addEventListener('click', () => {
+      document.getElementById('modalCat').style.display = 'flex';
+    });
+
+    document.getElementById('salvarCatBtn').addEventListener('click', async () => {
+      const nova = document.getElementById('inputNovaCat').value.trim();
       if (nova && !categorias.includes(nova)) {
         categorias.push(nova);
         try {
@@ -602,6 +606,8 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ categorias })
           });
+          document.getElementById('inputNovaCat').value = '';
+          document.getElementById('modalCat').style.display = 'none';
           loadCategorias();
         } catch (error) {
           console.error('Erro ao salvar nova categoria:', error);
@@ -892,6 +898,17 @@
 
     carregarProdutos();
   </script>
+</body>
+
+</html>
+style="color:#fff; margin-bottom:1rem;">Criar Nova Categoria</h3>
+      <input type="text" id="inputNovaCat" placeholder="Ex: Vitaminas" style="width:100%; padding:12px; margin-bottom:1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.5); color:#fff;">
+      <div style="display:flex; gap:10px;">
+        <button onclick="document.getElementById('modalCat').style.display='none'" style="flex:1; padding:12px; background:#333; color:#fff; border:none; border-radius:8px; cursor:pointer; transition:0.3s;">Cancelar</button>
+        <button id="salvarCatBtn" style="flex:1; padding:12px; background:#FFD700; color:#000; font-weight:bold; border:none; border-radius:8px; cursor:pointer; transition:0.3s;">Salvar</button>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

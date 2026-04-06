@@ -131,7 +131,7 @@
     .section-subtitle {
       font-size: 1.125rem !important;
       line-height: 1.6 !important;
-      margin-bottom: 1rem !important; /* Espaço reduzido */
+      margin-bottom: 1rem !important;
       display: block;
     }
 
@@ -468,11 +468,9 @@
         </div>
         <div class="hidden md:flex items-center gap-6 transition-all duration-500 ease-in-out" role="navigation">
           <a href="index.html"
-            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Voltar</a>
-          <a href="index.html#hero"
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Início</a>
           <button id="checkout-btn" class="relative text-sm font-bold bg-white text-blue-900 px-4 py-2 rounded-lg cursor-pointer transition-transform hover:scale-105">
-            🛒 Carrinho (0)
+            Carrinho (0)
           </button>
         </div>
         <button id="menu-toggle"
@@ -505,7 +503,7 @@
         </div>
         <div class="flex flex-col gap-4">
           <a href="index.html" class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Voltar</p>
+            <p class="text-base font-medium">Início</p>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
               class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
@@ -679,7 +677,7 @@
         });
 
         cartTotalDisplay.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-        checkoutBtn.innerText = `🛒 Carrinho (${totalItems})`;
+        checkoutBtn.textContent = `Carrinho (${totalItems})`;
       };
 
       window.updateQty = (index, change) => {
