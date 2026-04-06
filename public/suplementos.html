@@ -131,7 +131,7 @@
     .section-subtitle {
       font-size: 1.125rem !important;
       line-height: 1.6 !important;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem !important; /* Espaço reduzido */
       display: block;
     }
 
@@ -193,7 +193,17 @@
       justify-content: center;
       gap: 1rem;
       margin: 2rem 0;
-      flex-wrap: wrap;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding-bottom: 10px;
+      max-width: 100%;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-behavior: smooth;
+    }
+
+    .categories::-webkit-scrollbar {
+      display: none;
     }
 
     .cat-btn {
@@ -205,6 +215,7 @@
       cursor: pointer;
       transition: all 0.3s;
       font-weight: bold;
+      white-space: nowrap;
     }
 
     .cat-btn.active, .cat-btn:hover {
@@ -513,12 +524,17 @@
       <div class="w-full flex flex-col gap-14 relative z-10">
         <div class="w-content-width mx-auto">
           <div class="items-center text-center flex flex-col gap-3">
-            <h2 class="blur-text text-center text-6xl font-medium text-balance">Potencialize Seus Resultados</h2>
+            <h2 class="blur-text text-center text-6xl font-medium text-balance" style="margin-bottom: 0.5rem;">Potencialize Seus Resultados</h2>
             <p class="blur-text text-center text-base md:text-lg leading-tight">Suplementação premium para levar o seu treino ao próximo nível.</p>
           </div>
         </div>
       </div>
     </section>
+  </div>
+
+  <!-- Busca -->
+  <div style="display:flex; justify-content:center; margin-bottom:1.5rem; padding: 0 1rem;">
+    <input type="text" id="searchInput" placeholder="Qual suplemento você procura?" style="width:100%; max-width:400px; padding:12px 20px; border-radius:25px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff; backdrop-filter:blur(10px); font-size:1rem; outline:none; transition: border-color 0.3s;">
   </div>
 
   <!-- Categorias -->
@@ -675,6 +691,9 @@
       };
 
       // --- LOGICA DE PRODUTOS DINÂMICOS ---
+      let currentFilter = 'todos';
+      let currentSearch = '';
+
       async function carregarProdutosLoja() {
         const grid = document.getElementById('produtos-grid');
         grid.innerHTML = '<p style="color: white; text-align: center; grid-column: 1 / -1;">Carregando suplementos...</p>';
@@ -688,7 +707,8 @@
             return;
           }
 
-          renderizarProdutosLoja(produtos);
+          window.allProdutos = produtos; // Armazena globalmente para filtros
+          filtrarProdutos();
         } catch (error) {
           console.error('Erro ao carregar produtos:', error);
           grid.innerHTML = '<p style="color: white; text-align: center; grid-column: 1 / -1;">Erro ao carregar produtos.</p>';
@@ -697,44 +717,57 @@
 
       function renderizarProdutosLoja(produtos) {
         const grid = document.getElementById('produtos-grid');
-        grid.innerHTML = produtos.map(p => `
-          <div class="glass-card card p-6 blur-text in-view" data-category="${(p.nome.toLowerCase().includes('whey') || p.nome.toLowerCase().includes('proteina')) ? 'proteina' : (p.nome.toLowerCase().includes('creatina') ? 'creatina' : (p.nome.toLowerCase().includes('pré') || p.nome.toLowerCase().includes('pre') ? 'pre' : 'todos'))}">
-            <div class="img-container">
-              <img src="${p.imagem}" alt="${p.nome}" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px;">
+        grid.innerHTML = produtos.map(p => {
+          const category = (p.nome.toLowerCase().includes('whey') || p.nome.toLowerCase().includes('proteina')) ? 'proteina' : (p.nome.toLowerCase().includes('creatina') ? 'creatina' : (p.nome.toLowerCase().includes('pré') || p.nome.toLowerCase().includes('pre') ? 'pre' : 'todos'));
+          
+          return `
+            <div class="glass-card card p-6 blur-text in-view" data-category="${category}">
+              <div class="img-container">
+                <img src="${p.imagem}" alt="${p.nome}" style="width: 100%; height: 180px; object-fit: cover; border-radius: 8px;">
+              </div>
+              <h3 class="product-name">${p.nome}</h3>
+              <p class="card-desc">Suplemento de alta qualidade para potencializar seus resultados.</p>
+              <p class="product-price">${p.preco}</p>
+              <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
             </div>
-            <h3 class="product-name">${p.nome}</h3>
-            <p class="card-desc">Suplemento de alta qualidade para potencializar seus resultados.</p>
-            <p class="product-price">${p.preco}</p>
-            <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-          </div>
-        `).join('');
+          `;
+        }).join('');
 
-        configurarFiltros();
         configurarBotoesCarrinho();
       }
 
-      function configurarFiltros() {
-        const catBtns = document.querySelectorAll('.cat-btn');
-        const productCards = document.querySelectorAll('.glass-card');
+      function filtrarProdutos() {
+        if (!window.allProdutos) return;
 
-        catBtns.forEach(btn => {
-          btn.onclick = () => {
-            catBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            const filter = btn.getAttribute('data-filter');
-
-            productCards.forEach(card => {
-              const category = card.getAttribute('data-category');
-              if (filter === 'todos' || category === filter) {
-                card.style.display = 'flex';
-              } else {
-                card.style.display = 'none';
-              }
-            });
-          };
+        const produtosFiltrados = window.allProdutos.filter(p => {
+          const category = (p.nome.toLowerCase().includes('whey') || p.nome.toLowerCase().includes('proteina')) ? 'proteina' : (p.nome.toLowerCase().includes('creatina') ? 'creatina' : (p.nome.toLowerCase().includes('pré') || p.nome.toLowerCase().includes('pre') ? 'pre' : 'todos'));
+          
+          const matchCategory = currentFilter === 'todos' || category === currentFilter;
+          const matchSearch = p.nome.toLowerCase().includes(currentSearch.toLowerCase());
+          
+          return matchCategory && matchSearch;
         });
+
+        renderizarProdutosLoja(produtosFiltrados);
       }
+
+      // Configurar Categorias
+      const catBtns = document.querySelectorAll('.cat-btn');
+      catBtns.forEach(btn => {
+        btn.onclick = () => {
+          catBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentFilter = btn.getAttribute('data-filter');
+          filtrarProdutos();
+        };
+      });
+
+      // Configurar Busca
+      const searchInput = document.getElementById('searchInput');
+      searchInput.addEventListener('input', (e) => {
+        currentSearch = e.target.value;
+        filtrarProdutos();
+      });
 
       function configurarBotoesCarrinho() {
         document.querySelectorAll('.add-to-cart').forEach(button => {
@@ -751,7 +784,7 @@
             }
 
             renderCart();
-            // openCart(); // REMOVIDO para adição silenciosa
+            // openCart(); // Silencioso
             
             const originalText = button.innerText;
             button.innerText = 'Adicionado!';
