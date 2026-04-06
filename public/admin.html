@@ -469,7 +469,7 @@
 </head>
 
 <body class="antialiased">
-  <div id="loginOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040914; z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;"><div class="glass-card" style="width: 100%; max-width: 380px; padding: 2.5rem; text-align: center; border-radius: 16px; background: rgba(25, 25, 25, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.5);"><h2 style="color: #fff; margin-bottom: 1.5rem;">Acesso Restrito</h2><input type="text" id="adminUser" placeholder="Usuário" style="width: 100%; margin-bottom: 1rem; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; font-size: 1rem; box-sizing: border-box;"><input type="password" id="adminPass" placeholder="Senha" style="width: 100%; margin-bottom: 1.5rem; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; font-size: 1rem; box-sizing: border-box;"><button id="loginBtn" style="width: 100%; padding: 12px; background: #FFD700; color: #000; font-weight: bold; font-size: 1rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">Entrar</button><p id="loginError" style="color: #ff4d4d; margin-top: 1rem; display: none; font-size: 0.9rem;">Credenciais inválidas.</p></div></div>
+  <div id="loginOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040914; z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;"><div class="glass-card" style="width: 100%; max-width: 380px; padding: 2.5rem; text-align: center; border-radius: 16px; background: rgba(25, 25, 25, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.5);"><img src="logo.png" alt="Fulltime" style="max-height: 70px; margin-bottom: 1.5rem; display: block; margin-left: auto; margin-right: auto;"><h2 style="color: #fff; margin-bottom: 1.5rem;">Acesso Restrito</h2><input type="text" id="adminUser" placeholder="Usuário" style="width: 100%; margin-bottom: 1rem; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; font-size: 1rem; box-sizing: border-box;"><input type="password" id="adminPass" placeholder="Senha" style="width: 100%; margin-bottom: 1.5rem; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; font-size: 1rem; box-sizing: border-box;"><button id="loginBtn" style="width: 100%; padding: 12px; background: #FFD700; color: #000; font-weight: bold; font-size: 1rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">Entrar</button><p id="loginError" style="color: #ff4d4d; margin-top: 1rem; display: none; font-size: 0.9rem;">Credenciais inválidas.</p></div></div>
   <!-- Fundo animado (Canvas simulando Webild) -->
   <canvas id="bg-canvas"></canvas>
 
@@ -489,7 +489,7 @@
         <div class="hidden md:flex items-center gap-6 transition-all duration-500 ease-in-out" role="navigation">
           <a href="suplementos.html"
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Ver Loja</a>
-          <a href="index.html"
+          <a href="#" id="logoutBtn"
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground opacity-70 hover:opacity-100">Sair</a>
         </div>
         <button id="menu-toggle"
@@ -621,6 +621,8 @@
     document.addEventListener("DOMContentLoaded", () => { if (sessionStorage.getItem("krm_admin_auth") === "true") { document.getElementById("loginOverlay").style.display = "none"; } });
 
     document.getElementById("loginBtn").addEventListener("click", () => { const u = document.getElementById("adminUser").value; const p = document.getElementById("adminPass").value; if(u === "AdminFulltime" && p === "AdminFulltime") { sessionStorage.setItem("krm_admin_auth", "true"); document.getElementById("loginOverlay").style.display = "none"; } else { document.getElementById("loginError").style.display = "block"; } });
+
+    const logoutBtn = document.getElementById("logoutBtn"); if(logoutBtn) { logoutBtn.addEventListener("click", function(e) { e.preventDefault(); sessionStorage.removeItem("krm_admin_auth"); window.location.reload(); }); }
 
     let produtos = [];
 
