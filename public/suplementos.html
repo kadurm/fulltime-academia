@@ -38,28 +38,73 @@
       --color-accent: #3b82f6;
     }
 
-    body { font-family: 'Inter Tight', sans-serif; background-color: var(--color-background); color: var(--color-foreground); overflow-x: hidden; }
+    body { 
+      font-family: 'Inter Tight', sans-serif; 
+      background-color: var(--color-background); 
+      color: var(--color-foreground); 
+      overflow-x: hidden; 
+    }
     
     .glass-card {
-      background: var(--color-card); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px;
-      padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;
-      transition: 0.3s; height: 100%;
+      background: var(--color-card) !important; 
+      backdrop-filter: blur(12px) !important; 
+      -webkit-backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important; 
+      border-radius: 16px;
+      padding: 1.5rem; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: space-between;
+      transition: transform 0.3s ease, border-color 0.3s ease; 
+      height: 100%;
     }
-    .glass-card:hover { transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.3); }
+    .glass-card:hover { 
+      transform: translateY(-5px); 
+      border-color: rgba(255, 255, 255, 0.3) !important; 
+    }
 
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; padding: 2rem; max-width: 1400px; margin: 0 auto; }
+    .blur-text {
+      text-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
+    .grid { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+      gap: 2rem; 
+      padding: 2rem; 
+      max-width: 1400px; 
+      margin: 0 auto; 
+    }
     
     .cat-btn {
-      background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff; padding: 0.5rem 1.5rem; border-radius: 20px; cursor: pointer; transition: 0.3s;
+      background: rgba(255, 255, 255, 0.1); 
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff; 
+      padding: 0.5rem 1.5rem; 
+      border-radius: 20px; 
+      cursor: pointer; 
+      transition: 0.3s;
+      font-weight: bold;
+      white-space: nowrap;
     }
-    .cat-btn.active, .cat-btn:hover { background: #FFD700; color: #000; border-color: #FFD700; }
+    .cat-btn.active, .cat-btn:hover { 
+      background: #FFD700; 
+      color: #000; 
+      border-color: #FFD700; 
+    }
 
-    .img-container img { height: 180px; width: 100%; object-fit: cover; border-radius: 8px; }
-    .product-price { color: #3b82f6; font-weight: 800; font-size: 1.2rem; }
+    .img-container img { 
+      height: 180px; 
+      width: 100%; 
+      object-fit: cover; 
+      border-radius: 8px; 
+    }
+    .product-price { 
+      color: #3b82f6; 
+      font-weight: 800; 
+      font-size: 1.2rem; 
+    }
     
-    /* Mobile styles incorporated from mobile-fix.css or similar */
     @media (max-width: 768px) {
       .grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px; }
       .glass-card { padding: 12px; min-height: auto; }
@@ -69,7 +114,7 @@
       .product-price { font-size: 1rem; }
     }
   </style>
-  <link rel="stylesheet" href="mobile-fix.css">
+  <link rel="stylesheet" href="mobile-fix.css?v=1.1">
 </head>
 
 <body class="antialiased">
@@ -86,8 +131,8 @@
   </nav>
 
   <section class="pt-32 pb-10 text-center">
-    <h2 class="text-5xl font-bold mb-4">Loja de Suplementos</h2>
-    <p class="opacity-70">Potencialize seus resultados com o que há de melhor.</p>
+    <h2 class="text-5xl font-bold mb-4 blur-text">Potencialize Seus Resultados</h2>
+    <p class="opacity-70 blur-text">Suplementação premium para levar o seu treino ao próximo nível.</p>
   </section>
 
   <div class="flex justify-center px-4 mb-8">
@@ -102,24 +147,28 @@
     let allProdutos = [], currentFilter = 'todos', currentSearch = '';
 
     async function loadStore() {
-      const [resP, resC] = await Promise.all([fetch('/api/produtos'), fetch('/api/categorias')]);
-      allProdutos = await resP.json();
-      const categorias = await resC.json();
+      try {
+        const [resP, resC] = await Promise.all([fetch('/api/produtos'), fetch('/api/categorias')]);
+        allProdutos = await resP.json();
+        const categorias = await resC.json();
 
-      const catContainer = document.getElementById('categorias-container');
-      catContainer.innerHTML = `<button class="cat-btn active" data-filter="todos">Todos</button>` + 
-        categorias.map(c => `<button class="cat-btn" data-filter="${c}">${c}</button>`).join('');
+        const catContainer = document.getElementById('categorias-container');
+        catContainer.innerHTML = `<button class="cat-btn active" data-filter="todos">Todos</button>` + 
+          categorias.map(c => `<button class="cat-btn" data-filter="${c}">${c}</button>`).join('');
 
-      catContainer.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.onclick = () => {
-          catContainer.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          currentFilter = btn.getAttribute('data-filter');
-          render();
-        };
-      });
+        catContainer.querySelectorAll('.cat-btn').forEach(btn => {
+          btn.onclick = () => {
+            catContainer.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = btn.getAttribute('data-filter');
+            render();
+          };
+        });
 
-      render();
+        render();
+      } catch (err) {
+        console.error("Erro ao carregar loja:", err);
+      }
     }
 
     function render() {
@@ -135,7 +184,7 @@
           <div class="img-container"><img src="${p.imagem}" alt="${p.nome}"></div>
           <div class="mt-4">
             <h3 class="font-bold text-lg">${p.nome}</h3>
-            <p class="card-desc text-sm opacity-60 mt-2">${p.descricao || ""}</p>
+            <p class="card-desc text-sm opacity-60 mt-2">${p.descricao || "Suplemento de alta performance."}</p>
             <div class="flex items-center justify-between mt-4">
               <span class="product-price">${p.preco}</span>
               <button class="bg-white text-blue-900 px-4 py-2 rounded-lg font-bold text-sm">Adicionar</button>
