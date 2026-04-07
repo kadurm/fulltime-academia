@@ -67,6 +67,8 @@
       align-items: center;
       transition: transform 0.3s ease, border-color 0.3s ease; 
       height: 100%;
+      min-height: 460px;
+      gap: 0.5rem;
     }
     .glass-card:hover { 
       transform: translateY(-5px); 
@@ -141,6 +143,9 @@
     .card-desc {
       text-align: center;
       width: 100%;
+      min-height: 2.8em;
+      height: auto;
+      flex-shrink: 0;
     }
     .product-price { 
       color: #3b82f6; 
@@ -231,7 +236,7 @@
       });
 
       grid.innerHTML = filtered.map(p => `
-        <div class="glass-card">
+        <div class="glass-card p-3 pb-5">
           <div>
             <div class="img-container"><img src="${p.imagem}" alt="${p.nome}" class="w-full h-full object-cover" style="border-radius: 8px;"></div>
             <div class="mt-4">
