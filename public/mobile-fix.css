@@ -142,7 +142,11 @@
 
   /* 4. Refinamento Estético Form Consultar Planos */
   #formConsultarPlanos-container {
-    padding: 1.25rem !important; /* p-5 */
+    padding: 2.5rem 1.25rem 1.25rem !important; /* Aumenta padding superior para respiro do título */
+  }
+
+  #formConsultarPlanos {
+    gap: 1rem !important; /* Diminui gap entre cabeçalho e campos */
   }
 
   #formConsultarPlanos h2 {
@@ -155,6 +159,7 @@
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+    margin-bottom: 0 !important; /* Elimina margem inferior para aproximar do Nome */
   }
 
   /* Blindagem UI */
