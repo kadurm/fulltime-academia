@@ -1,5 +1,12 @@
 # Fulltime Academia - Diretrizes do Projeto e Contexto para IA
 
+## Protocolo de Sincronização Multi-Terminal
+1. Ao concluir qualquer alteração estrutural, adicione um resumo na seção "## Últimas Atualizações" no topo deste documento.
+2. Antes de iniciar qualquer nova tarefa, releia obrigatoriamente este arquivo `agent.md` para assimilar o contexto atualizado por agentes em outros terminais.
+
+## Últimas Atualizações
+- 2026-04-07: Implementado protocolo de sincronização multi-terminal para coordenação entre agentes em diferentes sessões.
+
 ## Arquitetura e Stack Tecnológico
 - **Frontend:** Vanilla JS, HTML5 e Tailwind CSS (via CDN). Sem frameworks pesados (React/Vue).
 - **Backend:** Vercel Serverless Functions (Node.js) alocadas na pasta `/api`.
