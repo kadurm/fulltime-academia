@@ -25,7 +25,6 @@
     width: 100% !important;
   }
 
-  /* Exibe links em linha/wrap */
   #nav div[role="navigation"] {
     display: flex !important;
     flex-wrap: wrap !important;
@@ -40,12 +39,11 @@
     font-size: 0.85rem !important;
   }
 
-  /* Esconde Botão de Menu e Drawer antigo */
   #menu-toggle, #mobile-menu, #menu-close {
     display: none !important;
   }
 
-  /* 2. Cards de Unidades na Home (Stack Vertical) */
+  /* 2. Home Stack Vertical */
   #unidades .grid {
     grid-template-columns: 1fr !important;
     display: flex !important;
@@ -58,54 +56,64 @@
     width: 100% !important;
   }
 
-  /* 3. Vitrine da Loja (Grid 2x2 e alinhamento) */
+  /* 3. RESOLUÇÃO DEFINITIVA GRID DA LOJA */
   #produtos-grid {
+    display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.75rem !important;
-    padding: 1rem !important;
+    gap: 10px !important;
+    padding: 10px !important;
+    align-items: stretch !important; /* Cards com mesma altura na linha */
   }
 
   #produtos-grid .glass-card {
-    min-height: 320px !important;
-    flex: 1 1 calc(50% - 0.75rem) !important;
-    max-width: 100% !important;
-    padding: 0.75rem !important;
-    justify-content: flex-start !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important; /* Agrupa no topo */
+    padding: 10px !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
   }
 
-  #produtos-grid .img-container {
-    height: 90px !important;
-    margin-bottom: 0.5rem !important;
-  }
-
-  #produtos-grid .img-container img {
-    height: 90px !important;
+  #produtos-grid .img-container, 
+  #produtos-grid img {
+    height: 100px !important;
+    width: 100% !important;
     object-fit: contain !important;
+    margin-bottom: 5px !important;
+    background: transparent !important;
   }
 
   #produtos-grid h3 {
-    font-size: 0.8rem !important;
-    height: 3em !important;
-    margin: 0.25rem 0 !important;
+    font-size: 0.85rem !important;
+    line-height: 1.2 !important;
+    margin: 2px 0 !important;
+    text-align: center !important;
+    height: 2.4em !important;
+    overflow: hidden !important;
   }
 
   #produtos-grid .card-desc {
-    display: none !important; /* Esconde descrição no mobile 2x2 para economizar espaço */
+    display: none !important; /* Remove ruído no mobile */
   }
 
   #produtos-grid .product-price {
     font-size: 0.9rem !important;
-    margin-bottom: 0.5rem !important;
+    margin: 5px 0 !important;
+    text-align: center !important;
+    font-weight: 800 !important;
   }
 
+  /* REGRA DE OURO: Botão fixo no rodapé */
   #produtos-grid .add-to-cart {
     margin-top: auto !important;
-    font-size: 0.7rem !important;
-    padding: 0.5rem !important;
-    height: auto !important;
+    width: 100% !important;
+    padding: 8px 4px !important;
+    font-size: 0.75rem !important;
+    border-radius: 6px !important;
   }
 
-  /* Blindagem do Carrossel (Garante que nada acima o quebre) */
+  /* Blindagem UI */
   .hero-carousel-wrapper, #main-carousel, .carousel-item {
     pointer-events: auto !important;
   }
