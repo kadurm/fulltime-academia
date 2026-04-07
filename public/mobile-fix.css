@@ -1,0 +1,58 @@
+@media (max-width: 768px) { 
+  nav, .navbar { 
+    flex-direction: column !important; 
+    padding: 15px 0 !important; 
+    height: auto !important; 
+  } 
+  nav img, .logo { 
+    margin: 0 auto 15px auto !important; 
+    max-height: 45px !important; 
+    display: block !important; 
+  } 
+  nav ul, .nav-links { 
+    display: flex !important; 
+    flex-direction: row !important; 
+    flex-wrap: wrap !important; 
+    justify-content: center !important; 
+    position: static !important; 
+    background: transparent !important; 
+    width: 100% !important; 
+    height: auto !important; 
+    transform: none !important; 
+    opacity: 1 !important; 
+    visibility: visible !important; 
+    gap: 10px !important; 
+  } 
+  .hamburger, .menu-toggle { 
+    display: none !important; 
+  } 
+  .grid, #produtos-grid { 
+    display: grid !important; 
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 10px !important; 
+    padding: 0 10px !important; 
+  } 
+  .glass-card { 
+    padding: 10px !important; 
+    min-width: 0 !important; 
+  } 
+  .glass-card img { 
+    height: 100px !important; 
+    object-fit: contain !important; 
+    margin-bottom: 5px !important; 
+  } 
+  .glass-card h3 { 
+    font-size: 0.9rem !important; 
+  } 
+  .glass-card button { 
+    padding: 8px !important; 
+    font-size: 0.8rem !important; 
+  } 
+  .categories { 
+    display: flex !important; 
+    flex-wrap: nowrap !important; 
+    overflow-x: auto !important; 
+    padding-bottom: 10px !important; 
+    justify-content: flex-start !important; 
+  } 
+}
