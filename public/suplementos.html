@@ -6,16 +6,12 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Loja | Fulltime Academia</title>
-  <meta name="description"
-    content="Transforme seu corpo na Fulltime Academia. Equipamentos premium, reconhecimento facial e unidades climatizadas em Montes Claros." />
-
-  <!-- Fonte Original -->
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet">
 
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -25,32 +21,10 @@
             background: 'var(--color-background)',
             foreground: 'var(--color-foreground)',
             card: 'var(--color-card)',
-            border: 'var(--color-border)',
             accent: 'var(--color-accent)',
-            'primary-cta': 'var(--color-primary-cta)',
-            'primary-cta-text': 'var(--color-primary-cta-text)',
-            'secondary-cta': 'var(--color-secondary-cta)',
-            'secondary-cta-text': 'var(--color-secondary-cta-text)',
           },
-          width: {
-            'content-width': 'var(--width-content-width)',
-          },
-          borderRadius: {
-            'theme': 'var(--theme-border-radius)',
-            'theme-capped': 'var(--theme-border-radius-capped)',
-          },
-          padding: {
-            'hero-page-padding': '8rem',
-          },
-          spacing: {
-            '15': '3.75rem',
-            '90': '22.5rem',
-            '100': '25rem',
-            '4/10': '40%',
-            '6/10': '60%',
-            '3/10': '30%',
-            '7/10': '70%',
-          }
+          width: { 'content-width': 'clamp(40rem, 75vw, 100rem)' },
+          borderRadius: { 'theme': '1rem' }
         }
       }
     }
@@ -58,869 +32,134 @@
 
   <style>
     :root {
-      /* Cores e variáveis exatas da plataforma */
       --color-background: #003399;
       --color-foreground: #fafafa;
-      --color-card: #383838;
-      --color-border: #484848;
+      --color-card: rgba(45, 45, 45, 0.6);
       --color-accent: #3b82f6;
-      --color-background-accent: #1f2937;
-      --color-primary-cta: #fafafa;
-      --color-primary-cta-text: #09090b;
-      --color-secondary-cta: #27272a;
-      --color-secondary-cta-text: #fafafa;
-
-      --radius-lg: 1rem;
-      --theme-border-radius: var(--radius-lg);
-      --theme-border-radius-capped: var(--radius-lg);
-      --width-content-width: clamp(40rem, 75vw, 100rem);
-      --width-content-width-expanded: clamp(calc(40rem - (40rem - 100vw) / 2), 87.5vw, calc(100rem + (100vw - 100rem) / 2));
-      --vw: clamp(0.5rem, 0.92vw, 1rem);
-
-      --text-base: clamp(0.875rem, 1.058vw, 1rem);
-      --width-10: 2.5rem;
-      --width-5: 1.25rem;
-      --width-17_5: 4.375rem;
-      --vw-0_75: 0.75rem;
     }
 
-    @media (max-width: 768px) {
-      :root {
-        --width-content-width: 85vw;
-        --width-content-width-expanded: 90vw;
-      }
-      #hero h2 {
-        font-size: 2.5rem !important;
-        line-height: 1.1;
-      }
-      h2 {
-        font-size: 1.75rem !important;
-      }
-      h3 {
-        font-size: 1.25rem !important;
-      }
-      .section-subtitle {
-        font-size: 1rem !important;
-      }
+    body { font-family: 'Inter Tight', sans-serif; background-color: var(--color-background); color: var(--color-foreground); overflow-x: hidden; }
+    
+    .glass-card {
+      background: var(--color-card); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px;
+      padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;
+      transition: 0.3s; height: 100%;
     }
+    .glass-card:hover { transform: translateY(-5px); border-color: rgba(255, 255, 255, 0.3); }
 
-    body {
-      font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: var(--color-background);
-      color: var(--color-foreground);
-      overflow-x: hidden;
-      font-kerning: none;
-      text-rendering: optimizeSpeed;
-    }
-
-    h1, h2, h3, .section-subtitle, .blur-text {
-      text-align: center !important;
-    }
-
-    h2 {
-      font-size: 2.5rem !important;
-      line-height: 1.3 !important;
-      margin-bottom: 0.5rem;
-    }
-
-    h3 {
-      font-size: 1.75rem !important;
-      line-height: 1.3 !important;
-    }
-
-    .section-subtitle {
-      font-size: 1.125rem !important;
-      line-height: 1.6 !important;
-      margin-bottom: 1rem !important;
-      display: block;
-    }
-
-    /* Estilos UI da Plataforma c/ Glassmorphism */
-    .card, .glass-card {
-      position: relative;
-      background-color: rgba(45, 45, 45, 0.6) !important;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1) !important;
-      box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.3);
-      border-radius: 16px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-      
-      /* Padronização de Tamanho */
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 420px;
-      width: 100%;
-      max-width: 280px;
-      flex: 0 0 280px;
-      margin: 0 auto;
-    }
-
-    .glass-card:hover {
-      transform: translateY(-10px);
-      border-color: rgba(255, 255, 255, 0.3) !important;
-      box-shadow: 0px 12px 48px rgba(0, 0, 0, 0.5);
-    }
-
-    .primary-button, .btn {
-      background-color: var(--color-primary-cta);
-      background: linear-gradient(to bottom, color-mix(in srgb, var(--color-primary-cta), transparent 25%), var(--color-primary-cta));
-      box-shadow: color-mix(in srgb, var(--color-background) 25%, transparent) 0px 1px 1px 0px inset, color-mix(in srgb, var(--color-primary-cta) 15%, transparent) 3px 3px 3px 0px;
-      color: var(--color-primary-cta-text);
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .primary-button:hover, .btn:hover {
-      filter: brightness(0.9);
-    }
-
-    /* Grade de Produtos Refinada */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      justify-content: center;
-      gap: 2rem;
-      padding: 3rem 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    /* Categorias */
-    .categories {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin: 2rem 0;
-      overflow-x: auto;
-      flex-wrap: nowrap;
-      padding-bottom: 10px;
-      max-width: 100%;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      scroll-behavior: smooth;
-    }
-
-    .categories::-webkit-scrollbar {
-      display: none;
-    }
-
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; padding: 2rem; max-width: 1400px; margin: 0 auto; }
+    
     .cat-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #fff;
-      padding: 0.5rem 1.5rem;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-weight: bold;
-      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff; padding: 0.5rem 1.5rem; border-radius: 20px; cursor: pointer; transition: 0.3s;
     }
+    .cat-btn.active, .cat-btn:hover { background: #FFD700; color: #000; border-color: #FFD700; }
 
-    .cat-btn.active, .cat-btn:hover {
-      background: #FFD700;
-      color: #000;
-      border-color: #FFD700;
-    }
-
-    .img-container {
-      overflow: hidden;
-      border-radius: 12px;
-      margin-bottom: 1rem;
-      background: rgba(255, 255, 255, 0.03);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 180px;
-      width: 100%;
-    }
-
-    .img-container div, .img-container img {
-      height: 180px;
-      width: 100%;
-      border-radius: 8px;
-      object-fit: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .badge {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: #FFD700;
-      color: #000;
-      font-size: 0.7rem;
-      font-weight: bold;
-      padding: 4px 8px;
-      border-radius: 4px;
-      z-index: 5;
-    }
-
-    /* Tipografia dos Cards */
-    .glass-card h3 {
-      font-size: 0.95rem;
-      line-height: 1.4;
-      height: 2.6em;
-      margin: 0.75rem 0 0.25rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-align: center !important;
-    }
-
-    .card-desc {
-      font-size: 0.85rem;
-      color: #ccc;
-      line-height: 1.4;
-      height: 2.8em;
-      margin-bottom: 1rem;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-align: center;
-    }
-
-    .product-price {
-      font-weight: 800;
-      color: #3b82f6; /* Accent color for price */
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    /* --- ESTILOS DO CARRINHO (DRAWER) --- */
-    .cart-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 99;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-    }
-
-    .cart-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .cart-drawer {
-      position: fixed;
-      top: 0;
-      right: -100%;
-      width: 100%;
-      max-width: 380px;
-      height: 100vh;
-      background: rgba(25, 25, 25, 0.85);
-      backdrop-filter: blur(16px);
-      border-left: 1px solid rgba(255, 255, 255, 0.1);
-      z-index: 10000 !important;
-      transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      flex-direction: column;
-      padding: 2rem;
-      box-sizing: border-box;
-      color: #fff;
-    }
-
-    .cart-drawer.open {
-      right: 0;
-    }
-
-    .cart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      padding-bottom: 1rem;
-      margin-bottom: 1rem !important;
-    }
-
-    .cart-header h2 { 
-      font-size: 1.5rem !important; 
-      line-height: 1.2 !important; 
-      width: 80% !important; 
-      white-space: normal !important; 
-      margin: 0 !important; 
-      padding-top: 5px !important; 
-      text-align: left !important;
-    } 
-
-    .close-cart {
-      cursor: pointer;
-      font-size: 1.5rem;
-      background: none;
-      border: none;
-      color: #fff;
-    }
-
-    .cart-items {
-      flex-grow: 1;
-      overflow-y: auto;
-      padding: 1rem 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 1rem;
-      border-radius: 8px;
-    }
-
-    .cart-item-info h4 {
-      margin: 0 0 0.5rem 0;
-      font-size: 0.9rem;
-      text-align: left !important;
-    }
-
-    .cart-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .cart-controls button {
-      background: rgba(255, 255, 255, 0.1);
-      border: none;
-      color: #fff;
-      width: 24px;
-      height: 24px;
-      border-radius: 4px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .cart-controls button:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    #checkoutBtnModal { 
-      background: #FFD700 !important; 
-      color: #000 !important; 
-      font-weight: 800 !important; 
-      font-size: 1.1rem !important; 
-      padding: 14px !important; 
-      border-radius: 8px !important; 
-      margin-top: 15px !important; 
-      border: none !important; 
-      width: 100% !important; 
-      transition: transform 0.2s !important; 
-      cursor: pointer;
-    } 
-    #checkoutBtnModal:hover { 
-      transform: scale(1.02) !important; 
-      background: #e6c200 !important; 
-    } 
-
-    nav { 
-      position: fixed; 
-      top: 0; 
-      width: 100%;
-      z-index: 900; 
-      transition: background-color 0.3s ease; 
-      background: transparent;
-    } 
-    nav.scrolled { 
-      background: rgba(0, 51, 153, 0.95); 
-      backdrop-filter: blur(12px); 
-      border-bottom: 1px solid rgba(255,255,255,0.1); 
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    .img-container img { height: 180px; width: 100%; object-fit: cover; border-radius: 8px; }
+    .product-price { color: #3b82f6; font-weight: 800; font-size: 1.2rem; }
+    
+    /* Mobile styles incorporated from mobile-fix.css or similar */
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px; }
+      .glass-card { padding: 12px; min-height: auto; }
+      .img-container img { height: 100px; }
+      .card-desc { display: none; }
+      h3 { font-size: 0.9rem !important; }
+      .product-price { font-size: 1rem; }
     }
   </style>
-  <link rel="stylesheet" href="mobile-fix.css?v=6">
+  <link rel="stylesheet" href="mobile-fix.css">
 </head>
 
 <body class="antialiased">
+  <canvas id="bg-canvas" style="position:fixed; inset:0; z-index:-1;"></canvas>
 
-  <!-- Fundo animado (Canvas simulando Webild) -->
-  <div class="bg-background fixed inset-0 -z-10 w-full h-full" aria-hidden="true">
-    <div style="position:relative;width:100%;height:100%;overflow:hidden;pointer-events:auto">
-      <div style="width:100%;height:100%">
-        <canvas id="bg-canvas" style="display:block"></canvas>
+  <nav class="fixed top-0 w-full h-20 z-[1000] bg-background/80 backdrop-blur-md border-bottom border-white/5">
+    <div class="flex items-center justify-between h-full max-w-7xl mx-auto px-6">
+      <a href="index.html"><img src="/logo.png" class="h-12 w-auto" /></a>
+      <div class="flex gap-6">
+        <a href="index.html">Início</a>
+        <button id="checkout-btn" class="font-bold">Carrinho (0)</button>
       </div>
     </div>
+  </nav>
+
+  <section class="pt-32 pb-10 text-center">
+    <h2 class="text-5xl font-bold mb-4">Loja de Suplementos</h2>
+    <p class="opacity-70">Potencialize seus resultados com o que há de melhor.</p>
+  </section>
+
+  <div class="flex justify-center px-4 mb-8">
+    <input type="text" id="searchInput" placeholder="O que você procura?" class="w-full max-w-md p-3 rounded-full bg-white/5 border border-white/20 text-white outline-none">
   </div>
 
-  <!-- Navegação -->
-  <div id="nav" data-section="nav">
-    <nav
-      class="fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/0 backdrop-blur-0 h-20">
-      <div class="relative flex items-center justify-between h-full w-content-width mx-auto">
-        <div class="flex items-center transition-all duration-500 ease-in-out">
-          <a href="index.html" class="cursor-pointer">
-            <img src="/logo.png" alt="Fulltime Academia" class="h-12 md:h-16 w-auto object-contain transition-transform hover:scale-105" />
-          </a>
-        </div>
-        <div class="hidden md:flex items-center gap-6 transition-all duration-500 ease-in-out" role="navigation">
-          <a href="index.html"
-            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Início</a>
-          <button id="checkout-btn" class="relative text-sm font-bold bg-white text-blue-900 px-4 py-2 rounded-lg cursor-pointer transition-transform hover:scale-105">
-            Carrinho (0)
-          </button>
-        </div>
-        <button id="menu-toggle"
-          class="flex md:hidden shrink-0 h-8 aspect-square rounded-theme bg-foreground items-center justify-center cursor-pointer"
-          aria-label="Toggle menu">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-plus w-1/2 h-1/2 text-background transition-transform duration-300 rotate-0">
-            <path d="M5 12h14"></path>
-            <path d="M12 5v14"></path>
-          </svg>
-        </button>
-      </div>
+  <div class="categories flex justify-center gap-3 overflow-x-auto px-4 mb-10" id="categorias-container"></div>
 
-      <!-- Menu Mobile -->
-      <div id="mobile-menu"
-        class="md:hidden z-10 fixed top-3 left-3 right-3 h-fit rounded-theme-capped card p-6 flex flex-col gap-6 opacity-0 pointer-events-none translate-y-[-10px]"
-        style="width:calc(100vw - var(--vw-0_75) * 2)">
-        <div class="w-full flex justify-between items-center">
-          <p class="text-xl text-foreground">Menu</p>
-          <button id="menu-close"
-            class="shrink-0 h-8 aspect-square rounded-theme bg-foreground flex items-center justify-center cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-plus w-1/2 h-1/2 text-background rotate-45">
-              <path d="M5 12h14"></path>
-              <path d="M12 5v14"></path>
-            </svg>
-          </button>
-        </div>
-        <div class="flex flex-col gap-4">
-          <a href="index.html" class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Início</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </a>
-        </div>
-      </div>
-    </nav>
-  </div>
+  <div class="grid" id="produtos-grid"></div>
 
-  <!-- Hero -->
-  <div id="hero" data-section="hero">
-    <section class="relative w-full h-fit flex items-center justify-center py-hero-page-padding">
-      <div class="w-full flex flex-col gap-14 relative z-10">
-        <div class="w-content-width mx-auto">
-          <div class="items-center text-center flex flex-col gap-3">
-            <h2 class="blur-text text-center text-6xl font-medium text-balance" style="margin-bottom: 0.5rem;">Potencialize Seus Resultados</h2>
-            <p class="blur-text text-center text-base md:text-lg leading-tight">Suplementação premium para levar o seu treino ao próximo nível.</p>
+  <script>
+    let allProdutos = [], currentFilter = 'todos', currentSearch = '';
+
+    async function loadStore() {
+      const [resP, resC] = await Promise.all([fetch('/api/produtos'), fetch('/api/categorias')]);
+      allProdutos = await resP.json();
+      const categorias = await resC.json();
+
+      const catContainer = document.getElementById('categorias-container');
+      catContainer.innerHTML = `<button class="cat-btn active" data-filter="todos">Todos</button>` + 
+        categorias.map(c => `<button class="cat-btn" data-filter="${c}">${c}</button>`).join('');
+
+      catContainer.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.onclick = () => {
+          catContainer.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentFilter = btn.getAttribute('data-filter');
+          render();
+        };
+      });
+
+      render();
+    }
+
+    function render() {
+      const grid = document.getElementById('produtos-grid');
+      const filtered = allProdutos.filter(p => {
+        const matchesCat = currentFilter === 'todos' || p.categoria === currentFilter;
+        const matchesSearch = p.nome.toLowerCase().includes(currentSearch.toLowerCase());
+        return matchesCat && matchesSearch;
+      });
+
+      grid.innerHTML = filtered.map(p => `
+        <div class="glass-card">
+          <div class="img-container"><img src="${p.imagem}" alt="${p.nome}"></div>
+          <div class="mt-4">
+            <h3 class="font-bold text-lg">${p.nome}</h3>
+            <p class="card-desc text-sm opacity-60 mt-2">${p.descricao || ""}</p>
+            <div class="flex items-center justify-between mt-4">
+              <span class="product-price">${p.preco}</span>
+              <button class="bg-white text-blue-900 px-4 py-2 rounded-lg font-bold text-sm">Adicionar</button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
+      `).join('');
+    }
 
-  <!-- Busca -->
-  <div style="display:flex; justify-content:center; margin-bottom:1.5rem; padding: 0 1rem;">
-    <input type="text" id="searchInput" placeholder="Qual suplemento você procura?" style="width:100%; max-width:400px; padding:12px 20px; border-radius:25px; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); color:#fff; backdrop-filter:blur(10px); font-size:1rem; outline:none; transition: border-color 0.3s;">
-  </div>
+    document.getElementById('searchInput').oninput = (e) => { currentSearch = e.target.value; render(); };
 
-  <!-- Categorias -->
-  <div class="categories blur-text" id="categorias-container">
-    <!-- Categorias renderizadas via JS -->
-  </div>
+    document.addEventListener('DOMContentLoaded', loadStore);
 
-  <!-- Grid de Produtos -->
-  <div id="store-grid" class="relative py-10 w-full">
-    <div class="w-content-width mx-auto">
-      <div class="grid" id="produtos-grid">
-        <!-- Produtos renderizados via JS -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div id="footer" data-section="footer">
-    <footer role="contentinfo" aria-label="Site footer" class="relative overflow-hidden w-full bg-[#003399] text-white py-10 mt-20">
-      <div class="relative w-content-width mx-auto z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-        <div class="flex items-center transition-all duration-500 ease-in-out">
-          <a href="index.html" class="cursor-pointer">
-            <img src="/logo.png" alt="Fulltime Academia" class="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" />
-          </a>
-        </div>
-        <div class="flex items-center">
-          <span class="text-white/50 text-sm">© 2026 | KrM Corp</span>
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Carrinho (Drawer) -->
-  <div class="cart-overlay" id="cartOverlay"></div>
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-header">
-      <h2 class="text-xl font-bold">Seu Carrinho</h2>
-      <button class="close-cart" id="closeCartBtn">✖</button>
-    </div>
-    <div class="cart-items" id="cartItemsContainer"></div>
-    <div class="cart-footer" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
-      <h3 style="display:flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem; margin-bottom: 1rem;">
-        Total: <span id="cartTotalDisplay">R$ 0,00</span>
-      </h3>
-      <button class="btn" id="checkoutBtnModal">Finalizar Compra</button>
-    </div>
-  </div>
-
-  <!-- Script Integrado e Carrinho -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // 1. Navbar no Scroll
-      window.addEventListener('scroll', () => {
-        const nav = document.querySelector('nav');
-        if (window.scrollY > 50) {
-          nav.classList.add('scrolled');
-        } else {
-          nav.classList.remove('scrolled');
-        }
-      });
-
-      // 2. Mobile Menu Toggle
-      const menuToggle = document.getElementById('menu-toggle');
-      const menuClose = document.getElementById('menu-close');
-      const mobileMenu = document.getElementById('mobile-menu');
-
-      function toggleMenu() {
-        const isOpen = mobileMenu.classList.contains('opacity-100');
-        if (!isOpen) {
-          mobileMenu.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-          mobileMenu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
-        } else {
-          mobileMenu.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
-          mobileMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
-        }
-      }
-
-      menuToggle?.addEventListener('click', toggleMenu);
-      menuClose?.addEventListener('click', toggleMenu);
-
-      // 3. Animação de entrada
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.15 });
-
-      document.querySelectorAll('.blur-text').forEach(el => observer.observe(el));
-
-      // --- LOGICA DO CARRINHO (DRAWER) ---
-      let cart = [];
-      const checkoutBtn = document.getElementById('checkout-btn');
-      const cartDrawer = document.getElementById('cartDrawer');
-      const cartOverlay = document.getElementById('cartOverlay');
-      const closeCartBtn = document.getElementById('closeCartBtn');
-      const cartItemsContainer = document.getElementById('cartItemsContainer');
-      const cartTotalDisplay = document.getElementById('cartTotalDisplay');
-      const checkoutBtnModal = document.getElementById('checkoutBtnModal');
-
-      const openCart = () => {
-        cartDrawer.classList.add('open');
-        cartOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      };
-
-      const closeCart = () => {
-        cartDrawer.classList.remove('open');
-        cartOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      };
-
-      const renderCart = () => {
-        cartItemsContainer.innerHTML = '';
-        let total = 0;
-        let totalItems = 0;
-
-        cart.forEach((item, index) => {
-          const itemPrice = parseFloat(item.price.replace('R$', '').replace(',', '.'));
-          total += itemPrice * item.quantity;
-          totalItems += item.quantity;
-
-          const itemEl = document.createElement('div');
-          itemEl.className = 'cart-item';
-          itemEl.innerHTML = `
-            <div class="cart-item-info">
-              <h4 class="font-medium">${item.name}</h4>
-              <span class="text-sm opacity-70">${item.price}</span>
-            </div>
-            <div class="cart-controls">
-              <button onclick="window.updateQty(${index}, -1)">-</button>
-              <span>${item.quantity}</span>
-              <button onclick="window.updateQty(${index}, 1)">+</button>
-            </div>
-          `;
-          cartItemsContainer.appendChild(itemEl);
-        });
-
-        cartTotalDisplay.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-        checkoutBtn.textContent = `Carrinho (${totalItems})`;
-      };
-
-      window.updateQty = (index, change) => {
-        cart[index].quantity += change;
-        if (cart[index].quantity <= 0) {
-          cart.splice(index, 1);
-        }
-        renderCart();
-      };
-
-      // --- LOGICA DE PRODUTOS DINÂMICOS ---
-      let currentFilter = 'todos';
-      let currentSearch = '';
-
-      async function syncCategoriasLoja() {
-        try {
-          const res = await fetch("/api/categorias");
-          const cats = await res.json();
-          const container = document.getElementById('categorias-container');
-          if (!container) return;
-
-          container.innerHTML = `<button class="cat-btn active" data-filter="todos">Todos</button>`;
-          cats.forEach(cat => {
-            container.innerHTML += `<button class="cat-btn" data-filter="${cat}">${cat}</button>`;
-          });
-
-          // Re-atachar eventos
-          container.querySelectorAll('.cat-btn').forEach(btn => {
-            btn.onclick = () => {
-              container.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-              btn.classList.add('active');
-              currentFilter = btn.getAttribute('data-filter');
-              filtrarProdutos();
-            };
-          });
-        } catch (err) {
-          console.error("Erro sync categorias:", err);
-        }
-      }
-
-      async function carregarProdutosLoja() {
-        const grid = document.getElementById('produtos-grid');
-        grid.innerHTML = '<p style="color: white; text-align: center; grid-column: 1 / -1;">Carregando suplementos...</p>';
-        
-        try {
-          const response = await fetch('/api/produtos');
-          const produtos = await response.json();
-          
-          if (produtos.length === 0) {
-            grid.innerHTML = '<p style="color: white; text-align: center; grid-column: 1 / -1;">Nenhum produto disponível no momento.</p>';
-            return;
-          }
-
-          window.allProdutos = produtos; // Armazena globalmente para filtros
-          filtrarProdutos();
-        } catch (error) {
-          console.error('Erro ao carregar produtos:', error);
-          grid.innerHTML = '<p style="color: white; text-align: center; grid-column: 1 / -1;">Erro ao carregar produtos.</p>';
-        }
-      }
-
-      function renderizarProdutosLoja(produtos) {
-        const grid = document.getElementById('produtos-grid');
-        grid.innerHTML = produtos.map(p => {
-          return `
-            <div class="glass-card card p-6 blur-text in-view" data-category="${p.categoria || 'todos'}">
-              <div class="img-container">
-                <img src="${p.imagem}" alt="${p.nome}" style="object-fit: contain; border-radius: 8px;">
-              </div>
-              <h3 class="product-name">${p.nome}</h3>
-              <p class="card-desc">${p.descricao || "Suplemento de alta qualidade para potencializar seus resultados."}</p>
-              <p class="product-price">${p.preco}</p>
-              <button class="add-to-cart primary-button h-10 w-full rounded-theme text-sm font-bold">Adicionar ao Carrinho</button>
-            </div>
-          `;
-        }).join('');
-
-        configurarBotoesCarrinho();
-      }
-
-      function filtrarProdutos() {
-        if (!window.allProdutos) return;
-
-        const produtosFiltrados = window.allProdutos.filter(p => {
-          const matchCategory = currentFilter === 'todos' || p.categoria === currentFilter;
-          const matchSearch = p.nome.toLowerCase().includes(currentSearch.toLowerCase());
-          
-          return matchCategory && matchSearch;
-        });
-
-        renderizarProdutosLoja(produtosFiltrados);
-      }
-
-      // Configurar Busca
-      const searchInput = document.getElementById('searchInput');
-      searchInput.addEventListener('input', (e) => {
-        currentSearch = e.target.value;
-        filtrarProdutos();
-      });
-
-      function configurarBotoesCarrinho() {
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-          button.onclick = () => {
-            const card = button.closest('.card');
-            const name = card.querySelector('.product-name').innerText;
-            const price = card.querySelector('.product-price').innerText;
-
-            const existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-              existingItem.quantity++;
-            } else {
-              cart.push({ name, price, quantity: 1 });
-            }
-
-            renderCart();
-            // openCart(); // Silencioso
-            
-            const originalText = button.innerText;
-            button.innerText = 'Adicionado!';
-            button.style.background = '#4BB543';
-            setTimeout(() => {
-              button.innerText = originalText;
-              button.style.background = '';
-            }, 1000);
-          };
-        });
-      }
-
-      // 4. Canvas de Fundo
-      const canvas = document.getElementById('bg-canvas');
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let time = 0;
-        function resize() {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-        function animate() {
-          time += 0.005;
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          const cx = canvas.width / 2 + Math.sin(time) * (canvas.width * 0.1);
-          const cy = canvas.height / 2 + Math.cos(time * 0.8) * (canvas.height * 0.1);
-          const radius = Math.max(canvas.width, canvas.height) * 0.6;
-          const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
-          gradient.addColorStop(0, 'rgba(59, 130, 246, 0.04)');
-          gradient.addColorStop(1, 'rgba(0, 51, 153, 0)');
-          ctx.fillStyle = gradient;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          requestAnimationFrame(animate);
-        }
-        animate();
-      }
-
-      carregarProdutosLoja();
-      syncCategoriasLoja();
-
-      checkoutBtn.addEventListener('click', openCart);
-      closeCartBtn.addEventListener('click', closeCart);
-      cartOverlay.addEventListener('click', closeCart);
-
-      checkoutBtnModal.addEventListener('click', async () => {
-        if (cart.length === 0) {
-          alert('Seu carrinho está vazio!');
-          return;
-        }
-
-        checkoutBtnModal.innerText = 'Processando...';
-        checkoutBtnModal.disabled = true;
-
-        try {
-          const response = await fetch('/api/checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ cart })
-          });
-
-          const data = await response.json();
-          if (data.url) {
-            window.location.href = data.url;
-          } else {
-            throw new Error(data.error || 'Erro ao criar sessão de checkout');
-          }
-        } catch (error) {
-          console.error('Erro:', error);
-          alert('Erro ao finalizar compra. Tente novamente.');
-          checkoutBtnModal.innerText = 'Finalizar Compra';
-          checkoutBtnModal.disabled = false;
-        }
-      });
-    });
-  </script>
-
-  <!-- Beams Background -->
-  <style>#beams-bg-container{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;overflow:hidden;background-color:var(--color-background,#003399)}#beams-canvas{position:absolute;inset:0;filter:blur(15px);opacity:0.8}body,main,.bg-background{background:transparent !important}</style>
-  <div id="beams-bg-container"><canvas id="beams-canvas"></canvas></div>
-  <script>
-    (function(){
-      const canvas=document.getElementById('beams-canvas');
-      const ctx=canvas.getContext('2d');
-      let beams=[];
-      let lastWidth=window.innerWidth;
-      function createBeam(width,height,isInitial=false){
-        return{x:Math.random()*width*1.5-width*0.25,y:isInitial?Math.random()*height*2-height:height+200+Math.random()*200,width:40+Math.random()*80,length:height*3.5,angle:-35+Math.random()*10,speed:0.8+Math.random()*1.5,opacity:0.4+Math.random()*0.4,pulse:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.03};
-      }
-      function updateSize(){
-        const width=window.innerWidth;
-        const height=window.innerHeight;
-        const dpr=window.devicePixelRatio||1;
-        canvas.width=width*dpr;
-        canvas.height=height*dpr;
-        canvas.style.width=width+'px';
-        canvas.style.height=height+'px';
-        ctx.scale(dpr,dpr);
-        beams=Array.from({length:45},()=>createBeam(width,height,true));
-      }
-      function draw(){
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        beams.forEach(beam=>{
-          beam.y-=beam.speed;
-          beam.pulse+=beam.pulseSpeed;
-          if(beam.y+beam.length<0) {
-            beam.y=window.innerHeight+200;
-            beam.x=Math.random()*window.innerWidth*1.5-window.innerWidth*0.25;
-          }
-          ctx.save();
-          ctx.translate(beam.x,beam.y);
-          ctx.rotate((beam.angle*Math.PI)/180);
-          const pOpacity=Math.max(0,Math.min(1,beam.opacity*(0.8+Math.sin(beam.pulse)*0.2)));
-          const grad=ctx.createLinearGradient(0,0,0,beam.length);
-          grad.addColorStop(0,'rgba(0,0,0,0)');
-          grad.addColorStop(0.5,`rgba(0,0,0,${pOpacity})`);
-          grad.addColorStop(1,'rgba(0,0,0,0)');
-          ctx.fillStyle=grad;
-          ctx.fillRect(-beam.width/2,0,beam.width,beam.length);
-          ctx.restore();
-        });
-        requestAnimationFrame(draw);
-      }
-      window.addEventListener('resize',updateSize);
-      updateSize();
-      draw();
-    })();
+    // BG Animation
+    const c = document.getElementById('bg-canvas'); const ctx = c.getContext('2d');
+    function res() { c.width = window.innerWidth; c.height = window.innerHeight; }
+    window.onresize = res; res();
+    function anim() {
+      ctx.clearRect(0,0,c.width,c.height);
+      const g = ctx.createRadialGradient(c.width/2, c.height/2, 0, c.width/2, c.height/2, Math.max(c.width,c.height));
+      g.addColorStop(0, 'rgba(59, 130, 246, 0.05)'); g.addColorStop(1, 'transparent');
+      ctx.fillStyle = g; ctx.fillRect(0,0,c.width,c.height);
+      requestAnimationFrame(anim);
+    } anim();
   </script>
 </body>
-
 </html>

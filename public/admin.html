@@ -44,967 +44,238 @@
 
   <style>
     :root {
-      /* Variáveis globais do index.html */
       --color-background: #003399;
       --color-foreground: #fafafa;
       --color-card: #383838;
       --color-border: #484848;
       --color-accent: #3b82f6;
-      --color-background-accent: #1f2937;
-      --color-primary-cta: #fafafa;
-      --color-primary-cta-text: #09090b;
-      --color-secondary-cta: #27272a;
-      --color-secondary-cta-text: #fafafa;
-
       --radius-lg: 1rem;
       --theme-border-radius: var(--radius-lg);
-      --theme-border-radius-capped: var(--radius-lg);
       --width-content-width: clamp(40rem, 75vw, 100rem);
-      --width-content-width-expanded: clamp(calc(40rem - (40rem - 100vw) / 2), 87.5vw, calc(100rem + (100vw - 100rem) / 2));
-      --vw: clamp(0.5rem, 0.92vw, 1rem);
-      --text-base: clamp(0.875rem, 1.058vw, 1rem);
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Inter Tight', sans-serif;
       background-color: var(--color-background);
       color: var(--color-foreground);
       overflow-x: hidden;
-      font-kerning: none;
-      text-rendering: optimizeSpeed;
       min-height: 100vh;
     }
 
-    /* Background animado (Canvas simulando Webild) */
-    #bg-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: -10;
-      width: 100%;
-      height: 100%;
-      display: block;
-    }
+    #bg-canvas { position: fixed; inset: 0; z-index: -10; width: 100%; height: 100%; }
+    #beams-bg-container { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -5; pointer-events: none; overflow: hidden; background-color: var(--color-background); }
+    #beams-canvas { position: absolute; inset: 0; filter: blur(15px); opacity: 0.8; }
 
-    /* Beams Background */
-    #beams-bg-container {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -5;
-      pointer-events: none;
-      overflow: hidden;
-      background-color: var(--color-background, #003399);
-    }
-
-    #beams-canvas {
-      position: absolute;
-      inset: 0;
-      filter: blur(15px);
-      opacity: 0.8;
-    }
-
-    /* Navbar Premium */
     .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 2rem;
-      height: 80px;
-      background: rgba(0, 51, 153, 0.85);
-      backdrop-filter: blur(12px);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center;
+      height: 80px; background: rgba(0, 51, 153, 0.85); backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      transition: all 0.3s ease;
     }
 
-    .navbar .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--color-foreground);
-      letter-spacing: 2px;
-    }
-
-    /* Container Principal */
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 120px 2rem 2rem;
-    }
-
-    .header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 3rem;
-      gap: 1.5rem;
-    }
-
-    .header h1 {
-      font-size: clamp(2rem, 3vw, 2.5rem);
-      font-weight: 600;
-      text-align: center;
-    }
+    .container { max-width: 1000px; margin: 0 auto; padding: 120px 2rem 2rem; }
+    .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 3rem; gap: 1rem; }
+    .header h1 { font-size: clamp(2rem, 3vw, 2.5rem); font-weight: 600; text-align: center; }
 
     .btn-adicionar {
-      padding: 0.75rem 2rem;
-      background-color: var(--color-primary-cta);
-      background: linear-gradient(to bottom, color-mix(in srgb, var(--color-primary-cta), transparent 25%), var(--color-primary-cta));
-      box-shadow: color-mix(in srgb, var(--color-background) 25%, transparent) 0px 1px 1px 0px inset, color-mix(in srgb, var(--color-primary-cta) 15%, transparent) 3px 3px 3px 0px;
-      border: none;
-      border-radius: var(--theme-border-radius);
-      color: var(--color-primary-cta-text);
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 1rem;
-      white-space: nowrap;
+      padding: 0.75rem 2rem; background: var(--color-primary-cta);
+      color: var(--color-primary-cta-text); font-weight: 600; border-radius: 8px;
+      cursor: pointer; border: none; transition: 0.3s;
     }
 
-    .btn-adicionar:hover {
-      transform: translateY(-2px);
-      filter: brightness(0.9);
-    }
-
-    /* Área de Produtos - Glassmorphism Global */
     .products-area {
-      background: rgba(45, 45, 45, 0.6);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 1.5rem;
-      color: #fff;
-      box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.3);
-      overflow-x: auto;
+      background: rgba(45, 45, 45, 0.6); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px;
+      padding: 1.5rem; color: #fff; overflow-x: auto;
     }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: #ccc; font-size: 0.85rem; }
+    td { padding: 16px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); vertical-align: middle; }
 
-    .products-area table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-
-    th {
-      text-align: left;
-      padding: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      color: #ccc;
-      font-size: 0.9rem;
-    }
-
-    td {
-      padding: 16px 12px;
-      vertical-align: middle;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .col-foto {
-      width: 80px;
-    }
-
-    .col-nome {
-      width: auto;
-    }
-
-    .col-preco {
-      width: 120px;
-    }
-
-    .col-acoes {
-      width: 180px;
-      text-align: right;
-    }
-
-    .img-thumb {
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .product-name {
-      font-weight: 500;
-    }
-
-    .product-price {
-      color: var(--color-accent);
-      font-weight: 700;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.75rem;
-    }
-
-    .btn-editar {
-      padding: 0.5rem 1rem;
-      background: rgba(59, 130, 246, 0.1);
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      border-radius: 6px;
-      color: #60a5fa;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 0.75rem;
-    }
-
-    .btn-editar:hover {
-      background: rgba(59, 130, 246, 0.2);
-    }
-
-    .btn-excluir {
-      padding: 0.5rem 1rem;
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      border-radius: 6px;
-      color: #f87171;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 0.75rem;
-      margin-left: 8px;
-    }
-
-    .btn-excluir:hover {
-      background: rgba(239, 68, 68, 0.2);
-    }
-
-    /* Modal - Overlay com Glassmorphism */
+    .img-thumb { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; }
+    .product-name { font-weight: 600; }
+    .product-price { color: #3b82f6; font-weight: 700; }
+    .actions { display: flex; gap: 10px; }
+    
     .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      z-index: 2000;
-      justify-content: center;
-      align-items: center;
+      display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px); z-index: 2000; justify-content: center; align-items: center;
     }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
+    .modal-overlay.active { display: flex; }
     .modal {
-      background: rgba(45, 45, 45, 0.8);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      padding: 2rem;
-      width: 90%;
-      max-width: 500px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-      color: #fff;
-      max-height: 90vh;
-      overflow-y: auto;
+      background: #1a1a1a; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+      padding: 2rem; width: 90%; max-width: 500px; color: #fff; max-height: 90vh; overflow-y: auto;
     }
-
-    .modal h2 {
-      margin-bottom: 1.5rem;
-      font-size: 1.5rem;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.5rem;
-      font-size: 0.875rem;
-      color: rgba(255, 255, 255, 0.7);
-      font-family: 'Inter Tight', sans-serif;
-    }
-
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; color: #aaa; }
     .form-group input, .form-group select, .form-group textarea {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      color: #fff;
-      font-size: 1rem;
-      font-family: 'Inter Tight', sans-serif;
-      transition: border-color 0.3s ease;
+      width: 100%; padding: 12px; background: #000; border: 1px solid #333; border-radius: 8px; color: #fff;
     }
 
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      outline: none;
-      border-color: var(--color-accent);
-    }
-
-    /* Upload Zone */
-    .upload-zone {
-      border: 2px dashed rgba(255, 255, 255, 0.3);
-      border-radius: 12px;
-      padding: 2rem 1rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s;
-      background: rgba(255, 255, 255, 0.05);
-      margin-bottom: 1rem;
-    }
-
-    .upload-zone:hover {
-      border-color: #FFD700;
-      background: rgba(255, 215, 0, 0.05);
-    }
-
-    .upload-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-
-    .btn-cancelar {
-      flex: 1;
-      padding: 0.75rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 0.875rem;
-    }
-
-    .btn-salvar {
-      flex: 1;
-      padding: 0.75rem;
-      background: var(--color-accent);
-      border: none;
-      border-radius: 8px;
-      color: #fff;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'Inter Tight', sans-serif;
-      font-size: 0.875rem;
-    }
-
-    /* Responsividade */
     @media (max-width: 768px) {
-      .navbar {
-        padding: 0 1rem;
-      }
-
-      /* Centralização da Logo na Navbar Mobile */
-      #nav nav > div {
-        justify-content: center !important;
-      }
-
-      /* Equilíbrio de Margens e Respiro Lateral */
-      .container {
-        padding: 100px 1.5rem 1.5rem !important;
-      }
-
-      /* Escala do Título e Redução de Espaço Vertical */
-      .header {
-        margin-bottom: 1.5rem !important;
-      }
-
-      .header h1 {
-        font-size: 1.5rem !important;
-      }
-
-      /* Ajuste da Tabela e Padding Interno */
-      .products-area {
-        padding: 1rem !important;
-        border-radius: 12px;
-      }
-
-      td {
-        padding: 12px 8px !important;
-        font-size: 0.85rem;
-      }
-
-      .img-thumb {
-        width: 40px;
-        height: 40px;
-      }
-
-      .actions {
-        gap: 0.5rem;
-      }
-
-      .btn-editar, .btn-excluir {
-        padding: 0.4rem 0.6rem;
-        font-size: 0.7rem;
-      }
+      .navbar > div { justify-content: center !important; }
+      .container { padding: 100px 1.5rem 1.5rem !important; }
+      .header h1 { font-size: 1.5rem !important; }
+      .products-area { padding: 1rem !important; }
+      td { padding: 12px 8px !important; font-size: 0.8rem; }
+      .img-thumb { width: 40px; height: 40px; }
     }
   </style>
 </head>
 
 <body class="antialiased">
   <div id="loginOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #040914; z-index: 9999; display: flex; justify-content: center; align-items: center; flex-direction: column;"><div class="glass-card" style="width: 100%; max-width: 380px; padding: 2.5rem; text-align: center; border-radius: 16px; background: rgba(25, 25, 25, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 35px rgba(0,0,0,0.5);"><img src="logo.png" alt="Fulltime" style="max-height: 70px; margin-bottom: 1.5rem; display: block; margin-left: auto; margin-right: auto;"><h2 style="color: #fff; margin-bottom: 1.5rem;">Acesso Restrito</h2><input type="text" id="adminUser" placeholder="Usuário" style="width: 100%; margin-bottom: 1rem; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; font-size: 1rem; box-sizing: border-box;"><input type="password" id="adminPass" placeholder="Senha" style="width: 100%; margin-bottom: 1.5rem; padding: 12px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; font-size: 1rem; box-sizing: border-box;"><button id="loginBtn" style="width: 100%; padding: 12px; background: #FFD700; color: #000; font-weight: bold; font-size: 1rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s;">Entrar</button><p id="loginError" style="color: #ff4d4d; margin-top: 1rem; display: none; font-size: 0.9rem;">Credenciais inválidas.</p></div></div>
-  <!-- Fundo animado (Canvas simulando Webild) -->
   <canvas id="bg-canvas"></canvas>
-
-  <!-- Beams Background -->
   <div id="beams-bg-container"><canvas id="beams-canvas"></canvas></div>
 
-  <!-- Navegação -->
-  <div id="nav" data-section="nav">
-    <nav
-      class="fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/0 backdrop-blur-0 h-20">
-      <div class="relative flex items-center justify-between h-full w-content-width mx-auto">
-        <div class="flex items-center transition-all duration-500 ease-in-out">
-          <a href="index.html" class="cursor-pointer">
-            <img src="/logo.png" alt="Fulltime Academia" class="h-12 md:h-16 w-auto object-contain transition-transform hover:scale-105" />
-          </a>
-        </div>
-        <div class="hidden md:flex items-center gap-6 transition-all duration-500 ease-in-out" role="navigation">
-          <a href="suplementos.html"
-            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Ver Loja</a>
-          <a href="#" id="logoutBtn"
-            class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground opacity-70 hover:opacity-100">Sair</a>
-        </div>
-      </div>
-    </nav>
-  </div>
+  <div id="nav"><nav class="navbar"><div class="relative flex items-center justify-between h-full w-content-width mx-auto"><a href="index.html"><img src="/logo.png" class="h-12 w-auto" /></a><div class="hidden md:flex gap-6"><a href="suplementos.html">Loja</a><a href="#" id="logoutBtn">Sair</a></div></div></nav></div>
 
-  <!-- Container Principal -->
   <div class="container">
-    <div class="header">
-      <h1>Gestão de Produtos</h1>
-      <button class="btn-adicionar" onclick="abrirModalNovo()">➕ Adicionar Produto</button>
-    </div>
-
-    <!-- Barra de Ferramentas -->
-    <div style="display:flex; gap:10px; margin-bottom:1.5rem; width:100%;">
-      <input type="text" id="searchAdmin" placeholder="Buscar produto pelo nome..." style="flex:1; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:#fff; font-size:1rem;">
-      <button id="btnNovaCat" style="padding:12px 20px; background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.2); border-radius:8px; cursor:pointer; font-weight:bold; transition:0.3s;">Categorias</button>
-    </div>
-
-    <!-- Área de Produtos -->
-    <div class="products-area">
-      <table>
-        <thead>
-          <tr>
-            <th class="col-foto">Foto</th>
-            <th class="col-nome">Nome / Descrição</th>
-            <th>Categoria</th>
-            <th class="col-preco">Preço</th>
-            <th class="col-acoes">Ações</th>
-          </tr>
-        </thead>
-        <tbody id="products-list">
-          <!-- Produtos renderizados via JS -->
-        </tbody>
-      </table>
-    </div>
+    <div class="header"><h1>Gestão de Produtos</h1><button class="btn-adicionar" onclick="abrirModalNovo()">➕ Novo Produto</button></div>
+    <div style="display:flex; gap:10px; margin-bottom:1.5rem;"><input type="text" id="searchAdmin" placeholder="Buscar..." style="flex:1; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border:1px solid #333; color:#fff;"><button id="btnNovaCat" style="padding:12px; background:#333; color:#fff; border-radius:8px; border:none; cursor:pointer;">Categorias</button></div>
+    <div class="products-area"><table><thead><tr><th>Foto</th><th>Produto</th><th>Categoria</th><th>Preço</th><th>Ações</th></tr></thead><tbody id="products-list"></tbody></table></div>
   </div>
 
-  <!-- Modal de Edição -->
   <div class="modal-overlay" id="modal-overlay">
     <div class="modal">
-      <h2 id="modal-title">Editar Produto</h2>
+      <h2 id="modal-title">Produto</h2>
       <form id="product-form">
         <input type="hidden" id="product-id">
-        <div class="form-group">
-          <label for="product-name">Nome</label>
-          <input type="text" id="product-name" placeholder="Nome do produto" required>
-        </div>
-        <div class="form-group">
-          <label for="produtoCategoria">Categoria</label>
-          <select id="produtoCategoria" required></select>
-        </div>
-        <div class="form-group">
-          <label for="produtoDescricao">Descrição</label>
-          <textarea id="produtoDescricao" placeholder="Descrição completa do produto" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="product-price">Preço</label>
-          <input type="text" id="product-price" placeholder="R$ 0,00" required>
-        </div>
-        <div class="upload-zone" id="uploadZone">
-          <input type="file" id="imageInput" accept="image/*" hidden>
-          <div class="upload-content" id="uploadContent">
-            <span style="font-size: 2rem;">📁</span>
-            <p>Clique ou arraste a foto do produto aqui</p>
-          </div>
-          <img id="imagePreview" src="" style="display: none; width: 100%; height: 150px; object-fit: contain; border-radius: 8px; margin-top: 1rem;">
+        <div class="form-group"><label>Nome</label><input type="text" id="product-name" required></div>
+        <div class="form-group"><label>Categoria</label><select id="produtoCategoria"></select></div>
+        <div class="form-group"><label>Descrição</label><textarea id="produtoDescricao" rows="3"></textarea></div>
+        <div class="form-group"><label>Preço</label><input type="text" id="product-price" required></div>
+        <div class="upload-zone" onclick="document.getElementById('imageInput').click()">
+          <input type="file" id="imageInput" hidden accept="image/*">
+          <div id="uploadContent">📁 Foto</div>
+          <img id="imagePreview" style="display:none; width:100%; height:120px; object-fit:contain; margin-top:10px;">
         </div>
         <input type="hidden" id="product-image">
-        <div class="modal-actions">
-          <button type="button" class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
-          <button type="submit" class="btn-salvar">Salvar</button>
-        </div>
+        <div style="display:flex; gap:10px; margin-top:1.5rem;"><button type="button" onclick="fecharModal()" style="flex:1; padding:12px; background:#333; color:#fff; border-radius:8px; border:none;">Cancelar</button><button type="submit" class="btn-salvar" style="flex:1; padding:12px; background:#3b82f6; color:#fff; border-radius:8px; border:none;">Salvar</button></div>
       </form>
     </div>
   </div>
 
-  <!-- Footer -->
-  <div id="footer" data-section="footer">
-    <footer role="contentinfo" aria-label="Site footer"
-      class="relative overflow-hidden w-full bg-[#003399] text-white py-10 mt-20">
-      <div class="relative w-content-width mx-auto z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-        <div class="flex items-center transition-all duration-500 ease-in-out">
-          <a href="index.html" class="cursor-pointer">
-            <img src="/logo.png" alt="Fulltime Academia" class="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" />
-          </a>
-        </div>
-        <div class="flex items-center">
-          <span class="text-white/50 text-sm">© 2026 | KrM Corp</span>
-        </div>
-      </div>
-    </footer>
-  </div>
-
   <script>
-    document.addEventListener("DOMContentLoaded", () => { 
-      if (sessionStorage.getItem("krm_admin_auth") === "true") { 
-        document.getElementById("loginOverlay").style.display = "none"; 
-      } 
-      loadCategorias();
+    document.addEventListener("DOMContentLoaded", () => {
+      if(sessionStorage.getItem("krm_admin_auth") === "true") document.getElementById("loginOverlay").style.display = "none";
+      loadCategorias(); carregarProdutos();
     });
 
-    document.getElementById("loginBtn").addEventListener("click", () => { 
-      const u = document.getElementById("adminUser").value; 
-      const p = document.getElementById("adminPass").value; 
-      if(u === "AdminFulltime" && p === "AdminFulltime") { 
-        sessionStorage.setItem("krm_admin_auth", "true"); 
-        document.getElementById("loginOverlay").style.display = "none"; 
-      } else { 
-        document.getElementById("loginError").style.display = "block"; 
-      } 
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      const u = document.getElementById("adminUser").value, p = document.getElementById("adminPass").value;
+      if(u === "AdminFulltime" && p === "AdminFulltime") { sessionStorage.setItem("krm_admin_auth", "true"); document.getElementById("loginOverlay").style.display = "none"; }
+      else document.getElementById("loginError").style.display = "block";
     });
 
-    const logoutBtn = document.getElementById("logoutBtn"); 
-    if(logoutBtn) { 
-      logoutBtn.addEventListener("click", function(e) { 
-        e.preventDefault(); 
-        sessionStorage.removeItem("krm_admin_auth"); 
-        window.location.reload(); 
-      }); 
-    }
+    document.getElementById("logoutBtn")?.addEventListener("click", () => { sessionStorage.removeItem("krm_admin_auth"); window.location.reload(); });
 
-    let produtos = [];
-    let categorias = [];
+    let produtos = [], categorias = [];
 
     async function loadCategorias() {
-      try {
-        const res = await fetch('/api/categorias');
-        categorias = await res.json();
-        const select = document.getElementById('produtoCategoria');
-        select.innerHTML = categorias.map(c => `<option value="${c}">${c}</option>`).join('');
-        renderCatManager();
-      } catch (error) {
-        console.error('Erro ao carregar categorias:', error);
-      }
+      const res = await fetch('/api/categorias'); categorias = await res.json();
+      document.getElementById('produtoCategoria').innerHTML = categorias.map(c => `<option value="${c}">${c}</option>`).join('');
+      renderCatManager();
     }
 
     function renderCatManager() {
-      const list = document.getElementById('catManagerList');
-      if (!list) return;
+      const list = document.getElementById('catManagerList'); if(!list) return;
       list.innerHTML = categorias.map((c, i) => `
-        <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:10px 12px; border-radius:8px; margin-bottom:10px; border:1px solid rgba(255,255,255,0.05);">
-          <span style="color:#fff; font-size:0.95rem;">${c}</span>
-          <div style="display:flex; gap:12px; align-items:center;">
-            <div onclick="editCat(${i})" style="cursor:pointer; opacity:0.7; transition:0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
-              <svg width="16" height="16" fill="#fff" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5z"/></svg>
-            </div>
-            <div onclick="deleteCat(${i})" style="cursor:pointer; opacity:0.7; transition:0.2s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.7">
-              <svg width="16" height="16" fill="#fff" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1z"/></svg>
-            </div>
+        <div style="display:flex; justify-content:space-between; padding:10px; background:rgba(255,255,255,0.05); border-radius:8px; margin-bottom:8px;">
+          <span>${c}</span>
+          <div style="display:flex; gap:12px;">
+            <div onclick="editCat(${i})" style="cursor:pointer;"><svg width="16" height="16" fill="#fff" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5z"/></svg></div>
+            <div onclick="deleteCat(${i})" style="cursor:pointer;"><svg width="16" height="16" fill="#fff" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1z"/></svg></div>
           </div>
-        </div>
-      `).join('');
+        </div>`).join('');
     }
 
-    async function editCat(i) {
-      window.catEditIndex = i;
-      document.getElementById('editCatInput').value = categorias[i];
-      document.getElementById('modalEdit').style.display = 'flex';
-    }
+    function editCat(i) { window.catEditIndex = i; document.getElementById('editCatInput').value = categorias[i]; document.getElementById('modalEdit').style.display = 'flex'; }
+    async function deleteCat(i) { if(confirm("Excluir?")) { categorias.splice(i, 1); await fetch('/api/categorias', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({categorias}) }); loadCategorias(); } }
 
-    async function deleteCat(i) {
-      if (confirm(`Excluir a categoria "${categorias[i]}"?`)) {
-        categorias.splice(i, 1);
-        await saveCategorias();
-      }
-    }
-
-    async function saveCategorias() {
-      try {
-        await fetch('/api/categorias', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ categorias })
-        });
-        loadCategorias();
-      } catch (error) {
-        console.error('Erro ao salvar categorias:', error);
-      }
-    }
-
-    const modalHTML = `<div id="modalCat" style="display:none; position:fixed; inset:0; background:rgba(4,9,20,0.95); z-index:9999; flex-direction:column; align-items:center; justify-content:center; backdrop-filter:blur(5px);"><div class="glass-card" style="padding:2.5rem; border-radius:16px; width:90%; max-width:400px; text-align:center; border:1px solid rgba(255,255,255,0.1);"><h3 style="color:#fff; margin-bottom:1.5rem; font-size:1.5rem;">Gerenciar Categorias</h3><div style="display:flex; gap:8px; margin-bottom:1.5rem;"><input type="text" id="inputNovaCat" placeholder="Nova categoria..." style="flex:1; padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.5); color:#fff; font-size:1rem; outline:none;"><button id="salvarCatBtn" style="padding:12px 20px; background:#FFD700; color:#000; font-weight:bold; border:none; border-radius:8px; cursor:pointer;">+</button></div><div id="catManagerList" style="text-align:left; max-height:250px; overflow-y:auto; border-top:1px solid rgba(255,255,255,0.1); padding-top:1rem; margin-bottom:1.5rem;"></div><button onclick="document.getElementById('modalCat').style.display='none'" style="width:100%; padding:12px; background:rgba(255,255,255,0.1); color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">Fechar</button></div></div>`; 
+    const modalHTML = `<div id="modalCat" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:9999; flex-direction:column; align-items:center; justify-content:center; backdrop-filter:blur(5px);"><div class="modal" style="max-width:400px; text-align:center;"><h3>Categorias</h3><div style="display:flex; gap:8px; margin:1.5rem 0;"><input type="text" id="inputNovaCat" style="flex:1; padding:10px; background:#000; border:1px solid #333; color:#fff;" placeholder="Nova..."><button id="salvarCatBtn" style="padding:10px; background:#FFD700; color:#000; font-weight:bold; border:none; border-radius:4px;">+</button></div><div id="catManagerList" style="max-height:200px; overflow-y:auto; text-align:left;"></div><button onclick="document.getElementById('modalCat').style.display='none'" style="width:100%; margin-top:1rem; padding:10px; background:#333; color:#fff; border:none;">Fechar</button></div></div>`;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
-    const editModal = `<div id="modalEdit" style="display:none; position:fixed; inset:0; background:rgba(4,9,20,0.95); z-index:10000; flex-direction:column; align-items:center; justify-content:center; backdrop-filter:blur(5px);"><div class="glass-card" style="padding:2.5rem; border-radius:16px; width:90%; max-width:350px; text-align:center; border:1px solid rgba(255,255,255,0.1);"><h3 style="color:#fff; margin-bottom:1.5rem; font-size:1.2rem;">Editar Categoria</h3><input type="text" id="editCatInput" style="width:100%; padding:14px; margin-bottom:1.5rem; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:rgba(0,0,0,0.5); color:#fff; font-size:1rem; outline:none;"><div style="display:flex; gap:10px;"><button onclick="document.getElementById('modalEdit').style.display='none'" style="flex:1; padding:12px; background:rgba(255,255,255,0.1); color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">Cancelar</button><button id="saveEditCat" style="flex:1; padding:12px; background:#FFD700; color:#000; font-weight:bold; border:none; border-radius:8px; cursor:pointer;">Salvar</button></div></div></div>`; 
+    const editModal = `<div id="modalEdit" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:10000; flex-direction:column; align-items:center; justify-content:center;"><div class="modal" style="max-width:350px; text-align:center;"><h3>Editar</h3><input type="text" id="editCatInput" style="width:100%; padding:12px; background:#000; color:#fff; border:1px solid #333; margin:1rem 0;"><div style="display:flex; gap:10px;"><button onclick="document.getElementById('modalEdit').style.display='none'" style="flex:1; padding:10px; background:#333; color:#fff; border:none;">Cancelar</button><button id="saveEditCat" style="flex:1; padding:10px; background:#FFD700; color:#000; font-weight:bold; border:none;">Salvar</button></div></div></div>`;
     document.body.insertAdjacentHTML('beforeend', editModal);
 
-    document.getElementById('btnNovaCat').addEventListener('click', () => {
-      document.getElementById('modalCat').style.display = 'flex';
-    });
+    document.getElementById('btnNovaCat').onclick = () => document.getElementById('modalCat').style.display = 'flex';
+    document.getElementById('salvarCatBtn').onclick = async () => { const v = document.getElementById('inputNovaCat').value.trim(); if(v) { categorias.push(v); await fetch('/api/categorias', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({categorias}) }); document.getElementById('inputNovaCat').value = ''; loadCategorias(); } };
+    document.getElementById('saveEditCat').onclick = async () => { const v = document.getElementById('editCatInput').value.trim(); if(v && window.catEditIndex !== undefined) { categorias[window.catEditIndex] = v; await fetch('/api/categorias', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({categorias}) }); document.getElementById('modalEdit').style.display = 'none'; loadCategorias(); } };
 
-    document.getElementById('salvarCatBtn').addEventListener('click', async () => {
-      const nova = document.getElementById('inputNovaCat').value.trim();
-      if (nova && !categorias.includes(nova)) {
-        categorias.push(nova);
-        try {
-          await fetch('/api/categorias', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ categorias })
-          });
-          document.getElementById('inputNovaCat').value = '';
-          loadCategorias();
-        } catch (error) {
-          console.error('Erro ao salvar nova categoria:', error);
-        }
-      }
-    });
-
-    document.getElementById('saveEditCat').addEventListener('click', async () => {
-      const novoNome = document.getElementById('editCatInput').value.trim();
-      if (novoNome && window.catEditIndex !== undefined) {
-        categorias[window.catEditIndex] = novoNome;
-        try {
-          await fetch('/api/categorias', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ categorias })
-          });
-          document.getElementById('modalEdit').style.display = 'none';
-          loadCategorias();
-        } catch (error) {
-          console.error('Erro ao salvar categoria editada:', error);
-        }
-      }
-    });
-
-    // Carregar produtos do banco
-    async function carregarProdutos() {
-      try {
-        const response = await fetch('/api/produtos');
-        const text = await response.text();
-        if (!response.ok) throw new Error("Erro ao carregar produtos: " + text);
-        produtos = JSON.parse(text);
-        renderizarProdutos();
-      } catch (error) {
-        console.error('Erro ao carregar produtos:', error);
-      }
-    }
-
-    // Salvar produtos no banco
-    async function salvarProdutosNoBanco() {
-      try {
-        await fetch('/api/produtos', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ produtos })
-        });
-      } catch (error) {
-        console.error('Erro ao salvar produtos:', error);
-      }
-    }
-
-    // Renderizar produtos
-    function renderizarProdutos(filtro = "") {
+    async function carregarProdutos() { const r = await fetch('/api/produtos'); produtos = await r.json(); renderizarProdutos(); }
+    function renderizarProdutos(f = "") {
       const list = document.getElementById('products-list');
-      let filtrados = produtos;
-      if (filtro) {
-        filtrados = produtos.filter(p => p.nome.toLowerCase().includes(filtro.toLowerCase()));
-      }
-
-      filtrados.sort((a,b) => (a.categoria || "").localeCompare(b.categoria || ""));
-
-      list.innerHTML = filtrados.map(p => `
-        <tr>
-          <td><img src="${p.imagem}" alt="${p.nome}" class="img-thumb"></td>
-          <td class="product-name">
-            ${p.nome}<br>
-            <small style="display:block; color:#777; font-style:italic; max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.descricao || ""}</small>
-          </td>
-          <td style="color:#aaa; font-size:0.9rem;">${p.categoria || 'Sem Categoria'}</td>
-          <td class="product-price">${p.preco}</td>
-          <td class="col-acoes">
-            <div class="actions">
-              <button class="btn-editar" onclick="editarProduto(${p.id})">Editar</button>
-              <button class="btn-excluir" onclick="excluirProduto(${p.id})">Excluir</button>
-            </div>
-          </td>
-        </tr>
-      `).join('');
+      let data = f ? produtos.filter(p => p.name.toLowerCase().includes(f.toLowerCase())) : produtos;
+      data.sort((a,b) => (a.categoria||"").localeCompare(b.categoria||""));
+      list.innerHTML = data.map(p => `<tr><td><img src="${p.imagem}" class="img-thumb"></td><td><b>${p.nome}</b><br><small style="color:#777;">${p.descricao||""}</small></td><td>${p.categoria||""}</td><td class="product-price">${p.preco}</td><td><div class="actions"><button class="btn-editar" onclick="editarProduto(${p.id})">Edit</button><button class="btn-excluir" onclick="excluirProduto(${p.id})">X</button></div></td></tr>`).join('');
     }
+    document.getElementById('searchAdmin').oninput = (e) => renderizarProdutos(e.target.value);
 
-    document.getElementById('searchAdmin').addEventListener('input', (e) => {
-      renderizarProdutos(e.target.value);
-    });
-
-    // Abrir modal para novo produto
     function abrirModalNovo() {
-      document.getElementById('modal-title').textContent = 'Novo Produto';
-      document.getElementById('product-id').value = '';
-      document.getElementById('product-name').value = '';
-      document.getElementById('produtoCategoria').value = categorias[0] || '';
-      document.getElementById('produtoDescricao').value = '';
-      document.getElementById('product-price').value = '';
-      document.getElementById('product-image').value = '';
-      imageInput.value = '';
-      imagePreview.src = '';
-      imagePreview.style.display = 'none';
-      uploadContent.style.display = 'flex';
+      document.getElementById('modal-title').textContent = 'Novo'; document.getElementById('product-id').value = '';
+      document.getElementById('product-name').value = ''; document.getElementById('produtoCategoria').value = categorias[0]||'';
+      document.getElementById('produtoDescricao').value = ''; document.getElementById('product-price').value = '';
+      document.getElementById('imagePreview').style.display = 'none'; document.getElementById('uploadContent').style.display = 'block';
       document.getElementById('modal-overlay').classList.add('active');
     }
 
-    // Editar produto
     function editarProduto(id) {
-      const produto = produtos.find(p => p.id === id);
-      if (produto) {
-        document.getElementById('modal-title').textContent = 'Editar Produto';
-        document.getElementById('product-id').value = produto.id;
-        document.getElementById('product-name').value = produto.nome;
-        document.getElementById('produtoCategoria').value = produto.categoria || '';
-        document.getElementById('produtoDescricao').value = produto.descricao || '';
-        document.getElementById('product-price').value = produto.preco;
-        document.getElementById('product-image').value = produto.imagem;
-        imagePreview.src = produto.imagem;
-        imagePreview.style.display = 'block';
-        uploadContent.style.display = 'none';
-        document.getElementById('modal-overlay').classList.add('active');
-      }
+      const p = produtos.find(x => x.id === id); if(!p) return;
+      document.getElementById('modal-title').textContent = 'Editar'; document.getElementById('product-id').value = p.id;
+      document.getElementById('product-name').value = p.nome; document.getElementById('produtoCategoria').value = p.categoria||'';
+      document.getElementById('produtoDescricao').value = p.descricao||''; document.getElementById('product-price').value = p.preco;
+      document.getElementById('product-image').value = p.imagem; document.getElementById('imagePreview').src = p.imagem;
+      document.getElementById('imagePreview').style.display = 'block'; document.getElementById('uploadContent').style.display = 'none';
+      document.getElementById('modal-overlay').classList.add('active');
     }
 
-    // Fechar modal
-    function fecharModal() {
-      document.getElementById('modal-overlay').classList.remove('active');
-    }
+    function fecharModal() { document.getElementById('modal-overlay').classList.remove('active'); }
 
-    // Excluir produto
-    async function excluirProduto(id) {
-      try {
-        if (confirm('Tem certeza que deseja excluir este produto?')) {
-          produtos = produtos.filter(p => p.id !== id);
-          renderizarProdutos();
-          await salvarProdutosNoBanco();
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    async function excluirProduto(id) { if(confirm("Excluir?")) { produtos = produtos.filter(p => p.id !== id); await fetch('/api/produtos', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({produtos}) }); carregarProdutos(); } }
 
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-      });
-    }
+    document.getElementById('product-form').onsubmit = async (e) => {
+      e.preventDefault(); const id = document.getElementById('product-id').value;
+      const data = { 
+        id: id ? Number(id) : (produtos.length ? Math.max(...produtos.map(p => p.id)) + 1 : 1),
+        nome: document.getElementById('product-name').value,
+        categoria: document.getElementById('produtoCategoria').value,
+        descricao: document.getElementById('produtoDescricao').value,
+        preco: document.getElementById('product-price').value,
+        imagem: document.getElementById('product-image').value
+      };
+      if(id) { const i = produtos.findIndex(x => x.id == id); produtos[i] = data; } else { produtos.push(data); }
+      await fetch('/api/produtos', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({produtos}) });
+      fecharModal(); carregarProdutos();
+    };
 
-    async function uploadImagemCloudinary(base64Image) {
-      if (!base64Image) return null;
-      try {
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ imageStr: base64Image })
-        });
-        const text = await response.text();
-        if (!response.ok) throw new Error("Servidor recusou upload: " + text);
-        const data = JSON.parse(text);
-        return data.secure_url;
-      } catch (error) {
-        console.error('Erro no upload:', error);
-        return null;
-      }
-    }
+    document.getElementById('imageInput').onchange = (e) => {
+      const f = e.target.files[0]; if(!f) return;
+      const r = new FileReader(); r.onload = (ev) => {
+        const img = new Image(); img.onload = () => {
+          const c = document.createElement('canvas'); let w = img.width, h = img.height;
+          if(w > h) { if(w > 800) { h *= 800/w; w = 800; } } else { if(h > 800) { w *= 800/h; h = 800; } }
+          c.width = w; c.height = h; c.getContext('2d').drawImage(img, 0, 0, w, h);
+          const base64 = c.toDataURL("image/jpeg", 0.8);
+          document.getElementById('imagePreview').src = base64; document.getElementById('imagePreview').style.display = 'block';
+          document.getElementById('uploadContent').style.display = 'none'; document.getElementById('product-image').value = base64;
+        }; img.src = ev.target.result;
+      }; r.readAsDataURL(f);
+    };
 
-    // Salvar produto
-    document.getElementById('product-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const btnSalvar = this.querySelector('.btn-salvar');
-      const textoOriginal = btnSalvar.textContent;
-      btnSalvar.textContent = 'Salvando...';
-      btnSalvar.disabled = true;
-
-      try {
-        const id = document.getElementById('product-id').value;
-        const nome = document.getElementById('product-name').value;
-        const categoria = document.getElementById('produtoCategoria').value;
-        const descricao = document.getElementById('produtoDescricao').value;
-        const preco = document.getElementById('product-price').value;
-        let imagem = document.getElementById('product-image').value;
-
-        if (imageInput.files && imageInput.files[0]) {
-          try {
-            const base64Image = await fileToBase64(imageInput.files[0]);
-            const uploadedUrl = await uploadImagemCloudinary(base64Image);
-            if (uploadedUrl) imagem = uploadedUrl;
-          } catch (err) { console.error(err); }
-        }
-
-        const produtoData = { 
-          id: id ? Number(id) : (produtos.length > 0 ? Math.max(...produtos.map(p => p.id)) + 1 : 1),
-          nome, categoria, descricao, preco, imagem 
-        };
-
-        if (id) {
-          const index = produtos.findIndex(p => p.id == id);
-          if (index !== -1) produtos[index] = produtoData;
-        } else {
-          produtos.push(produtoData);
-        }
-
-        renderizarProdutos();
-        await salvarProdutosNoBanco();
-        fecharModal();
-      } catch (error) {
-        console.error('Erro ao salvar produto:', error);
-      } finally {
-        btnSalvar.textContent = textoOriginal;
-        btnSalvar.disabled = false;
-      }
-    });
-
-    document.getElementById('modal-overlay').addEventListener('click', function(e) {
-      if (e.target === this) fecharModal();
-    });
-
-    const uploadZone = document.getElementById('uploadZone');
-    const imageInput = document.getElementById('imageInput');
-    const imagePreview = document.getElementById('imagePreview');
-    const uploadContent = document.getElementById('uploadContent');
-    const productImageInput = document.getElementById('product-image');
-
-    uploadZone.addEventListener('click', () => imageInput.click());
-
-    imageInput.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(event) {
-          const img = new Image();
-          img.onload = function() {
-            const canvas = document.createElement('canvas');
-            let { width, height } = img;
-            const maxSize = 800;
-            if (width > height) {
-              if (width > maxSize) { height *= maxSize / width; width = maxSize; }
-            } else {
-              if (height > maxSize) { width *= maxSize / height; height = maxSize; }
-            }
-            canvas.width = width; canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            const compressed = canvas.toDataURL("image/jpeg", 0.8);
-            imagePreview.src = compressed;
-            imagePreview.style.display = 'block';
-            uploadContent.style.display = 'none';
-            productImageInput.value = compressed;
-          };
-          img.src = event.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    // Canvas Background
-    const canvas = document.getElementById('bg-canvas');
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      let time = 0;
-      function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-      window.addEventListener('resize', resize);
-      resize();
-      function animate() {
-        time += 0.005;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const cx = canvas.width / 2 + Math.sin(time) * (canvas.width * 0.1);
-        const cy = canvas.height / 2 + Math.cos(time * 0.8) * (canvas.height * 0.1);
-        const radius = Math.max(canvas.width, canvas.height) * 0.6;
-        const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
-        gradient.addColorStop(0, 'rgba(59, 130, 246, 0.04)');
-        gradient.addColorStop(1, 'rgba(0, 51, 153, 0)');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        requestAnimationFrame(animate);
-      }
-      animate();
-    }
-
-    // Beams Animation
-    (function(){
-      const canvas=document.getElementById('beams-canvas');
-      const ctx=canvas.getContext('2d');
-      let beams=[];
-      function createBeam(width,height,isInitial=false){
-        return{x:Math.random()*width*1.5-width*0.25,y:isInitial?Math.random()*height*2-height:height+200+Math.random()*200,width:40+Math.random()*80,length:height*3.5,angle:-35+Math.random()*10,speed:0.8+Math.random()*1.5,opacity:0.4+Math.random()*0.4,pulse:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.03};
-      }
-      function updateSize(){
-        const width=window.innerWidth; const height=window.innerHeight;
-        const dpr=window.devicePixelRatio||1;
-        canvas.width=width*dpr; canvas.height=height*dpr;
-        canvas.style.width=width+'px'; canvas.style.height=height+'px';
-        ctx.scale(dpr,dpr);
-        beams=Array.from({length:45},()=>createBeam(width,height,true));
-      }
-      function draw(){
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        beams.forEach(beam=>{
-          beam.y-=beam.speed; beam.pulse+=beam.pulseSpeed;
-          if(beam.y+beam.length<0) { beam.y=window.innerHeight+200; beam.x=Math.random()*window.innerWidth*1.5-window.innerWidth*0.25; }
-          ctx.save(); ctx.translate(beam.x,beam.y); ctx.rotate((beam.angle*Math.PI)/180);
-          const pOpacity=Math.max(0,Math.min(1,beam.opacity*(0.8+Math.sin(beam.pulse)*0.2)));
-          const grad=ctx.createLinearGradient(0,0,0,beam.length);
-          grad.addColorStop(0,'rgba(0,0,0,0)'); grad.addColorStop(0.5,`rgba(0,0,0,${pOpacity})`); grad.addColorStop(1,'rgba(0,0,0,0)');
-          ctx.fillStyle=grad; ctx.fillRect(-beam.width/2,0,beam.width,beam.length); ctx.restore();
-        });
-        requestAnimationFrame(draw);
-      }
-      window.addEventListener('resize',updateSize);
-      updateSize(); draw();
+    // BG Animations (simplified)
+    (function animateBG() {
+      const c = document.getElementById('bg-canvas'); if(!c) return; const ctx = c.getContext('2d');
+      let t = 0; function res() { c.width = window.innerWidth; c.height = window.innerHeight; }
+      window.onresize = res; res();
+      function draw() {
+        t += 0.005; ctx.clearRect(0,0,c.width,c.height);
+        const grad = ctx.createRadialGradient(c.width/2, c.height/2, 0, c.width/2, c.height/2, Math.max(c.width,c.height));
+        grad.addColorStop(0, 'rgba(59, 130, 246, 0.05)'); grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad; ctx.fillRect(0,0,c.width,c.height); requestAnimationFrame(draw);
+      } draw();
     })();
-
-    carregarProdutos();
   </script>
 </body>
-
 </html>
