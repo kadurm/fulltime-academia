@@ -68,45 +68,55 @@
   }
 
   /* 3. IMPOSIÇÃO ABSOLUTA GRID 2X2 LOJA */
-  /* Alvo real identificado em suplementos.html: #produtos-grid */
   #produtos-grid {
     display: grid !important;
-    grid-template-columns: 1fr 1fr !important; /* Força matematicamente 2 colunas */
-    gap: 10px !important;
-    padding: 10px !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+    padding: 12px !important;
     width: 100% !important;
     align-items: stretch !important;
   }
 
   #produtos-grid .glass-card {
-    height: 100% !important;
-    min-width: 0 !important; /* Desbloqueio vital para caber em 1fr */
+    height: auto !important; /* Elimina esticamento vertical */
+    min-height: 280px !important;
+    min-width: 0 !important;
     width: 100% !important; 
     max-width: 100% !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-start !important; /* Agrupamento premium no topo */
-    padding: 10px !important;
+    justify-content: flex-start !important;
+    padding: 12px !important;
     box-sizing: border-box !important;
     margin: 0 !important;
   }
 
-  #produtos-grid .img-container, 
-  #produtos-grid img {
-    height: 100px !important;
+  #produtos-grid .img-container {
+    height: 90px !important; /* Altura máxima fixada */
     width: 100% !important;
-    object-fit: contain !important;
-    margin-bottom: 5px !important;
+    margin-bottom: 8px !important;
     background: transparent !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  #produtos-grid .img-container img {
+    max-height: 90px !important;
+    width: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
   }
 
   #produtos-grid h3 {
+    color: #ffffff !important; /* Branco puro */
     font-size: 0.85rem !important;
     line-height: 1.2 !important;
-    margin: 2px 0 !important;
+    margin: 4px 0 !important;
     text-align: center !important;
-    height: 2.4em !important;
-    overflow: hidden !important;
+    height: auto !important; /* Sem limite que esconda o texto */
+    overflow: visible !important;
+    font-weight: 600 !important;
   }
 
   #produtos-grid .card-desc {
@@ -115,17 +125,36 @@
 
   #produtos-grid .product-price {
     font-size: 0.9rem !important;
-    margin: 5px 0 !important;
+    margin: 4px 0 8px 0 !important;
     text-align: center !important;
     font-weight: 800 !important;
+    color: #ffffff !important;
   }
 
   #produtos-grid .add-to-cart {
-    margin-top: auto !important; /* Regra de Ouro: botão na base */
+    margin-top: auto !important; /* Botão colado na base */
     width: 100% !important;
-    padding: 8px 4px !important;
+    padding: 10px 4px !important;
     font-size: 0.75rem !important;
     border-radius: 6px !important;
+    height: auto !important;
+  }
+
+  /* 4. Refinamento Estético Form Consultar Planos */
+  #formConsultarPlanos-container {
+    padding: 1.25rem !important; /* p-5 */
+  }
+
+  #formConsultarPlanos h2 {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  #formConsultarPlanos p {
+    font-size: 0.85rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   /* Blindagem UI */
