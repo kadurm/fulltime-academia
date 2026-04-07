@@ -81,13 +81,14 @@
   #produtos-grid .glass-card {
     height: 100% !important;
     min-width: 0 !important; /* Desbloqueio vital para caber em 1fr */
-    width: auto !important; 
+    width: 100% !important; 
     max-width: 100% !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-start !important;
+    justify-content: flex-start !important; /* Agrupamento premium no topo */
     padding: 10px !important;
     box-sizing: border-box !important;
+    margin: 0 !important;
   }
 
   #produtos-grid .img-container, 
@@ -120,7 +121,7 @@
   }
 
   #produtos-grid .add-to-cart {
-    margin-top: auto !important; /* Regra de Ouro */
+    margin-top: auto !important; /* Regra de Ouro: botão na base */
     width: 100% !important;
     padding: 8px 4px !important;
     font-size: 0.75rem !important;
