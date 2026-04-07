@@ -51,7 +51,7 @@
       --color-accent: #3b82f6;
       --radius-lg: 1rem;
       --theme-border-radius: var(--radius-lg);
-      --width-content-width: clamp(40rem, 75vw, 100rem);
+      --width-content-width: clamp(20rem, 90vw, 100rem);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -60,6 +60,7 @@
       background-color: var(--color-background);
       color: var(--color-foreground);
       overflow-x: hidden;
+      max-width: 100%;
       min-height: 100vh;
     }
 
@@ -72,9 +73,10 @@
       display: flex; align-items: center;
       height: 80px; background: rgba(0, 51, 153, 0.85); backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      width: 100%;
     }
 
-    .container { max-width: 1000px; margin: 0 auto; padding: 120px 2rem 2rem; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 120px 2rem 2rem; width: 100%; }
     .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 3rem; gap: 1rem; }
     .header h1 { font-size: clamp(2rem, 3vw, 2.5rem); font-weight: 600; text-align: center; }
 
@@ -88,6 +90,7 @@
       background: rgba(45, 45, 45, 0.6); backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px;
       padding: 1.5rem; color: #fff; overflow-x: auto;
+      max-width: 100%;
     }
     table { width: 100%; border-collapse: collapse; }
     th { text-align: left; padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: #ccc; font-size: 0.85rem; }
@@ -113,11 +116,37 @@
       width: 100%; padding: 12px; background: #000; border: 1px solid #333; border-radius: 8px; color: #fff;
     }
 
+    .upload-zone { border: 2px dashed rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 2rem 1rem; text-align: center; cursor: pointer; }
+
     @media (max-width: 768px) {
-      .navbar > div { justify-content: center !important; }
-      .container { padding: 100px 1.5rem 1.5rem !important; }
+      .navbar { height: auto; padding: 1rem 0; }
+      .navbar > div { flex-direction: column !important; gap: 0.75rem; width: 100%; align-items: center; }
+      .navbar a:first-child { display: flex; justify-content: center; width: 100%; margin: 0; }
+      .navbar .hidden.md\:flex { 
+        display: flex !important; 
+        gap: 10px; 
+        width: 100%; 
+        justify-content: center; 
+        padding: 0 1rem; 
+      }
+      .navbar .hidden.md\:flex a {
+        flex: 1;
+        max-width: 150px;
+        text-align: center;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #fff;
+        font-family: 'Inter Tight', sans-serif;
+      }
+      
+      .container { padding: 120px 1rem 1rem !important; max-width: 100% !important; overflow-x: hidden !important; }
       .header h1 { font-size: 1.5rem !important; }
-      .products-area { padding: 1rem !important; }
+      .products-area { padding: 1rem !important; margin: 0 !important; width: 100% !important; box-sizing: border-box !important; }
       td { padding: 12px 8px !important; font-size: 0.8rem; }
       .img-thumb { width: 40px; height: 40px; }
     }
@@ -129,12 +158,12 @@
   <canvas id="bg-canvas"></canvas>
   <div id="beams-bg-container"><canvas id="beams-canvas"></canvas></div>
 
-  <div id="nav"><nav class="navbar"><div class="relative flex items-center justify-between h-full w-content-width mx-auto"><a href="index.html"><img src="/logo.png" class="h-12 w-auto" /></a><div class="hidden md:flex gap-6"><a href="suplementos.html">Loja</a><a href="#" id="logoutBtn">Sair</a></div></div></nav></div>
+  <div id="nav"><nav class="navbar"><div class="relative flex items-center justify-between h-full w-content-width mx-auto"><a href="index.html"><img src="/logo.png" class="h-12 w-auto" alt="Fulltime" /></a><div class="hidden md:flex gap-6 items-center"><a href="suplementos.html">Loja</a><a href="#" id="logoutBtn">Sair</a></div></div></nav></div>
 
   <div class="container">
     <div class="header"><h1>Gestão de Produtos</h1><button class="btn-adicionar" onclick="abrirModalNovo()">➕ Novo Produto</button></div>
     <div style="display:flex; gap:10px; margin-bottom:1.5rem;"><input type="text" id="searchAdmin" placeholder="Buscar..." style="flex:1; padding:12px; border-radius:8px; background:rgba(255,255,255,0.05); border:1px solid #333; color:#fff;"><button id="btnNovaCat" style="padding:12px; background:#333; color:#fff; border-radius:8px; border:none; cursor:pointer;">Categorias</button></div>
-    <div class="products-area"><table><thead><tr><th>Foto</th><th>Produto</th><th>Categoria</th><th>Preço</th><th>Ações</th></tr></thead><tbody id="products-list"></tbody></table></div>
+    <div class="products-area"><table><thead><tr><th>Foto</th><th>Produto</th><th>Categoria</th><th>Preço</th><th style="text-align:center;">Ações</th></tr></thead><tbody id="products-list"></tbody></table></div>
   </div>
 
   <div class="modal-overlay" id="modal-overlay">
@@ -145,7 +174,7 @@
         <div class="form-group"><label>Nome</label><input type="text" id="product-name" required></div>
         <div class="form-group"><label>Categoria</label><select id="produtoCategoria"></select></div>
         <div class="form-group"><label>Descrição</label><textarea id="produtoDescricao" rows="3"></textarea></div>
-        <div class="form-group"><label>Preço</label><input type="text" id="product-price" required></div>
+        <div class="form-group"><label>Preço</label><input type="text" id="product-price" required placeholder="R$ 0,00"></div>
         <div class="upload-zone" onclick="document.getElementById('imageInput').click()">
           <input type="file" id="imageInput" hidden accept="image/*">
           <div id="uploadContent">📁 Foto</div>
@@ -169,14 +198,27 @@
       else document.getElementById("loginError").style.display = "block";
     });
 
-    document.getElementById("logoutBtn")?.addEventListener("click", () => { sessionStorage.removeItem("krm_admin_auth"); window.location.reload(); });
+    document.getElementById("logoutBtn")?.addEventListener("click", (e) => { 
+      e.preventDefault(); sessionStorage.removeItem("krm_admin_auth"); window.location.reload(); 
+    });
+
+    document.getElementById('product-price').addEventListener('input', function(e) {
+      let v = e.target.value.replace(/\D/g, "");
+      v = (v / 100).toFixed(2) + "";
+      v = v.replace(".", ",");
+      v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+      v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+      e.target.value = "R$ " + v;
+    });
 
     let produtos = [], categorias = [];
 
     async function loadCategorias() {
-      const res = await fetch('/api/categorias'); categorias = await res.json();
-      document.getElementById('produtoCategoria').innerHTML = categorias.map(c => `<option value="${c}">${c}</option>`).join('');
-      renderCatManager();
+      try {
+        const res = await fetch('/api/categorias'); categorias = await res.json();
+        document.getElementById('produtoCategoria').innerHTML = categorias.map(c => `<option value="${c}">${c}</option>`).join('');
+        renderCatManager();
+      } catch (e) { console.error(e); }
     }
 
     function renderCatManager() {
@@ -185,8 +227,12 @@
         <div style="display:flex; justify-content:space-between; padding:10px; background:rgba(255,255,255,0.05); border-radius:8px; margin-bottom:8px;">
           <span>${c}</span>
           <div style="display:flex; gap:12px;">
-            <div onclick="editCat(${i})" style="cursor:pointer;"><svg width="16" height="16" fill="#fff" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5z"/></svg></div>
-            <div onclick="deleteCat(${i})" style="cursor:pointer;"><svg width="16" height="16" fill="#fff" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1z"/></svg></div>
+            <div onclick="editCat(${i})" style="cursor:pointer; opacity:0.7;">
+              <svg width="16" height="16" fill="#fff" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5z"/></svg>
+            </div>
+            <div onclick="deleteCat(${i})" style="cursor:pointer; opacity:0.7;">
+              <svg width="16" height="16" fill="#fff" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1z"/></svg>
+            </div>
           </div>
         </div>`).join('');
     }
@@ -209,7 +255,25 @@
       const list = document.getElementById('products-list');
       let data = f ? produtos.filter(p => p.name.toLowerCase().includes(f.toLowerCase())) : produtos;
       data.sort((a,b) => (a.categoria||"").localeCompare(b.categoria||""));
-      list.innerHTML = data.map(p => `<tr><td><img src="${p.imagem}" class="img-thumb"></td><td><b>${p.nome}</b><br><small style="color:#777;">${p.descricao||""}</small></td><td>${p.categoria||""}</td><td class="product-price">${p.preco}</td><td><div class="actions"><button class="btn-editar" onclick="editarProduto(${p.id})">Edit</button><button class="btn-excluir" onclick="excluirProduto(${p.id})">X</button></div></td></tr>`).join('');
+      list.innerHTML = data.map(p => {
+        const precoFormatado = p.preco.includes('R$') ? p.preco : `R$ ${parseFloat(p.preco || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+        return `<tr>
+          <td><img src="${p.imagem}" class="img-thumb"></td>
+          <td><b>${p.nome}</b><br><small style="color:#777;">${p.descricao||""}</small></td>
+          <td>${p.categoria||""}</td>
+          <td class="product-price">${precoFormatado}</td>
+          <td>
+            <div class="actions" style="justify-content: center;">
+              <div onclick="editarProduto(${p.id})" style="cursor:pointer; opacity:0.8;">
+                <svg width="18" height="16" fill="#fff" viewBox="0 0 16 16"><path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5z"/></svg>
+              </div>
+              <div onclick="excluirProduto(${p.id})" style="cursor:pointer; opacity:0.8;">
+                <svg width="18" height="16" fill="#fff" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1z"/></svg>
+              </div>
+            </div>
+          </td>
+        </tr>`;
+      }).join('');
     }
     document.getElementById('searchAdmin').oninput = (e) => renderizarProdutos(e.target.value);
 
@@ -264,7 +328,6 @@
       }; r.readAsDataURL(f);
     };
 
-    // BG Animations (simplified)
     (function animateBG() {
       const c = document.getElementById('bg-canvas'); if(!c) return; const ctx = c.getContext('2d');
       let t = 0; function res() { c.width = window.innerWidth; c.height = window.innerHeight; }
