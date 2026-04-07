@@ -1,73 +1,49 @@
 /* Mobile Surgical Fixes */
 @media (max-width: 768px) {
-  /* 1. Navbar Reconstruction (Horizontal Links) */
+  /* 1. Navbar Sync with Home */
   #nav nav {
     height: auto !important;
-    padding: 0.75rem 0 !important;
+    padding: 1rem 0 !important;
     position: fixed !important;
     top: 0 !important;
     width: 100% !important;
     z-index: 1000 !important;
-    background: rgba(0, 51, 153, 0.95) !important;
+    background: transparent !important; /* Start transparent like Home */
+    backdrop-filter: none !important;
+    transition: all 0.5s ease-in-out !important;
+  }
+
+  #nav nav.nav-scrolled {
+    background: rgba(0, 51, 153, 0.85) !important;
     backdrop-filter: blur(12px) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
   
   #nav nav > div {
-    flex-direction: column !important;
+    flex-direction: row !important; /* Keep horizontal like Home if possible or adjusted */
     align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    margin: 0 !important;
+    justify-content: space-between !important;
+    width: 90% !important; /* Balanced side margins */
+    margin: 0 auto !important;
     padding: 0 !important;
-    gap: 8px !important;
   }
 
   #nav .flex.items-center:first-child {
-    justify-content: center !important;
-    width: 100% !important;
-  }
-
-  /* Force links to display horizontally with scroll */
-  #nav div[role="navigation"] {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
     justify-content: flex-start !important;
-    gap: 16px !important;
-    width: 100% !important;
-    overflow-x: auto !important;
-    white-space: nowrap !important;
-    -webkit-overflow-scrolling: touch !important;
-    padding: 4px 20px 8px !important;
-    scrollbar-width: none !important; /* Firefox */
+    width: auto !important;
   }
 
-  #nav div[role="navigation"]::-webkit-scrollbar {
-    display: none !important; /* Chrome/Safari */
+  #nav div[role="navigation"] {
+    display: none !important; /* Use menu-toggle on mobile */
   }
 
-  #nav div[role="navigation"] button, 
-  #nav div[role="navigation"] a {
-    font-size: 0.8rem !important;
-    flex-shrink: 0 !important;
-    color: #ffffff !important;
+  #menu-toggle {
+    display: flex !important;
   }
 
-  /* Hide toggle elements */
-  #menu-toggle, #mobile-menu, #menu-close {
-    display: none !important;
-  }
-
-  /* 2. Home Spacing Fixes (Adjusted for new Nav height) */
+  /* 2. Home Spacing Fixes (Using exact IDs) */
   #hero section {
-    padding-top: 10rem !important;
-    padding-bottom: 1rem !important;
-  }
-
-  .hero-carousel-wrapper {
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    padding-top: 8rem !important;
+    padding-bottom: 2rem !important;
   }
 
   #unidades .grid {
@@ -75,7 +51,7 @@
     display: flex !important;
     flex-direction: column !important;
     gap: 1.5rem !important;
-    padding: 0 5% !important;
+    padding: 0 5% !important; /* Symmetric margins */
   }
 
   /* 3. GRID LOJA 2X2 */
@@ -83,44 +59,39 @@
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 12px !important;
-    padding: 12px 5% !important;
+    padding: 12px 5% !important; /* Symmetric margins */
     width: 100% !important;
     align-items: stretch !important;
   }
 
   #produtos-grid .glass-card {
-    height: auto !important;
-    min-height: 280px !important;
+    min-height: 320px !important;
     padding: 12px !important;
   }
 
   #produtos-grid .img-container {
-    height: 90px !important;
+    height: 100px !important;
   }
 
   #produtos-grid h3 {
     font-size: 0.85rem !important;
-    color: #ffffff !important;
+    font-weight: 700 !important;
   }
 
   #produtos-grid .product-price {
-    font-size: 0.9rem !important;
-    color: #ffffff !important;
+    font-size: 1rem !important;
+    margin-top: 8px !important;
   }
 
-  #produtos-grid .add-to-cart {
+  #produtos-grid .primary-button {
     margin-top: auto !important;
+    padding: 10px !important;
     font-size: 0.75rem !important;
   }
 
   /* 4. Refinamento Estético Form */
   #formConsultarPlanos-container {
-    padding: 2.5rem 5% 1.5rem !important;
-  }
-
-  #formConsultarPlanos p {
-    white-space: nowrap !important;
-    font-size: 0.85rem !important;
+    padding: 2.5rem 5% !important;
   }
 
   /* Blindagem UI */
