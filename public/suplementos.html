@@ -64,6 +64,7 @@
       display: flex; 
       flex-direction: column; 
       justify-content: flex-start;
+      align-items: center;
       transition: transform 0.3s ease, border-color 0.3s ease; 
       height: 100%;
     }
@@ -121,16 +122,32 @@
       border-color: #FFD700; 
     }
 
-    .img-container img { 
-      height: 180px; 
+    .img-container {
+      aspect-ratio: 1 / 1;
+      height: auto;
+      width: 100%;
+    }
+
+    .img-container div, .img-container img { 
+      height: 100%; 
       width: 100%; 
       object-fit: cover; 
       border-radius: 8px; 
+    }
+    .glass-card h3 {
+      text-align: center;
+      width: 100%;
+    }
+    .card-desc {
+      text-align: center;
+      width: 100%;
     }
     .product-price { 
       color: #3b82f6; 
       font-weight: 800; 
       font-size: 1.2rem; 
+      text-align: center;
+      width: 100%;
     }
 
     .nav-scrolled {
@@ -142,7 +159,6 @@
     @media (max-width: 768px) {
       .grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px; }
       .glass-card { padding: 12px; min-height: auto; }
-      .img-container img { height: 100px; }
       .card-desc { display: none; }
       h3 { font-size: 0.9rem !important; }
       .product-price { font-size: 1rem; }
@@ -196,17 +212,17 @@
             catContainer.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentFilter = btn.getAttribute('data-filter');
-            render();
+            renderizarProdutosLoja();
           };
         });
 
-        render();
+        renderizarProdutosLoja();
       } catch (err) {
         console.error("Erro ao carregar loja:", err);
       }
     }
 
-    function render() {
+    function renderizarProdutosLoja() {
       const grid = document.getElementById('produtos-grid');
       const filtered = allProdutos.filter(p => {
         const matchesCat = currentFilter === 'todos' || p.categoria === currentFilter;
@@ -217,7 +233,7 @@
       grid.innerHTML = filtered.map(p => `
         <div class="glass-card">
           <div>
-            <div class="img-container"><img src="${p.imagem}" alt="${p.nome}"></div>
+            <div class="img-container"><img src="${p.imagem}" alt="${p.nome}" class="w-full h-full object-cover" style="border-radius: 8px;"></div>
             <div class="mt-4">
               <h3 class="font-bold text-lg">${p.nome}</h3>
               <p class="card-desc text-sm opacity-60 mt-2">${p.descricao || ""}</p>
@@ -229,7 +245,7 @@
       `).join('');
     }
 
-    document.getElementById('searchInput').oninput = (e) => { currentSearch = e.target.value; render(); };
+    document.getElementById('searchInput').oninput = (e) => { currentSearch = e.target.value; renderizarProdutosLoja(); };
 
     document.addEventListener('DOMContentLoaded', () => {
       loadStore();
