@@ -739,6 +739,48 @@
 
 
 
+  <!-- Contato -->
+  <div id="contato" data-section="contact">
+    <section aria-label="Contact section" class="relative py-20 w-full bg-foreground">
+      <div class="w-content-width mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:auto-rows-fr">
+          <div class="bg-[#003399] text-white rounded-theme-capped p-8 md:p-12 flex items-center justify-center">
+            <form id="formConsultarPlanos" class="relative z-1 w-full flex flex-col gap-6">
+              <div class="w-full flex flex-col gap-2 text-center">
+                <h2 class="blur-text text-white"
+                  aria-label="Consultar Planos">Consultar Planos</h2>
+                <p class="blur-text section-subtitle text-white/80"
+                  aria-label="Entre em contato para saber mais">Entre em contato para saber mais</p>
+              </div>
+              <div class="w-full flex flex-col gap-4">
+                <div class="w-full">
+                  <input id="nomeConsulta" type="text" placeholder="Nome" aria-label="Nome"
+                    class="w-full relative z-1 px-4 py-3 bg-white/10 border border-white/20 rounded-theme text-base text-white placeholder:text-white/60 focus:outline-none" />
+                </div>
+                <div class="w-full">
+                  <input id="emailConsulta" type="email" placeholder="Email" aria-label="Email"
+                    class="w-full relative z-1 px-4 py-3 bg-white/10 border border-white/20 rounded-theme text-base text-white placeholder:text-white/60 focus:outline-none" />
+                </div>
+                <select id="unidadeConsulta" required style="width: 100%; padding: 12px; margin-bottom: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: #fff; font-size: 1rem; outline: none;"><option value="" disabled selected style="color:#000;">Unidade de Preferência</option><option value="Sede" style="color:#000;">Sede</option><option value="Unidade 2" style="color:#000;">Unidade 2</option><option value="Unidade 3" style="color:#000;">Unidade 3</option><option value="Unidade 4" style="color:#000;">Unidade 4</option></select>
+                <button type="submit" aria-label="Submit"
+                  class="relative cursor-pointer h-10 mt-2 min-w-0 max-w-full px-6 bg-white rounded-theme text-[#003399] font-medium w-full">
+                  <span
+                    class="block overflow-hidden truncate whitespace-nowrap text-base font-medium">Enviar</span>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="overflow-hidden rounded-theme-capped card md:relative md:h-full">
+            <img alt="" aria-hidden="true" loading="lazy"
+              class="h-auto rounded-theme-capped w-full md:absolute md:inset-0 md:h-full object-cover"
+              src="http://img.b2bpic.net/free-photo/close-up-athlete-ready-run_23-2148876522.jpg?_wi=2"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=1200&auto=format&fit=crop';" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
   <!-- FAQ -->
   <div id="faq" data-section="faq">
     <section aria-label="FAQ section" class="relative py-20 w-full">
@@ -817,48 +859,6 @@
                 <div class="text-base text-foreground/80 pt-4 text-center">Sim, oferecemos descontos para planos anuais.</div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-
-  <!-- Contato -->
-  <div id="contato" data-section="contact">
-    <section aria-label="Contact section" class="relative py-20 w-full bg-foreground">
-      <div class="w-content-width mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:auto-rows-fr">
-          <div class="bg-[#003399] text-white rounded-theme-capped p-8 md:p-12 flex items-center justify-center">
-            <form id="formConsultarPlanos" class="relative z-1 w-full flex flex-col gap-6">
-              <div class="w-full flex flex-col gap-2 text-center">
-                <h2 class="blur-text text-white"
-                  aria-label="Consultar Planos">Consultar Planos</h2>
-                <p class="blur-text section-subtitle text-white/80"
-                  aria-label="Entre em contato para saber mais">Entre em contato para saber mais</p>
-              </div>
-              <div class="w-full flex flex-col gap-4">
-                <div class="w-full">
-                  <input id="nomeConsulta" type="text" placeholder="Nome" aria-label="Nome"
-                    class="w-full relative z-1 px-4 py-3 bg-white/10 border border-white/20 rounded-theme text-base text-white placeholder:text-white/60 focus:outline-none" />
-                </div>
-                <div class="w-full">
-                  <input id="emailConsulta" type="email" placeholder="Email" aria-label="Email"
-                    class="w-full relative z-1 px-4 py-3 bg-white/10 border border-white/20 rounded-theme text-base text-white placeholder:text-white/60 focus:outline-none" />
-                </div>
-                <select id="unidadeConsulta" required style="width: 100%; padding: 12px; margin-bottom: 1.5rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: #fff; font-size: 1rem; outline: none;"><option value="" disabled selected style="color:#000;">Unidade de Preferência</option><option value="Sede" style="color:#000;">Sede</option><option value="Unidade 2" style="color:#000;">Unidade 2</option><option value="Unidade 3" style="color:#000;">Unidade 3</option><option value="Unidade 4" style="color:#000;">Unidade 4</option></select>
-                <button type="submit" aria-label="Submit"
-                  class="relative cursor-pointer h-10 mt-2 min-w-0 max-w-full px-6 bg-white rounded-theme text-[#003399] font-medium w-full">
-                  <span
-                    class="block overflow-hidden truncate whitespace-nowrap text-base font-medium">Enviar</span>
-                </button>
-              </div>
-            </form>
-          </div>
-          <div class="overflow-hidden rounded-theme-capped card md:relative md:h-full">
-            <img alt="" aria-hidden="true" loading="lazy"
-              class="h-auto rounded-theme-capped w-full md:absolute md:inset-0 md:h-full object-cover"
-              src="http://img.b2bpic.net/free-photo/close-up-athlete-ready-run_23-2148876522.jpg?_wi=2"
-              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=1200&auto=format&fit=crop';" />
           </div>
         </div>
       </div>
