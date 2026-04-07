@@ -113,6 +113,22 @@
     border-radius: 6px !important;
   }
 
+  /* Refinamento de Espaçamentos Mobile */
+  #hero section {
+    padding-top: 13.5rem !important; /* Espaço para navbar alta e respiro */
+    padding-bottom: 2rem !important; /* Reduz distância para a seção About */
+  }
+
+  .hero-carousel-wrapper {
+    margin-top: -1rem !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Ajuste de respiro entre o carrossel e o About */
+  #about section {
+    padding-top: 0 !important;
+  }
+
   /* Blindagem UI */
   .hero-carousel-wrapper, #main-carousel, .carousel-item {
     pointer-events: auto !important;
