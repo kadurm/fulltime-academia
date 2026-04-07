@@ -51,7 +51,7 @@
       --color-accent: #3b82f6;
       --radius-lg: 1rem;
       --theme-border-radius: var(--radius-lg);
-      --width-content-width: clamp(40rem, 75vw, 100rem);
+      --width-content-width: clamp(20rem, 90vw, 100rem);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -60,6 +60,7 @@
       background-color: var(--color-background);
       color: var(--color-foreground);
       overflow-x: hidden;
+      max-width: 100%;
       min-height: 100vh;
     }
 
@@ -72,9 +73,10 @@
       display: flex; align-items: center;
       height: 80px; background: rgba(0, 51, 153, 0.85); backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      width: 100%;
     }
 
-    .container { max-width: 1000px; margin: 0 auto; padding: 120px 2rem 2rem; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 120px 2rem 2rem; width: 100%; }
     .header { display: flex; flex-direction: column; align-items: center; margin-bottom: 3rem; gap: 1rem; }
     .header h1 { font-size: clamp(2rem, 3vw, 2.5rem); font-weight: 600; text-align: center; }
 
@@ -88,6 +90,7 @@
       background: rgba(45, 45, 45, 0.6); backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px;
       padding: 1.5rem; color: #fff; overflow-x: auto;
+      max-width: 100%;
     }
     table { width: 100%; border-collapse: collapse; }
     th { text-align: left; padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: #ccc; font-size: 0.85rem; }
@@ -113,15 +116,26 @@
       width: 100%; padding: 12px; background: #000; border: 1px solid #333; border-radius: 8px; color: #fff;
     }
 
+    .upload-zone { border: 2px dashed rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 2rem 1rem; text-align: center; cursor: pointer; }
+
     @media (max-width: 768px) {
-      .navbar > div { justify-content: center !important; }
-      .container { padding: 100px 1.5rem 1.5rem !important; }
+      .navbar { padding: 0 1rem; justify-content: center; }
+      .navbar > div { width: 100% !important; display: flex !important; justify-content: center !important; margin: 0 !important; max-width: 100% !important; }
+      .navbar a:first-child { display: flex; justify-content: center; width: 100%; }
+      .navbar img { margin: 0 auto !important; position: static !important; transform: none !important; }
+      
+      .container { padding: 100px 1rem 1rem !important; max-width: 100% !important; overflow-x: hidden !important; }
+      .header { margin-bottom: 1.5rem !important; }
       .header h1 { font-size: 1.5rem !important; }
-      .products-area { padding: 1rem !important; }
+      .products-area { padding: 1rem !important; margin: 0 !important; width: 100% !important; box-sizing: border-box !important; }
       td { padding: 12px 8px !important; font-size: 0.8rem; }
       .img-thumb { width: 40px; height: 40px; }
+      .btn-editar, .btn-excluir { padding: 0.4rem 0.6rem; font-size: 0.7rem; }
+      
+      #searchAdmin { width: 100% !important; }
+      #btnNovaCat { white-space: nowrap; }
     }
-  </style>
+  <link rel="stylesheet" href="mobile-fix.css">
 </head>
 
 <body class="antialiased">
@@ -129,7 +143,7 @@
   <canvas id="bg-canvas"></canvas>
   <div id="beams-bg-container"><canvas id="beams-canvas"></canvas></div>
 
-  <div id="nav"><nav class="navbar"><div class="relative flex items-center justify-between h-full w-content-width mx-auto"><a href="index.html"><img src="/logo.png" class="h-12 w-auto" /></a><div class="hidden md:flex gap-6"><a href="suplementos.html">Loja</a><a href="#" id="logoutBtn">Sair</a></div></div></nav></div>
+  <div id="nav"><nav class="navbar"><div class="relative flex items-center justify-between h-full w-content-width mx-auto"><a href="index.html"><img src="/logo.png" class="h-12 w-auto" alt="Fulltime" /></a><div class="hidden md:flex gap-6"><a href="suplementos.html">Loja</a><a href="#" id="logoutBtn">Sair</a></div></div></nav></div>
 
   <div class="container">
     <div class="header"><h1>Gestão de Produtos</h1><button class="btn-adicionar" onclick="abrirModalNovo()">➕ Novo Produto</button></div>
@@ -174,9 +188,11 @@
     let produtos = [], categorias = [];
 
     async function loadCategorias() {
-      const res = await fetch('/api/categorias'); categorias = await res.json();
-      document.getElementById('produtoCategoria').innerHTML = categorias.map(c => `<option value="${c}">${c}</option>`).join('');
-      renderCatManager();
+      try {
+        const res = await fetch('/api/categorias'); categorias = await res.json();
+        document.getElementById('produtoCategoria').innerHTML = categorias.map(c => `<option value="${c}">${c}</option>`).join('');
+        renderCatManager();
+      } catch (e) { console.error(e); }
     }
 
     function renderCatManager() {
@@ -264,7 +280,6 @@
       }; r.readAsDataURL(f);
     };
 
-    // BG Animations (simplified)
     (function animateBG() {
       const c = document.getElementById('bg-canvas'); if(!c) return; const ctx = c.getContext('2d');
       let t = 0; function res() { c.width = window.innerWidth; c.height = window.innerHeight; }

@@ -1,7 +1,15 @@
 /* Mobile Surgical Fixes */
 @media (max-width: 768px) {
-  /* 1. Navbar Isolada */
-  #nav nav {
+  /* Global Overflow Protection */
+  html, body {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 1. Navbar Centering & Reset */
+  #nav nav, .navbar {
     height: auto !important;
     padding: 1rem 0 !important;
     position: fixed !important;
@@ -10,160 +18,109 @@
     z-index: 1000 !important;
     background: rgba(0, 51, 153, 0.95) !important;
     backdrop-filter: blur(12px) !important;
+    left: 0 !important;
+    right: 0 !important;
   }
   
-  #nav nav > div {
+  #nav nav > div, .navbar > div {
     flex-direction: column !important;
     align-items: center !important;
+    justify-content: center !important;
     gap: 0.75rem !important;
     width: 100% !important;
-    padding: 0 !important;
+    padding: 0 1rem !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 
-  #nav .flex.items-center:first-child {
+  /* Logo Centering */
+  #nav .flex.items-center:first-child, .navbar a:first-child {
     justify-content: center !important;
     width: 100% !important;
+    display: flex !important;
+    margin: 0 !important;
   }
 
-  #nav div[role="navigation"] {
+  .navbar img, #nav img {
+    margin: 0 auto !important;
+    display: block !important;
+    max-width: 150px !important;
+  }
+
+  /* Hide Desktop Nav Elements */
+  #nav div[role="navigation"], .navbar .hidden.md\:flex {
     display: flex !important;
     flex-wrap: wrap !important;
     justify-content: center !important;
-    gap: 0.75rem !important;
+    gap: 1rem !important;
     width: 100% !important;
     margin-top: 0.5rem !important;
-  }
-
-  #nav div[role="navigation"] button, 
-  #nav div[role="navigation"] a {
-    font-size: 0.85rem !important;
   }
 
   #menu-toggle, #mobile-menu, #menu-close {
     display: none !important;
   }
 
-  /* 2. Home Spacing Fixes (Using exact IDs) */
-  #hero section {
-    padding-top: 15rem !important; /* Aumenta margem pós-navbar */
-    padding-bottom: 1rem !important;
+  /* 2. Main Container Margins */
+  .container {
+    padding: 120px 16px 20px !important; /* Respiro simétrico de 16px */
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 auto !important;
   }
 
-  .hero-carousel-wrapper {
-    margin-top: -0.5rem !important;
-    margin-bottom: 0 !important;
+  /* Header Title Scale */
+  .header h1 {
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem !important;
   }
 
-  /* Reduz espaço entre carrossel e About */
-  #about section {
-    padding-top: 0.5rem !important;
-    margin-top: -1rem !important;
+  /* 3. Products Area Refinement */
+  .products-area {
+    padding: 12px !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    border-radius: 12px !important;
+    overflow-x: auto !important; /* Permit table to scroll internally if needed */
   }
 
-  #unidades .grid {
-    grid-template-columns: 1fr !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 1.5rem !important;
+  table {
+    width: 100% !important;
+    min-width: 400px; /* Force minimum width for table contents readability */
   }
 
-  /* 3. IMPOSIÇÃO ABSOLUTA GRID 2X2 LOJA */
+  td, th {
+    padding: 10px 6px !important;
+    font-size: 0.8rem !important;
+  }
+
+  .img-thumb {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  /* 4. IMPOSIÇÃO ABSOLUTA GRID 2X2 LOJA */
   #produtos-grid {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 12px !important;
     padding: 12px !important;
     width: 100% !important;
-    align-items: stretch !important;
-  }
-
-  #produtos-grid .glass-card {
-    height: auto !important; /* Elimina esticamento vertical */
-    min-height: 280px !important;
-    min-width: 0 !important;
-    width: 100% !important; 
-    max-width: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    padding: 12px !important;
     box-sizing: border-box !important;
-    margin: 0 !important;
   }
 
-  #produtos-grid .img-container {
-    height: 90px !important; /* Altura máxima fixada */
-    width: 100% !important;
-    margin-bottom: 8px !important;
-    background: transparent !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
-
-  #produtos-grid .img-container img {
-    max-height: 90px !important;
-    width: auto !important;
+  /* Force buttons and inputs to respect container width */
+  input[type="text"], button {
     max-width: 100% !important;
-    object-fit: contain !important;
+    box-sizing: border-box !important;
   }
 
-  #produtos-grid h3 {
-    color: #ffffff !important; /* Branco puro */
-    font-size: 0.85rem !important;
-    line-height: 1.2 !important;
-    margin: 4px 0 !important;
-    text-align: center !important;
-    height: auto !important; /* Sem limite que esconda o texto */
-    overflow: visible !important;
-    font-weight: 600 !important;
-  }
-
-  #produtos-grid .card-desc {
-    display: none !important;
-  }
-
-  #produtos-grid .product-price {
-    font-size: 0.9rem !important;
-    margin: 4px 0 8px 0 !important;
-    text-align: center !important;
-    font-weight: 800 !important;
-    color: #ffffff !important;
-  }
-
-  #produtos-grid .add-to-cart {
-    margin-top: auto !important; /* Botão colado na base */
-    width: 100% !important;
-    padding: 10px 4px !important;
-    font-size: 0.75rem !important;
-    border-radius: 6px !important;
-    height: auto !important;
-  }
-
-  /* 4. Refinamento Estético Form Consultar Planos */
-  #formConsultarPlanos-container {
-    padding: 2.5rem 1.25rem 1.25rem !important; /* Aumenta padding superior para respiro do título */
-  }
-
-  #formConsultarPlanos {
-    gap: 1rem !important; /* Diminui gap entre cabeçalho e campos */
-  }
-
-  #formConsultarPlanos h2 {
-    font-size: 1.5rem !important;
-    margin-bottom: 0.25rem !important;
-  }
-
-  #formConsultarPlanos p {
-    font-size: 0.85rem !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    margin-bottom: 0 !important; /* Elimina margem inferior para aproximar do Nome */
-  }
-
-  /* Blindagem UI */
-  .hero-carousel-wrapper, #main-carousel, .carousel-item {
-    pointer-events: auto !important;
+  /* Hero Spacing Fixes */
+  #hero section {
+    padding-top: 15rem !important;
+    padding-bottom: 1rem !important;
   }
 }
