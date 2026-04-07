@@ -443,7 +443,6 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
   </style>
-  <link rel="stylesheet" href="mobile-fix.css">
 </head>
 
 <body class="antialiased">
@@ -537,11 +536,8 @@
   </div>
 
   <!-- Categorias -->
-  <div class="categories blur-text">
-    <button class="cat-btn active" data-filter="todos">Todos</button>
-    <button class="cat-btn" data-filter="proteina">Proteínas</button>
-    <button class="cat-btn" data-filter="creatina">Creatinas</button>
-    <button class="cat-btn" data-filter="pre">Pré-Treinos</button>
+  <div class="categories blur-text" id="categorias-container">
+    <!-- Categorias renderizadas via JS -->
   </div>
 
   <!-- Grid de Produtos -->
@@ -693,6 +689,32 @@
       let currentFilter = 'todos';
       let currentSearch = '';
 
+      async function syncCategoriasLoja() {
+        try {
+          const res = await fetch("/api/categorias");
+          const cats = await res.json();
+          const container = document.getElementById('categorias-container');
+          if (!container) return;
+
+          container.innerHTML = `<button class="cat-btn active" data-filter="todos">Todos</button>`;
+          cats.forEach(cat => {
+            container.innerHTML += `<button class="cat-btn" data-filter="${cat}">${cat}</button>`;
+          });
+
+          // Re-atachar eventos
+          container.querySelectorAll('.cat-btn').forEach(btn => {
+            btn.onclick = () => {
+              container.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              currentFilter = btn.getAttribute('data-filter');
+              filtrarProdutos();
+            };
+          });
+        } catch (err) {
+          console.error("Erro sync categorias:", err);
+        }
+      }
+
       async function carregarProdutosLoja() {
         const grid = document.getElementById('produtos-grid');
         grid.innerHTML = '<p style="color: white; text-align: center; grid-column: 1 / -1;">Carregando suplementos...</p>';
@@ -745,17 +767,6 @@
 
         renderizarProdutosLoja(produtosFiltrados);
       }
-
-      // Configurar Categorias
-      const catBtns = document.querySelectorAll('.cat-btn');
-      catBtns.forEach(btn => {
-        btn.onclick = () => {
-          catBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          currentFilter = btn.getAttribute('data-filter');
-          filtrarProdutos();
-        };
-      });
 
       // Configurar Busca
       const searchInput = document.getElementById('searchInput');
@@ -820,6 +831,7 @@
       }
 
       carregarProdutosLoja();
+      syncCategoriasLoja();
 
       checkoutBtn.addEventListener('click', openCart);
       closeCartBtn.addEventListener('click', closeCart);
