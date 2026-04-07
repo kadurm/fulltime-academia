@@ -22,6 +22,8 @@
             foreground: 'var(--color-foreground)',
             card: 'var(--color-card)',
             accent: 'var(--color-accent)',
+            'primary-cta': 'var(--color-primary-cta)',
+            'primary-cta-text': 'var(--color-primary-cta-text)',
           },
           width: { 'content-width': 'clamp(40rem, 75vw, 100rem)' },
           borderRadius: { 'theme': '1rem' }
@@ -36,13 +38,20 @@
       --color-foreground: #fafafa;
       --color-card: rgba(45, 45, 45, 0.6);
       --color-accent: #3b82f6;
+      --color-primary-cta: #fafafa;
+      --color-primary-cta-text: #09090b;
     }
 
     body { 
-      font-family: 'Inter Tight', sans-serif; 
+      font-family: 'Inter Tight', sans-serif !important; 
       background-color: var(--color-background); 
       color: var(--color-foreground); 
       overflow-x: hidden; 
+    }
+
+    /* Forçar Inter Tight em elementos específicos */
+    input, button, select, textarea, h1, h2, h3, p, span {
+      font-family: 'Inter Tight', sans-serif !important;
     }
     
     .glass-card {
@@ -54,7 +63,7 @@
       padding: 1.5rem; 
       display: flex; 
       flex-direction: column; 
-      justify-content: space-between;
+      justify-content: flex-start;
       transition: transform 0.3s ease, border-color 0.3s ease; 
       height: 100%;
     }
@@ -63,8 +72,27 @@
       border-color: rgba(255, 255, 255, 0.3) !important; 
     }
 
+    .primary-button {
+      background-color: var(--color-primary-cta);
+      background: linear-gradient(to bottom, color-mix(in srgb, var(--color-primary-cta), transparent 25%), var(--color-primary-cta));
+      box-shadow: color-mix(in srgb, var(--color-background) 25%, transparent) 0px 1px 1px 0px inset, color-mix(in srgb, var(--color-primary-cta) 15%, transparent) 3px 3px 3px 0px;
+      color: var(--color-primary-cta-text);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
     .blur-text {
-      text-shadow: 0 0 20px rgba(255,255,255,0.1);
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(15px);
+      transition: opacity 0.8s ease-out, filter 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .blur-text.in-view {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
     }
 
     .grid { 
@@ -104,6 +132,12 @@
       font-weight: 800; 
       font-size: 1.2rem; 
     }
+
+    .nav-scrolled {
+      background-color: rgba(0, 51, 153, 0.85) !important;
+      backdrop-filter: blur(12px) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
     
     @media (max-width: 768px) {
       .grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px; }
@@ -112,34 +146,35 @@
       .card-desc { display: none; }
       h3 { font-size: 0.9rem !important; }
       .product-price { font-size: 1rem; }
+      #searchInput { font-size: 0.9rem !important; }
     }
   </style>
-  <link rel="stylesheet" href="mobile-fix.css?v=1.1">
+  <link rel="stylesheet" href="mobile-fix.css?v=7">
 </head>
 
 <body class="antialiased">
   <canvas id="bg-canvas" style="position:fixed; inset:0; z-index:-1;"></canvas>
 
-  <nav class="fixed top-0 w-full h-20 z-[1000] bg-background/80 backdrop-blur-md border-bottom border-white/5">
+  <nav class="fixed top-0 w-full h-20 z-[1000] bg-background/0 backdrop-blur-0 transition-all duration-500 ease-in-out">
     <div class="flex items-center justify-between h-full max-w-7xl mx-auto px-6">
-      <a href="index.html"><img src="/logo.png" class="h-12 w-auto" /></a>
-      <div class="flex gap-6">
-        <a href="index.html">Início</a>
-        <button id="checkout-btn" class="font-bold">Carrinho (0)</button>
+      <a href="index.html"><img src="/logo.png" alt="Fulltime Academia" class="h-12 w-auto object-contain transition-transform hover:scale-105" /></a>
+      <div class="hidden md:flex items-center gap-6">
+        <a href="index.html" class="text-foreground">Início</a>
+        <button id="checkout-btn" class="font-bold bg-white text-blue-900 px-4 py-2 rounded-lg cursor-pointer transition-transform hover:scale-105">Carrinho (0)</button>
       </div>
     </div>
   </nav>
 
-  <section class="pt-32 pb-10 text-center">
+  <section class="pt-40 pb-10 text-center">
     <h2 class="text-5xl font-bold mb-4 blur-text">Potencialize Seus Resultados</h2>
     <p class="opacity-70 blur-text">Suplementação premium para levar o seu treino ao próximo nível.</p>
   </section>
 
-  <div class="flex justify-center px-4 mb-8">
-    <input type="text" id="searchInput" placeholder="O que você procura?" class="w-full max-w-md p-3 rounded-full bg-white/5 border border-white/20 text-white outline-none">
+  <div class="flex justify-center px-4 mb-8 blur-text">
+    <input type="text" id="searchInput" placeholder="Qual suplemento você procura?" class="w-full max-w-md p-4 rounded-full bg-white/5 border border-white/20 text-white outline-none placeholder:text-white/60 focus:border-white/40 transition-all">
   </div>
 
-  <div class="categories flex justify-center gap-3 overflow-x-auto px-4 mb-10" id="categorias-container"></div>
+  <div class="categories flex justify-center gap-3 overflow-x-auto px-4 mb-10 blur-text" id="categorias-container"></div>
 
   <div class="grid" id="produtos-grid"></div>
 
@@ -181,22 +216,44 @@
 
       grid.innerHTML = filtered.map(p => `
         <div class="glass-card">
-          <div class="img-container"><img src="${p.imagem}" alt="${p.nome}"></div>
-          <div class="mt-4">
-            <h3 class="font-bold text-lg">${p.nome}</h3>
-            <p class="card-desc text-sm opacity-60 mt-2">${p.descricao || "Suplemento de alta performance."}</p>
-            <div class="flex items-center justify-between mt-4">
-              <span class="product-price">${p.preco}</span>
-              <button class="bg-white text-blue-900 px-4 py-2 rounded-lg font-bold text-sm">Adicionar</button>
+          <div>
+            <div class="img-container"><img src="${p.imagem}" alt="${p.nome}"></div>
+            <div class="mt-4">
+              <h3 class="font-bold text-lg">${p.nome}</h3>
+              <p class="card-desc text-sm opacity-60 mt-2">${p.descricao || ""}</p>
+              <span class="product-price block mt-3">${p.preco}</span>
             </div>
           </div>
+          <button class="primary-button w-full py-3 rounded-xl font-bold text-sm mt-4 uppercase tracking-wider" style="margin-top: auto !important;">Adicionar ao Carrinho</button>
         </div>
       `).join('');
     }
 
     document.getElementById('searchInput').oninput = (e) => { currentSearch = e.target.value; render(); };
 
-    document.addEventListener('DOMContentLoaded', loadStore);
+    document.addEventListener('DOMContentLoaded', () => {
+      loadStore();
+      
+      const nav = document.querySelector('nav');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          nav.classList.add('nav-scrolled');
+        } else {
+          nav.classList.remove('nav-scrolled');
+        }
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.blur-text').forEach(el => observer.observe(el));
+    });
 
     // BG Animation
     const c = document.getElementById('bg-canvas'); const ctx = c.getContext('2d');
@@ -205,7 +262,7 @@
     function anim() {
       ctx.clearRect(0,0,c.width,c.height);
       const g = ctx.createRadialGradient(c.width/2, c.height/2, 0, c.width/2, c.height/2, Math.max(c.width,c.height));
-      g.addColorStop(0, 'rgba(59, 130, 246, 0.05)'); g.addColorStop(1, 'transparent');
+      g.addColorStop(0, 'rgba(59, 130, 246, 0.04)'); g.addColorStop(1, 'transparent');
       ctx.fillStyle = g; ctx.fillRect(0,0,c.width,c.height);
       requestAnimationFrame(anim);
     } anim();
