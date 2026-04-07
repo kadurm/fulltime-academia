@@ -770,89 +770,7 @@
     </section>
   </div>
 
-  <!-- FAQ -->
-  <div id="faq" data-section="faq">
-    <section aria-label="FAQ section" class="relative py-20 w-full">
-      <div class="w-content-width mx-auto">
-        <div class="flex flex-col items-center justify-center w-full mx-auto text-center mb-10">
-          <h2 class="blur-text" aria-label="Dúvidas Frequentes">Dúvidas Frequentes</h2>
-        </div>
-        <div class="max-w-3xl mx-auto flex flex-col gap-4">
-          <div>
-            <div
-              class="card p-5 rounded-theme-capped cursor-pointer flex flex-col items-center justify-between transition-all duration-500 group"
-              aria-expanded="false">
-              <div class="flex flex-row items-center justify-between w-full">
-                <h3 class="text-base md:text-xl font-medium text-foreground">Como funcionam as unidades?</h3>
-                <div
-                  class="h-8 w-8 shrink-0 flex items-center justify-center rounded-theme primary-button transition-all duration-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-plus w-4 h-4 text-primary-cta-text transition-transform duration-500 faq-icon"
-                    aria-hidden="true">
-                    <path d="M5 12h14"></path>
-                    <path d="M12 5v14"></path>
-                  </svg>
-                </div>
-              </div>
-              <div style="max-height:0px"
-                class="overflow-hidden transition-[max-height] duration-500 w-full flex flex-col faq-content">
-                <div class="text-base text-foreground/80 pt-4 text-center">Você pode escolher a unidade que preferir ou optar pelo
-                  plano global.</div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div
-              class="card p-5 rounded-theme-capped cursor-pointer flex flex-col items-center justify-between transition-all duration-500 group"
-              aria-expanded="false">
-              <div class="flex flex-row items-center justify-between w-full">
-                <h3 class="text-base md:text-xl font-medium text-foreground">Preciso agendar avaliação?</h3>
-                <div
-                  class="h-8 w-8 shrink-0 flex items-center justify-center rounded-theme primary-button transition-all duration-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-plus w-4 h-4 text-primary-cta-text transition-transform duration-500 faq-icon"
-                    aria-hidden="true">
-                    <path d="M5 12h14"></path>
-                    <path d="M12 5v14"></path>
-                  </svg>
-                </div>
-              </div>
-              <div style="max-height:0px"
-                class="overflow-hidden transition-[max-height] duration-500 w-full flex flex-col faq-content">
-                <div class="text-base text-foreground/80 pt-4 text-center">Sim, fazemos acompanhamento técnico para todos os
-                  alunos.</div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div
-              class="card p-5 rounded-theme-capped cursor-pointer flex flex-col items-center justify-between transition-all duration-500 group"
-              aria-expanded="false">
-              <div class="flex flex-row items-center justify-between w-full">
-                <h3 class="text-base md:text-xl font-medium text-foreground">Tem plano fidelidade?</h3>
-                <div
-                  class="h-8 w-8 shrink-0 flex items-center justify-center rounded-theme primary-button transition-all duration-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-plus w-4 h-4 text-primary-cta-text transition-transform duration-500 faq-icon"
-                    aria-hidden="true">
-                    <path d="M5 12h14"></path>
-                    <path d="M12 5v14"></path>
-                  </svg>
-                </div>
-              </div>
-              <div style="max-height:0px"
-                class="overflow-hidden transition-[max-height] duration-500 w-full flex flex-col faq-content">
-                <div class="text-base text-foreground/80 pt-4 text-center">Sim, oferecemos descontos para planos anuais.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+
 
   <!-- Footer -->
   <div id="footer" data-section="footer">
@@ -902,24 +820,6 @@
 
       menuToggle.addEventListener('click', toggleMenu);
       menuClose.addEventListener('click', toggleMenu);
-
-      // 3. FAQ Accordion
-      const faqCards = document.querySelectorAll('#faq .card.cursor-pointer');
-      faqCards.forEach(card => {
-        card.addEventListener('click', () => {
-          const content = card.querySelector('.faq-content');
-          const icon = card.querySelector('.faq-icon');
-          const isOpen = content.style.maxHeight !== '0px';
-
-          document.querySelectorAll('#faq .faq-content').forEach(c => c.style.maxHeight = '0px');
-          document.querySelectorAll('#faq .faq-icon').forEach(i => i.style.transform = 'rotate(0deg)');
-
-          if (!isOpen) {
-            content.style.maxHeight = content.scrollHeight + "px";
-            icon.style.transform = 'rotate(45deg)';
-          }
-        });
-      });
 
       // 4. Animação de entrada (Intersection Observer)
       const observer = new IntersectionObserver((entries) => {
