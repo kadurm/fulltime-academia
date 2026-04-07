@@ -1,74 +1,66 @@
-@media (max-width: 768px) { 
-  nav, .navbar { 
-    flex-direction: column !important; 
-    padding: 15px 0 !important; 
-    height: auto !important; 
-  } 
-  nav img, .logo { 
-    margin: 0 auto 15px auto !important; 
-    max-height: 45px !important; 
-    display: block !important; 
-  } 
-  nav ul, .nav-links { 
-    display: flex !important; 
-    flex-direction: row !important; 
-    flex-wrap: wrap !important; 
-    justify-content: center !important; 
-    position: static !important; 
-    background: transparent !important; 
-    width: 100% !important; 
-    height: auto !important; 
-    transform: none !important; 
-    opacity: 1 !important; 
-    visibility: visible !important; 
-    gap: 10px !important; 
-  } 
-  .hamburger, .menu-toggle { 
-    display: none !important; 
-  } 
-  .grid, #produtos-grid { 
-    display: grid !important; 
-    grid-template-columns: repeat(2, 1fr) !important; 
-    gap: 10px !important; 
-    padding: 0 10px !important; 
-  } 
-  .glass-card { 
-    padding: 12px !important; 
-    min-width: 0 !important; 
-    display: flex !important; 
-    flex-direction: column !important; 
-    justify-content: space-between !important; 
-    height: 100% !important; 
-    box-sizing: border-box !important; 
-  } 
-  .glass-card img { 
-    width: 100% !important; 
-    height: 120px !important; 
-    object-fit: contain !important; 
-    margin: 0 auto 10px auto !important; 
-  } 
-  .glass-card h3 { 
-    font-size: 0.9rem !important; 
-    margin-bottom: 5px !important; 
-    text-align: center !important; 
-    line-height: 1.2 !important; 
-  } 
-  .glass-card p { 
-    font-size: 0.8rem !important; 
-    text-align: center !important; 
-    margin-bottom: 10px !important; 
-  } 
-  .glass-card > div:last-child, .glass-card button { 
-    margin-top: auto !important; 
-    padding: 10px !important; 
-    font-size: 0.85rem !important; 
-    width: 100% !important; 
+@media (max-width: 768px) {
+  /* Navbar Exposta */
+  #nav nav {
+    height: auto !important;
+    padding: 1rem 0;
   }
-  .categories { 
-    display: flex !important; 
-    flex-wrap: nowrap !important; 
-    overflow-x: auto !important; 
-    padding-bottom: 10px !important; 
-    justify-content: flex-start !important; 
-  } 
+  #nav nav > div {
+    flex-direction: column !important;
+    gap: 1rem;
+    width: 100% !important;
+  }
+  #nav .flex.items-center {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+  #nav .hidden.md\:flex {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 0.75rem !important;
+  }
+  #nav #menu-toggle, #nav #mobile-menu {
+    display: none !important;
+  }
+
+  /* Correção de Esmagamento Horizontal */
+  .flex-row, .flex {
+    flex-direction: column !important;
+  }
+  .grid-cols-2, .grid-cols-4, .lg\:grid-cols-4, .md\:grid-cols-2 {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Reset de larguras para 100% */
+  .w-4\/10, .w-6\/10, .w-3\/10, .w-7\/10, .md\:w-8\/10, .md\:w-4\/10, .md\:w-6\/10 {
+    width: 100% !important;
+  }
+
+  /* Padronização de Margens e Gaps */
+  .gap-6, .gap-8, .gap-10, .gap-14, .gap-15 {
+    gap: 1.5rem !important;
+  }
+  .py-20 {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+  .w-content-width {
+    width: 92% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Hero Adjustments */
+  #hero {
+    padding-top: 10rem !important;
+  }
+  #hero h2 {
+    font-size: 2.25rem !important;
+    margin-top: 1rem;
+  }
+  
+  /* Card Image Heights */
+  .h-48 {
+    height: 12rem !important;
+  }
 }
