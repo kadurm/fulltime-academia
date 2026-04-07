@@ -263,7 +263,7 @@
       text-align: center;
     }
   </style>
-  <link rel="stylesheet" href="/mobile-fix.css?v=6">
+  <link rel="stylesheet" href="/mobile-fix.css?v=7">
 </head>
 
 <body class="antialiased">
@@ -287,7 +287,7 @@
             <img src="/logo.png" alt="Fulltime Academia" class="h-12 md:h-16 w-auto object-contain transition-transform hover:scale-105" />
           </button>
         </div>
-        <div class="hidden md:flex items-center gap-6 transition-all duration-500 ease-in-out" role="navigation">
+        <div class="flex items-center gap-6 transition-all duration-500 ease-in-out" role="navigation">
           <button type="button" onclick="document.getElementById('hero').scrollIntoView()"
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Início</button>
           <button type="button" onclick="document.getElementById('about').scrollIntoView()"
@@ -298,93 +298,6 @@
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Fale Conosco</button>
           <a href="suplementos.html"
             class="relative text-sm inline-block bg-transparent border-none p-0 cursor-pointer after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-current after:scale-x-0 after:origin-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-left !text-base text-foreground">Loja</a>
-        </div>
-        <button id="menu-toggle"
-          class="flex md:hidden shrink-0 h-8 aspect-square rounded-theme bg-foreground items-center justify-center cursor-pointer"
-          aria-label="Toggle menu">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-plus w-1/2 h-1/2 text-background transition-transform duration-300 rotate-0">
-            <path d="M5 12h14"></path>
-            <path d="M12 5v14"></path>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Menu Mobile -->
-      <div id="mobile-menu"
-        class="md:hidden z-10 fixed top-3 left-3 right-3 h-fit rounded-theme-capped card p-6 flex flex-col gap-6 opacity-0 pointer-events-none translate-y-[-10px]"
-        style="width:calc(100vw - var(--vw-0_75) * 2)">
-        <div class="w-full flex justify-between items-center">
-          <p class="text-xl text-foreground">Menu</p>
-          <button id="menu-close"
-            class="shrink-0 h-8 aspect-square rounded-theme bg-foreground flex items-center justify-center cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-plus w-1/2 h-1/2 text-background rotate-45">
-              <path d="M5 12h14"></path>
-              <path d="M12 5v14"></path>
-            </svg>
-          </button>
-        </div>
-        <div class="flex flex-col gap-4">
-          <button
-            onclick="document.getElementById('hero').scrollIntoView(); document.getElementById('menu-close').click();"
-            class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Início</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </button>
-          <div class="w-full h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent"></div>
-          <button
-            onclick="document.getElementById('about').scrollIntoView(); document.getElementById('menu-close').click();"
-            class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Sobre</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </button>
-          <div class="w-full h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent"></div>
-          <button
-            onclick="document.getElementById('unidades').scrollIntoView(); document.getElementById('menu-close').click();"
-            class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Unidades</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </button>
-          <div class="w-full h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent"></div>
-          <button
-            onclick="document.getElementById('contato').scrollIntoView(); document.getElementById('menu-close').click();"
-            class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Fale Conosco</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </button>
-          <div class="w-full h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent"></div>
-          <a href="suplementos.html" class="w-full h-fit flex justify-between items-center cursor-pointer">
-            <p class="text-base font-medium">Loja</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-              class="lucide lucide-arrow-right h-[var(--text-base)] w-auto text-foreground">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </a>
         </div>
       </div>
     </nav>
