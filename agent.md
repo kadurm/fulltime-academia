@@ -25,6 +25,8 @@
 2. **Estilização:** Utilizar classes utilitárias do Tailwind CSS. Evitar o uso indiscriminado de `!important` ou altas fixas engessadas; priorizar `flexbox`, `aspect-ratio` e design fluido (Mobile-First).
 3. **Segurança:** Nunca expor chaves sensíveis (Stripe, Cloudinary, KV) no frontend. Toda a comunicação com serviços de terceiros deve ser feita pelas rotas da pasta `/api` lendo do arquivo `.env`.
 4. **Navegação:** O menu principal é construído via Flexbox horizontal estendido, sem modais ou botões hambúrguer.
+5. **Feedback Auditivo Universal:** Implementar uma rotina centralizada de áudio para fornecer feedback sonoro discreto em todas as interações de clique (botões e links), garantindo uma experiência sensorial consistente e acessível.
+5. **Feedback Auditivo Universal:** Implementar uma rotina centralizada de áudio para fornecer feedback sonoro discreto em todas as interações de clique (botões e links), garantindo uma experiência sensorial consistente e acessível.
 
 ## Estado Atual do Projeto
 - **Concluído:** Estruturação da Landing Page (`index.html`), Loja (`suplementos.html`) e CMS/Painel (`admin.html`).
