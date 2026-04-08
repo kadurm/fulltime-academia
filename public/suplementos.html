@@ -301,6 +301,7 @@
 
   <script>
     let allProdutos = [], currentFilter = 'todos', currentSearch = '';
+    localStorage.removeItem('fulltime_cart');
     let cart = JSON.parse(localStorage.getItem('fulltime_cart') || '[]');
 
     async function loadStore() {
@@ -337,7 +338,7 @@
       });
 
       grid.innerHTML = filtered.map(p => `
-        <div class="glass-card p-3 pb-5">
+        <div class="glass-card card-produto p-3 pb-5">
           <div>
             <div class="img-container"><img src="${p.imagem}" alt="${p.nome}" class="w-full h-full object-cover" style="border-radius: 8px;"></div>
             <div class="mt-4">
@@ -346,7 +347,7 @@
               <span class="product-price block mt-3">${p.preco}</span>
             </div>
           </div>
-          <button class="primary-button w-full py-3 rounded-xl font-bold text-sm mt-4 uppercase tracking-wider" onclick="addToCart('${p.id}', '${p.nome}', '${p.preco}', '${p.imagem}')" style="margin-top: auto !important;">Adicionar ao Carrinho</button>
+          <button class="primary-button w-full py-3 rounded-xl font-bold text-sm mt-4 uppercase tracking-wider" onclick="addToCart('${p.id}', '${p.nome}', '${p.preco}')" style="margin-top: auto !important;">Adicionar ao Carrinho</button>
         </div>
       `).join('');
     }
@@ -358,7 +359,11 @@
       document.getElementById('cart-sidebar').classList.toggle('open');
     }
 
-    function addToCart(id, name, price, imagem) {
+    function addToCart(id, name, price) {
+      const btn = event.currentTarget;
+      const card = btn.closest(".card-produto");
+      const imagem = card.querySelector("img").src;
+
       const existing = cart.find(item => item.name === name);
       if (existing) {
         existing.quantidade++;
@@ -368,7 +373,6 @@
       updateCart();
       
       // Feedback Visual
-      const btn = event.currentTarget;
       const originalText = btn.innerText;
       btn.innerText = "Adicionado! ✓";
       btn.classList.add('bg-green-600');
@@ -403,12 +407,13 @@
       
       const itemsContainer = document.getElementById('cart-items');
       itemsContainer.innerHTML = cart.map((item, index) => {
+        console.log(item.imagem);
         const itemPrice = parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.'));
         const subtotal = itemPrice * (item.quantidade || 1);
         
         return `
           <div class="cart-item flex gap-4 py-4 border-b border-white/10">
-            <img src="${item.imagem}" alt="${item.name}" class="w-16 h-16 object-cover rounded-md flex-shrink-0">
+            <img src="${item.imagem}" alt="${item.name}" class="w-12 h-12 object-cover rounded-md flex-shrink-0">
             <div class="flex flex-col gap-2 flex-1">
               <div class="flex justify-between items-start w-full">
                 <div class="font-bold text-white text-sm line-clamp-1">${item.name}</div>
