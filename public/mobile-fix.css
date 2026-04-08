@@ -33,7 +33,16 @@
   }
 
   #nav div[role="navigation"] {
-    display: none !important; /* Use menu-toggle on mobile */
+    display: flex !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    padding-bottom: 0.25rem !important;
+    gap: 1rem !important;
+  }
+
+  #nav div[role="navigation"]::-webkit-scrollbar {
+    display: none !important;
   }
 
   #menu-toggle {
