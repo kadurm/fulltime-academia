@@ -336,15 +336,15 @@
       });
 
       grid.innerHTML = filtered.map(p => `
-        <div class="glass-card card-produto p-0 overflow-hidden">
+        <div class="glass-card card-produto overflow-hidden">
           <div class="img-container w-full aspect-square">
-            <img src="${p.imagem}" alt="${p.nome}" class="w-full h-full object-cover rounded-t-[16px]">
+            <img src="${p.imagem}" alt="${p.nome}" class="w-full h-full object-cover">
           </div>
-          <div class="p-5 flex flex-col flex-1">
+          <div class="p-4 flex flex-col flex-1">
             <h3 class="font-bold text-lg">${p.nome}</h3>
             <p class="card-desc text-sm text-gray-400 mt-1">${p.descricao || ""}</p>
             <span class="product-price block mt-3">${p.preco}</span>
-            <button class="primary-button w-full py-3 rounded-xl font-bold text-sm mt-6 uppercase tracking-wider" onclick="addToCart('${p.id}', '${p.nome}', '${p.preco}')" style="margin-top: auto !important;">Adicionar ao Carrinho</button>
+            <button class="primary-button w-full py-3 rounded-xl font-bold text-xs md:text-sm px-2 mt-6 uppercase tracking-wider" onclick="addToCart('${p.id}', '${p.nome}', '${p.preco}')" style="margin-top: auto !important;">Adicionar ao Carrinho</button>
           </div>
         </div>
       `).join('');
