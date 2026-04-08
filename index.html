@@ -759,6 +759,28 @@
           }, 3500);
       })();
 
+      // 9. Randomização das Imagens do Carrossel Hero
+      (function(){
+          const availableImages = [
+              '/unidade-sao-jose.jpeg',
+              '/[Fulltime][Major].jpeg',
+              '/[Fulltime][FotoForms].jpeg',
+              '/[Fulltime][Aulas][01].jpeg',
+              '/[Fulltime][Suporte][01].jpeg',
+              '/[Fulltime][Suporte][02].jpeg',
+              '/[Fulltime][Aparelhos][01].jpeg'
+          ];
+          // Embaralha o array
+          const shuffled = availableImages.sort(() => 0.5 - Math.random());
+          // Seleciona as imagens do carrossel
+          const carouselImgs = document.querySelectorAll('#main-carousel .carousel-item');
+          carouselImgs.forEach((img, index) => {
+              if (shuffled[index]) {
+                  img.src = shuffled[index];
+              }
+          });
+      })();
+
       // 8. Lógica do Modal de Lead (Inativa para Unidades)
       const modal = document.getElementById('modal-planos');
       const closeBtn = document.getElementById('close-modal');
