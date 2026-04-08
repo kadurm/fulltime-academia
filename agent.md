@@ -5,6 +5,7 @@
 2. Antes de iniciar qualquer nova tarefa, releia obrigatoriamente este arquivo `agent.md` para assimilar o contexto atualizado por agentes em outros terminais.
 
 ## Últimas Atualizações
+- 2026-04-07: Refatoração da Navbar em `index.html` para um design responsivo in-line com logo centralizada e remoção de elementos de menu mobile legados.
 - 2026-04-07: Implementado protocolo de sincronização multi-terminal para coordenação entre agentes em diferentes sessões.
 
 ## Arquitetura e Stack Tecnológico
