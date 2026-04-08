@@ -346,7 +346,7 @@
               <span class="product-price block mt-3">${p.preco}</span>
             </div>
           </div>
-          <button class="primary-button w-full py-3 rounded-xl font-bold text-sm mt-4 uppercase tracking-wider" onclick="addToCart('${p.id}', '${p.nome}', '${p.preco}')" style="margin-top: auto !important;">Adicionar ao Carrinho</button>
+          <button class="primary-button w-full py-3 rounded-xl font-bold text-sm mt-4 uppercase tracking-wider" onclick="addToCart('${p.id}', '${p.nome}', '${p.preco}', '${p.imagem}')" style="margin-top: auto !important;">Adicionar ao Carrinho</button>
         </div>
       `).join('');
     }
@@ -358,12 +358,12 @@
       document.getElementById('cart-sidebar').classList.toggle('open');
     }
 
-    function addToCart(id, name, price) {
+    function addToCart(id, name, price, imagem) {
       const existing = cart.find(item => item.name === name);
       if (existing) {
         existing.quantidade++;
       } else {
-        cart.push({ id, name, price, quantidade: 1 });
+        cart.push({ id, name, price, imagem, quantidade: 1 });
       }
       updateCart();
       
@@ -407,18 +407,21 @@
         const subtotal = itemPrice * (item.quantidade || 1);
         
         return `
-          <div class="cart-item flex flex-col gap-2 py-4 border-b border-white/10">
-            <div class="flex justify-between items-start w-full">
-              <div class="font-bold text-white text-sm">${item.name}</div>
-              <button onclick="removeFromCart(${index})" class="text-red-400 text-[10px] uppercase tracking-wider hover:text-red-300">Remover</button>
-            </div>
-            <div class="flex justify-between items-center w-full">
-              <div class="flex items-center bg-white/5 rounded-lg border border-white/10 p-1">
-                <button onclick="changeQuantity(${index}, -1)" class="w-6 h-6 flex items-center justify-center hover:bg-white/10 rounded">-</button>
-                <span class="mx-3 text-sm font-medium">${item.quantidade || 1}</span>
-                <button onclick="changeQuantity(${index}, 1)" class="w-6 h-6 flex items-center justify-center hover:bg-white/10 rounded">+</button>
+          <div class="cart-item flex gap-4 py-4 border-b border-white/10">
+            <img src="${item.imagem}" alt="${item.name}" class="w-16 h-16 object-cover rounded-md flex-shrink-0">
+            <div class="flex flex-col gap-2 flex-1">
+              <div class="flex justify-between items-start w-full">
+                <div class="font-bold text-white text-sm line-clamp-1">${item.name}</div>
+                <button onclick="removeFromCart(${index})" class="text-red-400 text-[10px] uppercase tracking-wider hover:text-red-300 ml-2">Remover</button>
               </div>
-              <div class="text-blue-400 font-bold">R$ ${subtotal.toFixed(2).replace('.', ',')}</div>
+              <div class="flex justify-between items-center w-full">
+                <div class="flex items-center bg-white/5 rounded-lg border border-white/10 p-1">
+                  <button onclick="changeQuantity(${index}, -1)" class="w-6 h-6 flex items-center justify-center hover:bg-white/10 rounded">-</button>
+                  <span class="mx-3 text-sm font-medium">${item.quantidade || 1}</span>
+                  <button onclick="changeQuantity(${index}, 1)" class="w-6 h-6 flex items-center justify-center hover:bg-white/10 rounded">+</button>
+                </div>
+                <div class="text-blue-400 font-bold text-sm">R$ ${subtotal.toFixed(2).replace('.', ',')}</div>
+              </div>
             </div>
           </div>
         `;
