@@ -218,6 +218,20 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
     
+    #cart-sidebar {
+      position: fixed; top: 0; right: -400px; width: 400px; height: 100%;
+      background: rgba(20, 20, 20, 0.95); backdrop-filter: blur(20px);
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5); z-index: 2000;
+      transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex; flex-direction: column; padding: 2rem; border-left: 1px solid rgba(255,255,255,0.1);
+    }
+    #cart-sidebar.open { right: 0; }
+    
+    .cart-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
     @media (max-width: 768px) {
       .grid { grid-template-columns: 1fr 1fr; gap: 12px; padding: 12px; }
       .glass-card { padding: 12px; min-height: auto; }
@@ -225,6 +239,7 @@
       h3 { font-size: 0.9rem !important; }
       .product-price { font-size: 1rem; }
       #searchInput { font-size: 0.9rem !important; }
+      #cart-sidebar { width: 100%; right: -100%; }
     }
   </style>
   <link rel="stylesheet" href="mobile-fix.css?v=7">
@@ -249,10 +264,27 @@
       </div>
       <div class="flex items-center justify-center gap-4 sm:gap-6 md:gap-6 transition-all duration-500 ease-in-out w-full md:w-auto overflow-x-auto pb-1 md:pb-0 px-6" role="navigation" style="scrollbar-width: none;">
         <a href="/index.html" class="relative text-sm md:text-base inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Início</a>
-        <button id="checkout-btn" class="font-bold bg-white text-blue-900 px-4 py-2 rounded-lg cursor-pointer transition-transform hover:scale-105 whitespace-nowrap ml-2">Carrinho (0)</button>
+        <a href="#" class="relative text-sm md:text-base inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Loja</a>
+        <button id="checkout-btn" class="font-bold bg-white text-blue-900 px-4 py-2 rounded-lg cursor-pointer transition-transform hover:scale-105 whitespace-nowrap ml-2" onclick="toggleCart()">Carrinho (0)</button>
       </div>
     </div>
   </nav>
+
+  <!-- Sidebar do Carrinho -->
+  <div id="cart-sidebar">
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-2xl font-bold">Seu Carrinho</h2>
+      <button onclick="toggleCart()" class="text-white opacity-50 hover:opacity-100">✕</button>
+    </div>
+    <div id="cart-items" class="flex-1 overflow-y-auto"></div>
+    <div class="mt-8 pt-6 border-t border-white/10">
+      <div class="flex justify-between items-center mb-6">
+        <span class="text-lg opacity-60">Total</span>
+        <span id="cart-total" class="text-2xl font-bold text-blue-400">R$ 0,00</span>
+      </div>
+      <button id="finish-btn" class="w-full py-4 bg-white text-black font-bold rounded-xl hover:scale-[1.02] transition-transform active:scale-95" onclick="checkout()">Finalizar Compra</button>
+    </div>
+  </div>
 
   <section class="pt-40 pb-10 text-center">
     <h2 class="text-5xl font-bold mb-4 blur-text">Potencialize Seus Resultados</h2>
@@ -269,6 +301,7 @@
 
   <script>
     let allProdutos = [], currentFilter = 'todos', currentSearch = '';
+    let cart = JSON.parse(localStorage.getItem('fulltime_cart') || '[]');
 
     async function loadStore() {
       try {
@@ -313,15 +346,87 @@
               <span class="product-price block mt-3">${p.preco}</span>
             </div>
           </div>
-          <button class="primary-button w-full py-3 rounded-xl font-bold text-sm mt-4 uppercase tracking-wider" style="margin-top: auto !important;">Adicionar ao Carrinho</button>
+          <button class="primary-button w-full py-3 rounded-xl font-bold text-sm mt-4 uppercase tracking-wider" onclick="addToCart('${p.id}', '${p.nome}', '${p.preco}')" style="margin-top: auto !important;">Adicionar ao Carrinho</button>
         </div>
       `).join('');
     }
 
     document.getElementById('searchInput').oninput = (e) => { currentSearch = e.target.value; renderizarProdutosLoja(); };
 
+    // Funções do Carrinho
+    function toggleCart() {
+      document.getElementById('cart-sidebar').classList.toggle('open');
+    }
+
+    function addToCart(id, name, price) {
+      cart.push({ id, name, price });
+      updateCart();
+      
+      // Feedback Visual
+      const btn = event.currentTarget;
+      const originalText = btn.innerText;
+      btn.innerText = "Adicionado! ✓";
+      btn.classList.add('bg-green-600');
+      btn.style.background = 'none';
+      btn.style.backgroundColor = '#16a34a';
+
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.classList.remove('bg-green-600');
+        btn.style.background = '';
+        btn.style.backgroundColor = '';
+      }, 2000);
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function updateCart() {
+      localStorage.setItem('fulltime_cart', JSON.stringify(cart));
+      document.getElementById('checkout-btn').innerText = `Carrinho (${cart.length})`;
+      
+      const itemsContainer = document.getElementById('cart-items');
+      itemsContainer.innerHTML = cart.map((item, index) => `
+        <div class="cart-item">
+          <div>
+            <div class="font-bold text-white">${item.name}</div>
+            <div class="text-blue-400 text-sm">${item.price}</div>
+          </div>
+          <button onclick="removeFromCart(${index})" class="text-red-400 text-xs hover:text-red-300 transition-colors">Remover</button>
+        </div>
+      `).join('');
+
+      const total = cart.reduce((sum, item) => sum + parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.')), 0);
+      document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    }
+
+    async function checkout() {
+      if (cart.length === 0) return alert('Carrinho vazio!');
+      
+      const btn = document.getElementById('finish-btn');
+      btn.innerText = "Processando...";
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ cart })
+        });
+        const { url } = await res.json();
+        window.location.href = url;
+      } catch (err) {
+        alert('Erro ao processar pagamento.');
+        btn.innerText = "Finalizar Compra";
+        btn.disabled = false;
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       loadStore();
+      updateCart();
       
       const nav = document.querySelector('nav');
       window.addEventListener('scroll', () => {
@@ -372,42 +477,5 @@
     });
   </script>
 <style>#beams-bg-container{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;overflow:hidden;background-color:var(--color-background,#003399)}#beams-canvas{position:absolute;inset:0;filter:blur(15px);opacity:0.8}body,main,.bg-background{background:transparent !important}</style><div id="beams-bg-container"><canvas id="beams-canvas"></canvas></div><script>(function(){const canvas=document.getElementById('beams-canvas');const ctx=canvas.getContext('2d');let beams=[];let lastWidth=window.innerWidth;function createBeam(width,height,isInitial=false){return{x:Math.random()*width*1.5-width*0.25,y:isInitial?Math.random()*height*2-height:height+200+Math.random()*200,width:40+Math.random()*80,length:height*3.5,angle:-35+Math.random()*10,speed:0.8+Math.random()*1.5,opacity:0.4+Math.random()*0.4,pulse:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.03};}function resetBeam(beam,width,height){beam.y=height+200+Math.random()*200;beam.x=Math.random()*width*1.5-width*0.25;return beam;}function updateSize(){const width=window.innerWidth;const height=window.innerHeight;if(Math.abs(width-lastWidth)<10&&beams.length>0)return;lastWidth=width;const dpr=window.devicePixelRatio||1;canvas.width=width*dpr;canvas.height=height*dpr;canvas.style.width=width+'px';canvas.style.height=height+'px';ctx.setTransform(1,0,0,1,0,0);ctx.scale(dpr,dpr);beams=Array.from({length:45},()=>createBeam(width,height,true));}function drawBeam(beam){ctx.save();ctx.translate(beam.x,beam.y);ctx.rotate((beam.angle*Math.PI)/180);const pOpacity=Math.max(0,Math.min(1,beam.opacity*(0.8+Math.sin(beam.pulse)*0.2)));const grad=ctx.createLinearGradient(0,0,0,beam.length);grad.addColorStop(0,'rgba(0,0,0,0)');grad.addColorStop(0.1,`rgba(0,0,0,${pOpacity*0.5})`);grad.addColorStop(0.4,`rgba(0,0,0,${pOpacity})`);grad.addColorStop(0.6,`rgba(0,0,0,${pOpacity})`);grad.addColorStop(0.9,`rgba(0,0,0,${pOpacity*0.5})`);grad.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=grad;ctx.fillRect(-beam.width/2,0,beam.width,beam.length);ctx.restore();}function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);const w=window.innerWidth;const h=window.innerHeight;beams.forEach((beam)=>{beam.y-=beam.speed;beam.pulse+=beam.pulseSpeed;if(beam.y+beam.length<-200){resetBeam(beam,w,h);}drawBeam(beam);});requestAnimationFrame(animate);}updateSize();window.addEventListener('resize',updateSize);animate();})();</script>
-  <script>
-    (function() {
-      function updateCartUI() {
-        const count = localStorage.getItem('cartCount') || 0;
-        const checkoutBtn = document.getElementById('checkout-btn');
-        if (checkoutBtn) {
-          checkoutBtn.innerText = `Carrinho (${count})`;
-        }
-      }
-
-      updateCartUI();
-
-      document.addEventListener('click', (e) => {
-        if (e.target && e.target.classList.contains('primary-button') && e.target.innerText.includes('Adicionar ao Carrinho')) {
-          let count = parseInt(localStorage.getItem('cartCount') || 0);
-          count++;
-          localStorage.setItem('cartCount', count);
-          updateCartUI();
-
-          const btn = e.target;
-          const originalText = btn.innerText;
-          const originalStyle = btn.getAttribute('style') || "";
-          
-          btn.innerText = "Adicionado! ✓";
-          btn.classList.add('bg-green-600');
-          btn.style.background = 'none';
-          btn.style.backgroundColor = '#16a34a';
-
-          setTimeout(() => {
-            btn.innerText = originalText;
-            btn.classList.remove('bg-green-600');
-            btn.setAttribute('style', originalStyle);
-          }, 2000);
-        }
-      });
-    })();
-  </script>
 </body>
 </html>
