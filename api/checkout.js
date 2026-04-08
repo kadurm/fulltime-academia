@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     const line_items = cart.map((item) => {
       // O preço vem como "R$ 159,90", precisamos converter para centavos
       const unit_amount = Math.round(
-        parseFloat(item.price.replace('R$', '').replace(',', '.')) * 100
+        parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.')) * 100
       );
 
       return {
@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
           },
           unit_amount,
         },
-        quantity: 1,
+        quantity: item.quantidade || 1,
       };
     });
 

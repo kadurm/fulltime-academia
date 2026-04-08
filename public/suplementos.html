@@ -359,7 +359,12 @@
     }
 
     function addToCart(id, name, price) {
-      cart.push({ id, name, price });
+      const existing = cart.find(item => item.name === name);
+      if (existing) {
+        existing.quantidade++;
+      } else {
+        cart.push({ id, name, price, quantidade: 1 });
+      }
       updateCart();
       
       // Feedback Visual
@@ -378,6 +383,14 @@
       }, 2000);
     }
 
+    function changeQuantity(index, delta) {
+      cart[index].quantidade += delta;
+      if (cart[index].quantidade <= 0) {
+        cart.splice(index, 1);
+      }
+      updateCart();
+    }
+
     function removeFromCart(index) {
       cart.splice(index, 1);
       updateCart();
@@ -385,20 +398,36 @@
 
     function updateCart() {
       localStorage.setItem('fulltime_cart', JSON.stringify(cart));
-      document.getElementById('checkout-btn').innerText = `Carrinho (${cart.length})`;
+      const totalItems = cart.reduce((sum, item) => sum + (item.quantidade || 1), 0);
+      document.getElementById('checkout-btn').innerText = `Carrinho (${totalItems})`;
       
       const itemsContainer = document.getElementById('cart-items');
-      itemsContainer.innerHTML = cart.map((item, index) => `
-        <div class="cart-item">
-          <div>
-            <div class="font-bold text-white">${item.name}</div>
-            <div class="text-blue-400 text-sm">${item.price}</div>
+      itemsContainer.innerHTML = cart.map((item, index) => {
+        const itemPrice = parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.'));
+        const subtotal = itemPrice * (item.quantidade || 1);
+        
+        return `
+          <div class="cart-item flex flex-col gap-2 py-4 border-b border-white/10">
+            <div class="flex justify-between items-start w-full">
+              <div class="font-bold text-white text-sm">${item.name}</div>
+              <button onclick="removeFromCart(${index})" class="text-red-400 text-[10px] uppercase tracking-wider hover:text-red-300">Remover</button>
+            </div>
+            <div class="flex justify-between items-center w-full">
+              <div class="flex items-center bg-white/5 rounded-lg border border-white/10 p-1">
+                <button onclick="changeQuantity(${index}, -1)" class="w-6 h-6 flex items-center justify-center hover:bg-white/10 rounded">-</button>
+                <span class="mx-3 text-sm font-medium">${item.quantidade || 1}</span>
+                <button onclick="changeQuantity(${index}, 1)" class="w-6 h-6 flex items-center justify-center hover:bg-white/10 rounded">+</button>
+              </div>
+              <div class="text-blue-400 font-bold">R$ ${subtotal.toFixed(2).replace('.', ',')}</div>
+            </div>
           </div>
-          <button onclick="removeFromCart(${index})" class="text-red-400 text-xs hover:text-red-300 transition-colors">Remover</button>
-        </div>
-      `).join('');
+        `;
+      }).join('');
 
-      const total = cart.reduce((sum, item) => sum + parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.')), 0);
+      const total = cart.reduce((sum, item) => {
+        const itemPrice = parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.'));
+        return sum + (itemPrice * (item.quantidade || 1));
+      }, 0);
       document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
     }
 
