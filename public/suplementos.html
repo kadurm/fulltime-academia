@@ -254,16 +254,16 @@
     </div>
   </div>
 
-  <nav class="fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/0 backdrop-blur-0 min-h-[6rem] py-3 md:py-0 md:h-20">
-    <div class="relative flex flex-col md:flex-row items-center justify-center md:justify-between h-full w-content-width mx-auto gap-3 md:gap-0">
-      <div class="flex items-center transition-all duration-500 ease-in-out">
+  <nav class="fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/0 backdrop-blur-0 min-h-[4rem] md:h-20 py-2 md:py-0">
+    <div class="relative flex flex-row items-center justify-between h-full w-content-width mx-auto px-4 md:px-0">
+      <div class="flex items-center transition-all duration-500 ease-in-out flex-shrink-0">
         <a href="/index.html" class="cursor-pointer">
-          <img src="/logo.png" alt="Fulltime Academia" class="h-10 md:h-16 w-auto object-contain transition-transform hover:scale-105" />
+          <img src="/logo.png" alt="Fulltime Academia" class="h-8 md:h-16 w-auto object-contain transition-transform hover:scale-105" />
         </a>
       </div>
-      <div class="flex items-center justify-center gap-4 sm:gap-6 md:gap-6 transition-all duration-500 ease-in-out w-full md:w-auto pb-1 md:pb-0 px-6" role="navigation" style="scrollbar-width: none;">
+      <div class="flex items-center justify-end gap-4 sm:gap-6 md:gap-6 transition-all duration-500 ease-in-out" role="navigation">
         <a href="/index.html" class="relative text-sm md:text-base inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Início</a>
-        <button id="checkout-btn" class="relative p-2 mr-2 text-foreground hover:text-accent transition-colors" onclick="toggleCart()">
+        <button id="checkout-btn" class="relative p-2 text-foreground hover:text-accent transition-colors" onclick="toggleCart()">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
           <span id="cart-badge" class="absolute top-0 right-0 bg-blue-500 text-white rounded-full text-[10px] font-bold w-4 h-4 flex items-center justify-center">0</span>
         </button>
