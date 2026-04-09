@@ -9,7 +9,7 @@ const glassCardVariants = cva(
     {
         variants: {
             variant: {
-                dark: "bg-gray-900/60 backdrop-blur-xl border border-t-white/30 border-l-white/20 border-b-black/50 border-r-black/50 shadow-[0_15px_35px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]",
+                dark: "bg-gray-800/40 backdrop-blur-xl border border-t-white/30 border-l-white/20 border-b-black/50 border-r-black/50 shadow-[0_15px_35px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]",
                 light: "bg-white/10 backdrop-blur-xl border border-white/40 shadow-xl",
             },
             hoverEffect: {

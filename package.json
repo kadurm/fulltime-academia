@@ -15,12 +15,17 @@
     "vite": "^8.0.1"
   },
   "dependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@vercel/kv": "^3.0.0",
+    "@vitejs/plugin-react": "^6.0.1",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.9.0",
     "clsx": "^2.1.1",
     "dotenv": "^17.4.0",
     "lucide-react": "^1.7.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "stripe": "^22.0.0",
     "tailwind-merge": "^3.5.0"
   }
