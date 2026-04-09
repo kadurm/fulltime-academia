@@ -36,4 +36,4 @@
 ## Estado Atual do Projeto
 - **Concluído:** Migração bem-sucedida do layout estático Vanilla JS para uma Single Page Application React (Vite).
 - **Concluído:** Reestruturação da UI com componentes modernos (GlassCards, Navbar/Footer flutuantes 3D e Carrinho Sidebar sincronizado).
-- **Objetivo Imediato:** Injetar a chave secreta (`STRIPE_SECRET_KEY`) no ambiente local e validar o funil de pagamento conectando o carrinho global ao Stripe Checkout.
+- **Objetivo Imediato:** Injetar a chave secreta (`STRIPE_SECRET_KEY`) no ambiente local (`.env.local`) e validar o funil de pagamento conectando o carrinho global ao Stripe Checkout (Configuração pendente/adiada pelo usuário).
