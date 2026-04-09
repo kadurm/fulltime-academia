@@ -289,10 +289,10 @@ function App() {
 
         {/* Contato */}
         <div id="contato" data-section="contact">
-          <section aria-label="Contact section" className="relative py-20 w-full bg-[#003399]">
+          <section aria-label="Contact section" className="relative py-20 w-full bg-slate-900/30">
             <div className="w-content-width mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:auto-rows-fr">
-                <div id="formConsultarPlanos-container" className="bg-[#003399]/50 backdrop-blur-xl border border-white/10 text-white rounded-theme-capped p-12 flex items-center justify-center shadow-2xl">
+                <GlassCard id="formConsultarPlanos-container" className="p-8 md:p-12 flex items-center justify-center h-full flex-col">
                   <form id="formConsultarPlanos" className="relative z-1 w-full flex flex-col gap-6" onSubmit={handleConsultarPlanos}>
                     <div className="w-full flex flex-col gap-2 text-center">
                       <h2 className="blur-text text-white text-6xl font-medium text-balance">Consultar Planos</h2>
@@ -316,10 +316,10 @@ function App() {
                       </button>
                     </div>
                   </form>
-                </div>
-                <div className="overflow-hidden rounded-2xl card md:relative md:h-full shadow-2xl">
-                  <img src={fotoForms} alt="Academia" className="h-auto w-full md:absolute md:inset-0 md:h-full object-cover" />
-                </div>
+                </GlassCard>
+                <GlassCard className="p-0 overflow-hidden h-full flex flex-col">
+                  <img src={fotoForms} alt="Academia" className="w-full h-full object-cover min-h-[400px] md:min-h-full rounded-2xl" />
+                </GlassCard>
               </div>
             </div>
           </section>
