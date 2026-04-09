@@ -103,7 +103,7 @@ const Loja: React.FC = () => {
               <img src={p.imagem} alt={p.nome} className="h-full w-full object-cover rounded-t-2xl transition-transform duration-500 group-hover:scale-110" />
             </div>
             <div className="p-3 md:p-8 flex flex-col flex-1 gap-1 md:gap-2">
-              <h3 className="text-xs md:text-lg font-bold text-white text-center line-clamp-1">{p.nome}</h3>
+              <h3 className="text-[10px] md:text-sm font-bold text-white text-center line-clamp-1">{p.nome}</h3>
               <p className="text-[10px] md:text-sm text-gray-400 text-center line-clamp-2">{p.descricao}</p>
               <span className="text-sm md:text-xl font-bold text-blue-400 text-center mt-1 md:mt-3">{p.preco}</span>
               <button 
