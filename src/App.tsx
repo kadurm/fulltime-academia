@@ -4,12 +4,14 @@ import { AnimatedBackground } from './components/ui/animated-background';
 import { ShoppingCart } from 'lucide-react';
 import Home from './pages/Home';
 import Loja from './pages/Loja';
+import { CartSidebar } from './components/ui/cart-sidebar';
 
 // Importando imagem da logo
 import logo from '/logo.png';
 
 function App() {
   const [cartBadge, setCartBadge] = useState(0);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     // Carrinho Badge Update
@@ -29,11 +31,6 @@ function App() {
     };
   }, []);
 
-  const toggleCart = () => {
-    // Por enquanto redireciona para a loja se estiver na home ou abre lateral se implementarmos futuramente
-    // Se estivermos usando rotas, talvez queiramos um modal lateral global
-  };
-
   return (
     <Router>
       <AnimatedBackground shopStatus="default" />
@@ -52,7 +49,7 @@ function App() {
                 <a href="/#contato" className="px-1 md:px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-[10px] md:text-sm font-medium tracking-tighter md:tracking-wide whitespace-nowrap">Contato</a>
                 <Link to="/loja" className="px-1 md:px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-[10px] md:text-sm font-medium tracking-tighter md:tracking-wide whitespace-nowrap">Loja</Link>
               </div>
-              <button id="checkout-btn" className="relative p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/25 hover:scale-105 transition-all duration-300 flex items-center justify-center text-white flex-shrink-0 scale-90 md:scale-100 origin-right ml-1" onClick={toggleCart}>
+              <button id="checkout-btn" className="relative p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/25 hover:scale-105 transition-all duration-300 flex items-center justify-center text-white flex-shrink-0 scale-90 md:scale-100 origin-right ml-1" onClick={() => setIsCartOpen(true)}>
                 <ShoppingCart size={20} />
                 <span id="cart-badge" className="absolute -top-1 -right-1 bg-blue-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-md">{cartBadge}</span>
               </button>
@@ -73,6 +70,8 @@ function App() {
             <span className="text-white/50 text-sm">© 2026 | KrM Corp</span>
           </div>
         </footer>
+
+        <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       </div>
     </Router>
   );
