@@ -279,7 +279,26 @@
 
   <!-- Navegação -->
   <div id="nav" data-section="nav">
-    <nav class="fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/0 backdrop-blur-0 min-h-[6rem] py-3 md:py-0 md:h-20"><div class="relative flex flex-col md:flex-row items-center justify-center md:justify-between h-full w-content-width mx-auto gap-3 md:gap-0"><div class="flex items-center transition-all duration-500 ease-in-out"><button onclick="document.getElementById('hero').scrollIntoView()" class="cursor-pointer"><img src="/logo.png" alt="Fulltime Academia" class="h-10 md:h-16 w-auto object-contain transition-transform hover:scale-105" /></button></div><div class="flex items-center justify-center gap-4 sm:gap-6 md:gap-6 transition-all duration-500 ease-in-out w-full md:w-auto overflow-x-auto pb-1 md:pb-0 px-6" role="navigation" style="scrollbar-width: none;"><button type="button" onclick="document.getElementById('hero').scrollIntoView()" class="relative text-sm md:text-base inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Início</button><button type="button" onclick="document.getElementById('about').scrollIntoView()" class="relative text-sm md:text-base inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Sobre</button><button type="button" onclick="document.getElementById('unidades').scrollIntoView()" class="relative text-sm md:text-base inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Unidades</button><button type="button" onclick="document.getElementById('contact').scrollIntoView()" class="relative text-sm md:text-base inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Fale Conosco</button><a href="suplementos.html" class="relative text-sm md:text-base inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Loja</a></div></div></nav>
+    <nav class="fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/0 backdrop-blur-0 md:h-20">
+      <div class="relative flex flex-col items-center md:flex-row md:justify-between w-full md:max-w-7xl mx-auto px-8 md:px-8 py-6 md:py-0 h-full">
+        <button onclick="document.getElementById('hero').scrollIntoView()" class="cursor-pointer mb-4 md:mb-0 flex-shrink-0">
+          <img src="/logo.png" alt="Fulltime Academia" class="w-14 md:w-16 h-auto object-contain transition-transform hover:scale-105" />
+        </button>
+        <div class="w-full md:w-auto flex flex-row justify-between items-center md:gap-8" role="navigation">
+          <div class="flex flex-row flex-wrap gap-3 md:gap-6 items-center text-sm md:text-base">
+            <button type="button" onclick="document.getElementById('hero').scrollIntoView()" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Início</button>
+            <button type="button" onclick="document.getElementById('about').scrollIntoView()" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Sobre</button>
+            <button type="button" onclick="document.getElementById('unidades').scrollIntoView()" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Unidades</button>
+            <button type="button" onclick="document.getElementById('contact').scrollIntoView()" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Contato</button>
+            <a href="suplementos.html" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Loja</a>
+          </div>
+          <a href="suplementos.html" class="relative p-2 text-foreground hover:text-accent transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            <span id="cart-badge" class="absolute top-0 right-0 bg-blue-500 text-white rounded-full text-[10px] font-bold w-4 h-4 flex items-center justify-center">0</span>
+          </a>
+        </div>
+      </div>
+    </nav>
   </div>
 
   <!-- Hero -->
