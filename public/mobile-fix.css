@@ -71,11 +71,21 @@
 
   #produtos-grid .glass-card {
     min-height: 320px !important;
-    padding: 12px !important;
+    padding: 0 !important; /* Edge-to-edge image */
+    overflow: hidden !important;
   }
 
   #produtos-grid .img-container {
-    height: 100px !important;
+    height: 140px !important;
+    width: 100% !important;
+  }
+
+  #produtos-grid .img-container img {
+    border-radius: 12px 12px 0 0 !important;
+  }
+
+  #produtos-grid .p-4 {
+    padding: 12px !important; /* Content padding */
   }
 
   #produtos-grid h3 {
