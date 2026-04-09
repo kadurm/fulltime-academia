@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { GlassCard } from './components/ui/glass-card';
+import { AnimatedBackground } from './components/ui/animated-background';
 import { ShoppingCart, Zap, Users, Activity, Snowflake, X, ChevronDown, MapPin } from 'lucide-react';
 
 // Importando imagens para o Vite
