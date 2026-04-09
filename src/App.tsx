@@ -146,14 +146,12 @@ function App() {
   };
 
   return (
-    <div className="antialiased">
-      {/* Beams Background (Canvas simulando Webild) */}
-      <div className="bg-background fixed inset-0 -z-10 w-full h-full" aria-hidden="true">
-        <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden', pointerEvents: 'auto' }}>
-          <div style={{ width: '100%', height: '100%' }}>
-            <canvas id="bg-canvas" style={{ display: 'block' }}></canvas>
-          </div>
-        </div>
+    <div className="antialiased text-white">
+      {/* Background Global Escuro com Esferas Refrativas */}
+      <div className="fixed inset-0 z-[-1] bg-slate-950 overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-blue-600/30 rounded-full mix-blend-screen filter blur-[100px] opacity-70 animate-blob"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[30vw] h-[30vw] bg-teal-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-70 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-[40%] left-[40%] w-[25vw] h-[25vw] bg-indigo-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-70 animate-blob animation-delay-4000"></div>
       </div>
 
       <nav className="fixed top-0 left-0 w-full z-50 bg-[#003399]/80 backdrop-blur-lg border-b border-white/10 shadow-lg transition-all duration-300">
@@ -201,7 +199,7 @@ function App() {
       </div>
 
       {/* Funcionalidades (Diferenciais) */}
-      <section id="sobre" className="bg-slate-950 py-20 relative overflow-hidden" aria-label="Feature section">
+      <section id="sobre" className="bg-slate-950/40 py-20 relative overflow-hidden" aria-label="Feature section">
         <div className="container mx-auto px-4 flex flex-col gap-12 relative z-10">
           <div className="flex flex-col items-center justify-center w-full mx-auto text-center">
             <div className="w-full md:w-8/10 flex flex-col gap-3 items-center">

@@ -27,10 +27,25 @@ export default {
           '0%': { left: '-100%' },
           '20%': { left: '200%' },
           '100%': { left: '200%' },
-        }
+        },
+        blob: {
+          "0%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
+          "33%": {
+            transform: "translate(30px, -50px) scale(1.1)",
+          },
+          "66%": {
+            transform: "translate(-20px, 20px) scale(0.9)",
+          },
+          "100%": {
+            transform: "translate(0px, 0px) scale(1)",
+          },
+        },
       },
       animation: {
         'shine-glass': 'shine 6s infinite',
+        blob: "blob 7s infinite",
       }
     },
   },
