@@ -277,29 +277,26 @@
     </div>
   </div>
 
-  <!-- Navegação -->
-  <div id="nav" data-section="nav">
-    <nav class="fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/0 backdrop-blur-0 md:h-20 mb-10">
-      <div class="relative flex flex-col items-center md:flex-row md:justify-between w-full md:max-w-7xl mx-auto px-6 md:px-8 py-6 md:py-0 h-full">
-        <a href="#hero" onclick="document.getElementById('hero').scrollIntoView(); return false;" class="cursor-pointer mb-2 md:mb-0 flex-shrink-0">
-          <img src="/logo.png" alt="Fulltime Academia" class="w-14 md:w-16 h-auto object-contain transition-transform hover:scale-105" />
-        </a>
-        <div class="w-full md:w-auto flex flex-row justify-between items-center md:gap-8" role="navigation">
-          <div class="flex flex-row flex-wrap gap-3 md:gap-6 items-center text-sm md:text-base">
-            <button type="button" onclick="document.getElementById('hero').scrollIntoView()" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Início</button>
-            <button type="button" onclick="document.getElementById('about').scrollIntoView()" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Sobre</button>
-            <button type="button" onclick="document.getElementById('unidades').scrollIntoView()" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Unidades</button>
-            <button type="button" onclick="document.getElementById('contact').scrollIntoView()" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Contato</button>
-            <a href="suplementos.html" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Loja</a>
-          </div>
-          <a href="suplementos.html" class="relative p-2 text-foreground hover:text-accent transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-            <span id="cart-badge" class="absolute top-0 right-0 bg-blue-500 text-white rounded-full text-[10px] font-bold w-4 h-4 flex items-center justify-center">0</span>
-          </a>
+  <nav class="fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/0 backdrop-blur-0 md:h-20">
+    <div class="relative flex flex-col items-center md:flex-row md:justify-between w-full md:max-w-7xl mx-auto px-8 md:px-8 py-6 md:py-0 h-full">
+      <a href="/index.html" class="cursor-pointer mb-4 md:mb-0 flex-shrink-0">
+        <img src="/logo.png" alt="Fulltime Academia" class="w-14 md:w-16 h-auto object-contain transition-transform hover:scale-105" />
+      </a>
+      <div class="w-full md:w-auto flex flex-row justify-between items-center md:gap-8" role="navigation">
+        <div class="flex flex-row flex-wrap gap-3 md:gap-6 items-center text-sm md:text-base">
+          <a href="/index.html" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Início</a>
+          <a href="/index.html#about" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Sobre</a>
+          <a href="/index.html#unidades" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Unidades</a>
+          <a href="/index.html#contact" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Contato</a>
+          <a href="suplementos.html" class="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Loja</a>
         </div>
+        <button id="checkout-btn" class="relative p-2 text-foreground hover:text-accent transition-colors" onclick="toggleCart()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+          <span id="cart-badge" class="absolute top-0 right-0 bg-blue-500 text-white rounded-full text-[10px] font-bold w-4 h-4 flex items-center justify-center">0</span>
+        </button>
       </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
 
   <!-- Hero -->
   <div id="hero" data-section="hero">
@@ -318,7 +315,7 @@
                 <span class="text-sm block overflow-hidden truncate whitespace-nowrap text-primary-cta-text">Encontrar
                   Unidade</span>
               </button>
-              <button type="button" onclick="document.getElementById('contato').scrollIntoView()"
+              <button type="button" onclick="document.getElementById('contact').scrollIntoView()"
                 class="relative cursor-pointer h-9 min-w-0 w-fit max-w-full px-6 secondary-button rounded-theme text-secondary-cta-text">
                 <span class="text-sm block overflow-hidden truncate whitespace-nowrap text-secondary-cta-text">Fale Conosco</span>
               </button>
@@ -349,7 +346,7 @@
   </div>
 
   <!-- Funcionalidades -->
-  <div id="features" data-section="features">
+  <div id="about" data-section="about">
     <section class="relative py-20 w-full bg-foreground" aria-label="Feature section">
       <div class="w-content-width mx-auto flex flex-col gap-6">
         <div class="flex flex-col items-center justify-center w-full mx-auto text-center">
@@ -639,7 +636,7 @@
 
 
   <!-- Contato -->
-  <div id="contato" data-section="contact">
+  <div id="contact" data-section="contact">
     <section aria-label="Contact section" class="relative py-20 w-full bg-foreground">
       <div class="w-content-width mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:auto-rows-fr">
@@ -821,6 +818,17 @@
         alert('Obrigado! Entraremos em contato via WhatsApp.');
         closeModal();
       });
+
+      // 10. Carrinho e Badge (Sync com Loja)
+      window.toggleCart = function() {
+        window.location.href = 'suplementos.html';
+      };
+      (function updateBadge() {
+        const cart = JSON.parse(localStorage.getItem('fulltime_cart') || '[]');
+        const totalItems = cart.reduce((sum, item) => sum + (item.quantidade || 1), 0);
+        const badge = document.getElementById('cart-badge');
+        if (badge) badge.innerText = totalItems;
+      })();
     });
   </script>
 <style>#beams-bg-container{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;overflow:hidden;background-color:var(--color-background,#003399)}#beams-canvas{position:absolute;inset:0;filter:blur(15px);opacity:0.8}body,main,.bg-background{background:transparent !important}</style><div id="beams-bg-container"><canvas id="beams-canvas"></canvas></div><script>(function(){const canvas=document.getElementById('beams-canvas');const ctx=canvas.getContext('2d');let beams=[];let lastWidth=window.innerWidth;function createBeam(width,height,isInitial=false){return{x:Math.random()*width*1.5-width*0.25,y:isInitial?Math.random()*height*2-height:height+200+Math.random()*200,width:40+Math.random()*80,length:height*3.5,angle:-35+Math.random()*10,speed:0.8+Math.random()*1.5,opacity:0.4+Math.random()*0.4,pulse:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.03};}function resetBeam(beam,width,height){beam.y=height+200+Math.random()*200;beam.x=Math.random()*width*1.5-width*0.25;return beam;}function updateSize(){const width=window.innerWidth;const height=window.innerHeight;if(Math.abs(width-lastWidth)<10&&beams.length>0)return;lastWidth=width;const dpr=window.devicePixelRatio||1;canvas.width=width*dpr;canvas.height=height*dpr;canvas.style.width=width+'px';canvas.style.height=height+'px';ctx.setTransform(1,0,0,1,0,0);ctx.scale(dpr,dpr);beams=Array.from({length:45},()=>createBeam(width,height,true));}function drawBeam(beam){ctx.save();ctx.translate(beam.x,beam.y);ctx.rotate((beam.angle*Math.PI)/180);const pOpacity=Math.max(0,Math.min(1,beam.opacity*(0.8+Math.sin(beam.pulse)*0.2)));const grad=ctx.createLinearGradient(0,0,0,beam.length);grad.addColorStop(0,'rgba(0,0,0,0)');grad.addColorStop(0.1,`rgba(0,0,0,${pOpacity*0.5})`);grad.addColorStop(0.4,`rgba(0,0,0,${pOpacity})`);grad.addColorStop(0.6,`rgba(0,0,0,${pOpacity})`);grad.addColorStop(0.9,`rgba(0,0,0,${pOpacity*0.5})`);grad.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=grad;ctx.fillRect(-beam.width/2,0,beam.width,beam.length);ctx.restore();}function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);const w=window.innerWidth;const h=window.innerHeight;beams.forEach((beam)=>{beam.y-=beam.speed;beam.pulse+=beam.pulseSpeed;if(beam.y+beam.length<-200){resetBeam(beam,w,h);}drawBeam(beam);});requestAnimationFrame(animate);}updateSize();window.addEventListener('resize',updateSize);animate();})();</script>
