@@ -211,39 +211,45 @@ function App() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <GlassCard className="p-8 h-full">
-              <div className="relative z-1 flex flex-col gap-4 items-center text-center h-full">
-                <div className="h-16 w-16 rounded-2xl primary-button flex items-center justify-center">
-                  <Zap className="w-8 h-8 text-primary-cta-text" />
+            <GlassCard className="p-8 h-full flex flex-col">
+              <div className="relative z-1 flex flex-col gap-6 items-center text-center h-full">
+                <div className="h-20 w-20 bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-full shadow-inner flex items-center justify-center">
+                  <Zap className="w-full h-full text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold text-white">Treino Inteligente</h3>
-                <p className="text-gray-300">Equipamentos de musculação de última geração para resultados otimizados.</p>
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-2xl font-semibold text-white">Treino Inteligente</h3>
+                  <p className="text-gray-300">Equipamentos de musculação de última geração para resultados otimizados.</p>
+                </div>
                 <div className="mt-auto pt-6 w-full overflow-hidden rounded-xl h-48">
                   <img src={aparelhosImg} alt="Gym machines" className="h-full w-full object-cover" />
                 </div>
               </div>
             </GlassCard>
 
-            <GlassCard className="p-8 h-full">
-              <div className="relative z-1 flex flex-col gap-4 items-center text-center h-full">
-                <div className="h-16 w-16 rounded-2xl primary-button flex items-center justify-center">
-                  <Users className="w-8 h-8 text-primary-cta-text" />
+            <GlassCard className="p-8 h-full flex flex-col">
+              <div className="relative z-1 flex flex-col gap-6 items-center text-center h-full">
+                <div className="h-20 w-20 bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-full shadow-inner flex items-center justify-center">
+                  <Users className="w-full h-full text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold text-white">Aulas Coletivas</h3>
-                <p className="text-gray-300">Diversidade de modalidades para todos os níveis e objetivos fitness.</p>
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-2xl font-semibold text-white">Aulas Coletivas</h3>
+                  <p className="text-gray-300">Diversidade de modalidades para todos os níveis e objetivos fitness.</p>
+                </div>
                 <div className="mt-auto pt-6 w-full overflow-hidden rounded-xl h-48">
                   <img src={aulasImg} alt="Collective classes" className="h-full w-full object-cover" />
                 </div>
               </div>
             </GlassCard>
 
-            <GlassCard className="p-8 h-full">
-              <div className="relative z-1 flex flex-col gap-4 items-center text-center h-full">
-                <div className="h-16 w-16 rounded-2xl primary-button flex items-center justify-center">
-                  <Activity className="w-8 h-8 text-primary-cta-text" />
+            <GlassCard className="p-8 h-full flex flex-col">
+              <div className="relative z-1 flex flex-col gap-6 items-center text-center h-full">
+                <div className="h-20 w-20 bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-full shadow-inner flex items-center justify-center">
+                  <Activity className="w-full h-full text-white" />
                 </div>
-                <h3 className="text-2xl font-semibold text-white">Suporte Técnico</h3>
-                <p className="text-gray-300">Profissionais qualificados sempre à disposição para orientar seu treino.</p>
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-2xl font-semibold text-white">Suporte Técnico</h3>
+                  <p className="text-gray-300">Profissionais qualificados sempre à disposição para orientar seu treino.</p>
+                </div>
                 <div className="mt-auto pt-6 w-full overflow-hidden rounded-xl h-48">
                   <img src={suporte01Img} alt="Gym coach" className="h-full w-full object-cover" />
                 </div>
@@ -263,72 +269,64 @@ function App() {
                 <p className="blur-text text-sm md:text-base font-medium text-gray-300 mt-4 mb-6">Encontre a Fulltime mais próxima de você e venha treinar.</p>
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
               {/* Unidade Ibituruna */}
               <div className="min-h-[28rem]">
-                <GlassCard hoverEffect="float" className="relative h-full text-foreground overflow-hidden flex flex-col">
-                  <div className="h-48 w-full overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" alt="Unidade Ibituruna" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                <GlassCard hoverEffect="float" className="p-0 relative h-full text-foreground overflow-hidden flex flex-col">
+                  <div className="w-full aspect-video overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" alt="Unidade Ibituruna" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 rounded-t-2xl" />
                   </div>
-                  <div className="p-6 flex flex-col gap-4 flex-1">
-                    <h3 className="text-center">Unidade<br />Ibituruna</h3>
+                  <div className="p-8 flex flex-col gap-4 flex-1">
+                    <h3 className="text-center font-bold text-xl">Unidade<br />Ibituruna</h3>
                     <p className="text-sm text-foreground/70 leading-relaxed text-center">Av. José Corrêa Machado, 1079, Ibituruna - Montes Claros</p>
-                    <div className="mt-auto">
-                      <a href="https://www.google.com/maps/search/?api=1&query=Av.+José+Corrêa+Machado,+1079+-+Ibituruna,+Montes+Claros" target="_blank" rel="noopener noreferrer" className="relative cursor-pointer h-10 px-6 primary-button rounded-theme primary-button text-primary-cta-text w-full flex items-center justify-center">
-                        <span className="text-sm font-medium">Como Chegar</span>
-                      </a>
-                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Av.+José+Corrêa+Machado,+1079+-+Ibituruna,+Montes+Claros" target="_blank" rel="noopener noreferrer" className="mt-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl transition-all duration-300 shadow-lg shadow-blue-600/20 uppercase tracking-wider text-sm text-center">
+                      Como Chegar
+                    </a>
                   </div>
                 </GlassCard>
               </div>
               {/* Unidade São José */}
               <div className="min-h-[28rem]">
-                <GlassCard hoverEffect="float" className="relative h-full text-foreground overflow-hidden flex flex-col">
-                  <div className="h-48 w-full overflow-hidden">
-                    <img src={unidadeSaoJose} alt="Unidade São José" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                <GlassCard hoverEffect="float" className="p-0 relative h-full text-foreground overflow-hidden flex flex-col">
+                  <div className="w-full aspect-video overflow-hidden">
+                    <img src={unidadeSaoJose} alt="Unidade São José" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 rounded-t-2xl" />
                   </div>
-                  <div className="p-6 flex flex-col gap-4 flex-1">
-                    <h3 className="text-center">Unidade<br />São José</h3>
+                  <div className="p-8 flex flex-col gap-4 flex-1">
+                    <h3 className="text-center font-bold text-xl">Unidade<br />São José</h3>
                     <p className="text-sm text-foreground/70 leading-relaxed text-center">Av. Floriano Neiva, 610, Alto São João - Montes Claros</p>
-                    <div className="mt-auto">
-                      <a href="https://www.google.com/maps/search/?api=1&query=Av.+Floriano+Neiva,+610+-+Alto+São+João,+Montes+Claros" target="_blank" rel="noopener noreferrer" className="relative cursor-pointer h-10 px-6 primary-button rounded-theme primary-button text-primary-cta-text w-full flex items-center justify-center">
-                        <span className="text-sm font-medium">Como Chegar</span>
-                      </a>
-                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Av.+Floriano+Neiva,+610+-+Alto+São+João,+Montes+Claros" target="_blank" rel="noopener noreferrer" className="mt-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl transition-all duration-300 shadow-lg shadow-blue-600/20 uppercase tracking-wider text-sm text-center">
+                      Como Chegar
+                    </a>
                   </div>
                 </GlassCard>
               </div>
               {/* Unidade Major Prates */}
               <div className="min-h-[28rem]">
-                <GlassCard hoverEffect="float" className="relative h-full text-foreground overflow-hidden flex flex-col">
-                  <div className="h-48 w-full overflow-hidden">
-                    <img src={majorImg} alt="Unidade Major Prates" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                <GlassCard hoverEffect="float" className="p-0 relative h-full text-foreground overflow-hidden flex flex-col">
+                  <div className="w-full aspect-video overflow-hidden">
+                    <img src={majorImg} alt="Unidade Major Prates" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 rounded-t-2xl" />
                   </div>
-                  <div className="p-6 flex flex-col gap-4 flex-1">
-                    <h3 className="text-center">Unidade<br />Major Prates</h3>
+                  <div className="p-8 flex flex-col gap-4 flex-1">
+                    <h3 className="text-center font-bold text-xl">Unidade<br />Major Prates</h3>
                     <p className="text-sm text-foreground/70 leading-relaxed text-center">Av. Francisco Gaetani, 742, Major Prates - Montes Claros</p>
-                    <div className="mt-auto">
-                      <a href="https://www.google.com/maps/search/?api=1&query=Av.+Francisco+Gaetani,+742+-+Maj.+Prates,+Montes+Claros" target="_blank" rel="noopener noreferrer" className="relative cursor-pointer h-10 px-6 primary-button rounded-theme primary-button text-primary-cta-text w-full flex items-center justify-center">
-                        <span className="text-sm font-medium">Como Chegar</span>
-                      </a>
-                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Av.+Francisco+Gaetani,+742+-+Maj.+Prates,+Montes+Claros" target="_blank" rel="noopener noreferrer" className="mt-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl transition-all duration-300 shadow-lg shadow-blue-600/20 uppercase tracking-wider text-sm text-center">
+                      Como Chegar
+                    </a>
                   </div>
                 </GlassCard>
               </div>
               {/* Unidade Planalto */}
               <div className="min-h-[28rem]">
-                <GlassCard hoverEffect="float" className="relative h-full text-foreground overflow-hidden flex flex-col">
-                  <div className="h-48 w-full overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop" alt="Unidade Planalto" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                <GlassCard hoverEffect="float" className="p-0 relative h-full text-foreground overflow-hidden flex flex-col">
+                  <div className="w-full aspect-video overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop" alt="Unidade Planalto" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 rounded-t-2xl" />
                   </div>
-                  <div className="p-6 flex flex-col gap-4 flex-1">
-                    <h3 className="text-center">Unidade<br />Planalto</h3>
+                  <div className="p-8 flex flex-col gap-4 flex-1">
+                    <h3 className="text-center font-bold text-xl">Unidade<br />Planalto</h3>
                     <p className="text-sm text-foreground/70 leading-relaxed text-center">Av. Osmane Barbosa, 1177, Residencial JK - Montes Claros</p>
-                    <div className="mt-auto">
-                      <a href="https://www.google.com/maps/search/?api=1&query=Av.+Osmane+Barbosa,+1177+-+Conj.+Res.+Jk,+Montes+Claros" target="_blank" rel="noopener noreferrer" className="relative cursor-pointer h-10 px-6 primary-button rounded-theme primary-button text-primary-cta-text w-full flex items-center justify-center">
-                        <span className="text-sm font-medium">Como Chegar</span>
-                      </a>
-                    </div>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Av.+Osmane+Barbosa,+1177+-+Conj.+Res.+Jk,+Montes+Claros" target="_blank" rel="noopener noreferrer" className="mt-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl transition-all duration-300 shadow-lg shadow-blue-600/20 uppercase tracking-wider text-sm text-center">
+                      Como Chegar
+                    </a>
                   </div>
                 </GlassCard>
               </div>
@@ -341,18 +339,18 @@ function App() {
       <div id="contato" data-section="contact">
         <section aria-label="Contact section" className="relative py-20 w-full bg-[#003399]">
           <div className="w-content-width mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:auto-rows-fr">
-              <div id="formConsultarPlanos-container" className="bg-[#003399]/50 backdrop-blur-xl border border-white/10 text-white rounded-theme-capped p-8 md:p-12 flex items-center justify-center shadow-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:auto-rows-fr">
+              <div id="formConsultarPlanos-container" className="bg-[#003399]/50 backdrop-blur-xl border border-white/10 text-white rounded-theme-capped p-12 flex items-center justify-center shadow-2xl">
                 <form id="formConsultarPlanos" className="relative z-1 w-full flex flex-col gap-6" onSubmit={handleConsultarPlanos}>
                   <div className="w-full flex flex-col gap-2 text-center">
                     <h2 className="blur-text text-white text-6xl font-medium text-balance">Consultar Planos</h2>
                     <p className="blur-text text-sm md:text-base font-medium text-white/80 mt-4 mb-6">Entre em contato para saber mais</p>
                   </div>
                   <div className="w-full flex flex-col gap-4">
-                    <input id="nomeConsulta" type="text" placeholder="Nome" aria-label="Nome" className="w-full relative z-1 px-4 py-3 bg-white/10 border border-white/20 rounded-theme text-base text-white placeholder:text-white/60 focus:outline-none" required />
-                    <input id="emailConsulta" type="email" placeholder="Email" aria-label="Email" className="w-full relative z-1 px-4 py-3 bg-white/10 border border-white/20 rounded-theme text-base text-white placeholder:text-white/60 focus:outline-none" required />
+                    <input id="nomeConsulta" type="text" placeholder="Nome" aria-label="Nome" className="w-full relative z-1 px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-base text-white placeholder:text-white/60 focus:outline-none" required />
+                    <input id="emailConsulta" type="email" placeholder="Email" aria-label="Email" className="w-full relative z-1 px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-base text-white placeholder:text-white/60 focus:outline-none" required />
                     <div className="w-full relative">
-                      <select id="unidadeConsulta" required className="w-full relative z-1 px-4 py-3 bg-white/10 border border-white/20 rounded-theme text-base text-white focus:outline-none appearance-none cursor-pointer">
+                      <select id="unidadeConsulta" required className="w-full relative z-1 px-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-base text-white focus:outline-none appearance-none cursor-pointer">
                         <option value="" disabled selected className="bg-[#003399]">Selecione uma Unidade</option>
                         <option value="Unidade Ibituruna" className="bg-[#003399]">Unidade Ibituruna</option>
                         <option value="Unidade São José" className="bg-[#003399]">Unidade São José</option>
@@ -361,14 +359,14 @@ function App() {
                       </select>
                       <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50" size={16} />
                     </div>
-                    <button type="submit" className="relative cursor-pointer h-12 mt-2 min-w-0 max-w-full px-6 bg-white rounded-theme text-[#003399] font-bold w-full hover:bg-gray-100 transition-colors shadow-lg">
-                      <span className="block overflow-hidden truncate whitespace-nowrap text-base">Enviar</span>
+                    <button type="submit" className="mt-4 bg-white hover:bg-gray-100 text-[#003399] font-bold py-4 rounded-2xl transition-all duration-300 shadow-lg uppercase tracking-wider text-sm">
+                      Enviar Mensagem
                     </button>
                   </div>
                 </form>
               </div>
-              <div className="overflow-hidden rounded-theme-capped card md:relative md:h-full">
-                <img src={fotoForms} alt="Academia" className="h-auto rounded-theme-capped w-full md:absolute md:inset-0 md:h-full object-cover" />
+              <div className="overflow-hidden rounded-2xl card md:relative md:h-full shadow-2xl">
+                <img src={fotoForms} alt="Academia" className="h-auto w-full md:absolute md:inset-0 md:h-full object-cover" />
               </div>
             </div>
           </div>
