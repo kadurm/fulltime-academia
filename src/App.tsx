@@ -126,14 +126,14 @@ function App() {
               <img src={logo} alt="Fulltime Academia" className="w-14 md:w-16 h-auto object-contain transition-transform hover:scale-105" />
             </a>
             <div className="w-full md:w-auto flex flex-row justify-between items-center md:gap-8" role="navigation">
-              <div className="flex flex-row flex-wrap gap-2 md:gap-4 items-center">
-                <a href="#hero" className="px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-sm font-medium tracking-wide">Início</a>
-                <a href="#sobre" className="px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-sm font-medium tracking-wide">Sobre</a>
-                <a href="#unidades" className="px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-sm font-medium tracking-wide">Unidades</a>
-                <a href="#contato" className="px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-sm font-medium tracking-wide">Contato</a>
-                <a href="public/suplementos.html" className="px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-sm font-medium tracking-wide">Loja</a>
+              <div className="flex flex-row flex-nowrap w-full justify-between gap-0 md:gap-4 items-center">
+                <a href="#hero" className="px-1 md:px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-[10px] md:text-sm font-medium tracking-tighter md:tracking-wide whitespace-nowrap">Início</a>
+                <a href="#sobre" className="px-1 md:px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-[10px] md:text-sm font-medium tracking-tighter md:tracking-wide whitespace-nowrap">Sobre</a>
+                <a href="#unidades" className="px-1 md:px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-[10px] md:text-sm font-medium tracking-tighter md:tracking-wide whitespace-nowrap">Unidades</a>
+                <a href="#contato" className="px-1 md:px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-[10px] md:text-sm font-medium tracking-tighter md:tracking-wide whitespace-nowrap">Contato</a>
+                <a href="public/suplementos.html" className="px-1 md:px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-[10px] md:text-sm font-medium tracking-tighter md:tracking-wide whitespace-nowrap">Loja</a>
               </div>
-              <button id="checkout-btn" className="relative p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/25 hover:scale-105 transition-all duration-300 flex items-center justify-center text-white" onClick={toggleCart}>
+              <button id="checkout-btn" className="relative p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/25 hover:scale-105 transition-all duration-300 flex items-center justify-center text-white flex-shrink-0 scale-90 md:scale-100 origin-right ml-1" onClick={toggleCart}>
                 <ShoppingCart size={20} />
                 <span id="cart-badge" className="absolute -top-1 -right-1 bg-blue-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-md">{cartBadge}</span>
               </button>
