@@ -20,9 +20,13 @@ function App() {
     };
     updateBadge();
     
-    // Escutar por mudanças no localStorage para o badge
+    // Escutar por mudanças no localStorage e evento customizado
     window.addEventListener('storage', updateBadge);
-    return () => window.removeEventListener('storage', updateBadge);
+    window.addEventListener('cartUpdated', updateBadge);
+    return () => {
+      window.removeEventListener('storage', updateBadge);
+      window.removeEventListener('cartUpdated', updateBadge);
+    };
   }, []);
 
   const toggleCart = () => {
