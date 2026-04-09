@@ -1,7 +1,23 @@
 import React, { useEffect, useRef } from 'react';
 
 interface AnimatedBackgroundProps {
-  shopStatus?: 'default' | 'offer' | 'checkout';
+  shopStatus?: 'default' | 'cart' | 'checkout' | 'offer';
+}
+
+interface Line {
+  x: number;
+  y: number;
+  speed: number;
+  length: number;
+  thickness: number;
+  opacity: number;
+}
+
+interface Lightning {
+  x: number;
+  y: number;
+  life: number;
+  segments: { dx: number; dy: number }[];
 }
 
 export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStatus = 'default' }) => {
@@ -15,7 +31,6 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
 
     let animationFrameId: number;
     let w: number, h: number;
-    let phase = 0;
 
     const resize = () => {
       w = canvas.width = window.innerWidth;
@@ -25,72 +40,101 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
     window.addEventListener('resize', resize);
     resize();
 
-    // Partículas
-    const particles = Array.from({ length: 15 }, () => ({
-      x: Math.random(),
-      y: Math.random(),
-      size: Math.random() * 4 + 2,
-      speed: Math.random() * 0.001 + 0.0005,
-      opacity: Math.random() * 0.5 + 0.2
+    // Inicializar Linhas
+    let lines: Line[] = Array.from({ length: 12 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: window.innerHeight + Math.random() * 200,
+      speed: Math.random() * 2 + 1,
+      length: Math.random() * 100 + 50,
+      thickness: Math.random() * 2 + 1,
+      opacity: Math.random() * 0.4 + 0.1
     }));
 
+    let lightnings: Lightning[] = [];
+
+    const createLightning = (x: number, y: number) => {
+      const segments = Array.from({ length: 4 }, () => ({
+        dx: (Math.random() - 0.5) * 40,
+        dy: Math.random() * 30 + 10
+      }));
+      lightnings.push({ x, y, life: 10, segments });
+    };
+
     const render = () => {
-      // 1. Limpar fundo e preencher base sólida
+      // Configurações por Status
       let bgColor = '#020617';
-      if (shopStatus === 'checkout') bgColor = '#000000';
-      
+      let lineColor = '#003399';
+      let lightningColor = '#06b6d4'; // cyan
+      let speedMult = 1;
+
+      switch (shopStatus) {
+        case 'cart':
+        case 'offer':
+          lineColor = '#7c3aed'; // purple
+          lightningColor = '#d946ef'; // magenta
+          speedMult = 1.2;
+          break;
+        case 'checkout':
+          bgColor = '#000000';
+          lineColor = '#1e293b'; // slate-800
+          lightningColor = '#fbbf24'; // amber/gold
+          speedMult = 0.6;
+          break;
+      }
+
+      // 1. Limpar Frame
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, w, h);
 
-      // 2. Configurações de Cor e Velocidade
-      let baseColor = '#003399';
-      let waveSpeed = 0.02;
+      // 2. Atualizar e Desenhar Linhas
+      lines.forEach(l => {
+        l.x += l.speed * speedMult;
+        l.y -= l.speed * speedMult;
 
-      if (shopStatus === 'offer') {
-        baseColor = '#4c1d95';
-        waveSpeed = 0.04;
-      } else if (shopStatus === 'checkout') {
-        waveSpeed = 0.01;
-      }
-
-      // 3. Renderizar Ondas Senoidais
-      const drawWave = (offset: number, amplitude: number, opacity: number, speedMult: number) => {
+        // Desenhar rastro da linha
         ctx.beginPath();
-        ctx.moveTo(0, h * 0.7);
-        for (let x = 0; x <= w; x += 10) {
-          const y = h * 0.75 + Math.sin(x * 0.005 + phase * speedMult + offset) * amplitude;
-          ctx.lineTo(x, y);
+        ctx.strokeStyle = hexToRgba(lineColor, l.opacity);
+        ctx.lineWidth = l.thickness;
+        ctx.moveTo(l.x - l.length, l.y + l.length);
+        ctx.lineTo(l.x, l.y);
+        ctx.stroke();
+
+        // Colisão com bordas (topo ou direita)
+        if (l.y <= 0 || l.x >= w) {
+          createLightning(l.x, l.y);
+          // Reset para a base ou esquerda
+          if (Math.random() > 0.5) {
+            l.x = Math.random() * w;
+            l.y = h + l.length;
+          } else {
+            l.x = -l.length;
+            l.y = Math.random() * h + h/2;
+          }
         }
-        ctx.lineTo(w, h);
-        ctx.lineTo(0, h);
-        ctx.closePath();
-        ctx.fillStyle = hexToRgba(baseColor, opacity);
-        ctx.fill();
-      };
-
-      drawWave(0, 40, 0.1, 1);
-      drawWave(2, 30, 0.2, 0.8);
-      drawWave(4, 50, 0.15, 1.2);
-
-      // 4. Renderizar Partículas (Luz Refratada)
-      particles.forEach(p => {
-        p.y -= p.speed;
-        if (p.y < -0.1) p.y = 1.1;
-
-        const px = p.x * w;
-        const py = p.y * h;
-
-        const grad = ctx.createRadialGradient(px, py, 0, px, py, p.size * 10);
-        grad.addColorStop(0, hexToRgba('#ffffff', p.opacity));
-        grad.addColorStop(1, 'transparent');
-
-        ctx.beginPath();
-        ctx.arc(px, py, p.size * 10, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
-        ctx.fill();
       });
 
-      phase += waveSpeed;
+      // 3. Atualizar e Desenhar Raios
+      for (let i = lightnings.length - 1; i >= 0; i--) {
+        const ln = lightnings[i];
+        ctx.beginPath();
+        ctx.strokeStyle = hexToRgba(lightningColor, ln.life / 10);
+        ctx.lineWidth = 2;
+        
+        let curX = ln.x;
+        let curY = ln.y;
+        ctx.moveTo(curX, curY);
+        
+        ln.segments.forEach(seg => {
+          curX += seg.dx;
+          curY += seg.dy;
+          ctx.lineTo(curX, curY);
+        });
+        ctx.stroke();
+
+        ln.life--;
+        if (ln.life <= 0) lightnings.splice(i, 1);
+      }
+
       animationFrameId = requestAnimationFrame(render);
     };
 
