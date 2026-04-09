@@ -139,21 +139,12 @@
       display: block;
     }
 
-    /* Estilos UI da Plataforma c/ Glassmorphism */
+    /* Estilos UI da Plataforma - Original */
     .card {
       position: relative;
-      background-color: rgba(31, 41, 55, 0.3) !important;
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(107, 114, 128, 0.3) !important;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-      transition: all 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 25px 50px -12px rgba(17, 24, 39, 0.5);
-      border-color: rgba(107, 114, 128, 0.5) !important;
+      background-color: rgba(45, 45, 45, 0.9) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.3);
     }
 
     /* Remove pseudo-elemento que forçava borda sólida gradiente anterior */
@@ -341,11 +332,11 @@
 
   <!-- Funcionalidades -->
   <div id="sobre" data-section="about">
-    <section class="relative py-20 w-full" aria-label="Feature section">
+    <section class="relative py-20 w-full bg-white" aria-label="Feature section">
       <div class="w-content-width mx-auto flex flex-col gap-6">
         <div class="flex flex-col items-center justify-center w-full mx-auto text-center">
           <div class="w-full md:w-8/10 flex flex-col gap-3 items-center">
-            <h2 class="blur-text text-background text-6xl font-medium text-balance"
+            <h2 class="blur-text text-gray-900 text-6xl font-medium text-balance"
               aria-label="O Melhor para o seu Treino">O Melhor para o seu Treino</h2>
             <p class="blur-text text-sm md:text-base font-medium text-gray-500 mt-4 mb-6"
               aria-label="Recursos exclusivos pensados para sua performance e bem-estar.">Recursos exclusivos pensados
