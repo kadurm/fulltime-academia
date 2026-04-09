@@ -121,7 +121,7 @@ function App() {
       
       <div className="relative z-10 w-full min-h-screen antialiased text-white">
         <nav className="fixed top-0 left-0 w-full z-50 bg-[#003399]/70 backdrop-blur-2xl border-b border-white/20 shadow-[0_15px_30px_rgba(0,0,0,0.4),inset_0_-1px_0_rgba(255,255,255,0.1)] transition-all duration-300">
-          <div className="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="container mx-auto px-6 lg:px-12 max-w-7xl py-4 flex flex-col md:flex-row justify-between items-center gap-4">
             <a href="#hero" className="cursor-pointer flex-shrink-0">
               <img src={logo} alt="Fulltime Academia" className="w-14 md:w-16 h-auto object-contain transition-transform hover:scale-105" />
             </a>
@@ -144,12 +144,10 @@ function App() {
         {/* Hero */}
         <div id="hero" data-section="hero" className="pt-32 bg-transparent">
           <section className="relative w-full h-fit md:min-h-screen flex items-center justify-center py-hero-page-padding">
-            <div className="w-full flex flex-col gap-4 md:gap-5 relative z-10">
-              <div className="w-content-width mx-auto mt-6 md:mt-0">
-                <div className="items-center text-center flex flex-col gap-3 md:gap-3">
-                  <h2 className="blur-text text-center text-6xl font-medium text-balance">Transforme seu corpo<br />Supere seus limites</h2>
-                  <p className="text-sm md:text-base font-medium text-gray-300 mt-4 mb-6">Encontre a unidade Fulltime mais próxima de você.</p>
-                </div>
+            <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-4 md:gap-5 relative z-10">
+              <div className="items-center text-center flex flex-col gap-3 md:gap-3">
+                <h2 className="blur-text text-center text-6xl font-medium text-balance">Transforme seu corpo<br />Supere seus limites</h2>
+                <p className="text-sm md:text-base font-medium text-gray-300 mt-4 mb-6">Encontre a unidade Fulltime mais próxima de você.</p>
               </div>
 
               {/* Galeria Flutuante */}
@@ -166,16 +164,16 @@ function App() {
 
         {/* Funcionalidades (Diferenciais) */}
         <section id="sobre" className="bg-slate-900/30 py-20 relative overflow-hidden" aria-label="Feature section">
-          <div className="container mx-auto px-4 flex flex-col gap-12 relative z-10">
+          <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-12 relative z-10">
             <div className="flex flex-col items-center justify-center w-full mx-auto text-center">
-              <div className="w-full md:w-8/10 flex flex-col gap-3 items-center">
+              <div className="w-full flex flex-col gap-3 items-center">
                 <h2 className="blur-text text-white text-6xl font-medium text-balance">O Melhor para o seu Treino</h2>
                 <p className="blur-text text-sm md:text-base font-medium text-gray-400 mt-4 mb-6">Recursos exclusivos pensados para sua performance e bem‑estar.</p>
               </div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <GlassCard className="p-8 h-full flex flex-col">
+              <GlassCard className="p-8 h-full w-full flex flex-col">
                 <div className="relative z-1 flex flex-col gap-6 items-center text-center h-full">
                   <div className="h-20 w-20 bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-full shadow-inner flex items-center justify-center">
                     <Zap className="w-full h-full text-white" />
@@ -190,7 +188,7 @@ function App() {
                 </div>
               </GlassCard>
 
-              <GlassCard className="p-8 h-full flex flex-col">
+              <GlassCard className="p-8 h-full w-full flex flex-col">
                 <div className="relative z-1 flex flex-col gap-6 items-center text-center h-full">
                   <div className="h-20 w-20 bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-full shadow-inner flex items-center justify-center">
                     <Users className="w-full h-full text-white" />
@@ -205,7 +203,7 @@ function App() {
                 </div>
               </GlassCard>
 
-              <GlassCard className="p-8 h-full flex flex-col">
+              <GlassCard className="p-8 h-full w-full flex flex-col">
                 <div className="relative z-1 flex flex-col gap-6 items-center text-center h-full">
                   <div className="h-20 w-20 bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-full shadow-inner flex items-center justify-center">
                     <Activity className="w-full h-full text-white" />
@@ -226,16 +224,16 @@ function App() {
         {/* Unidades */}
         <div id="unidades" data-section="unidades">
           <section className="relative py-20 w-full bg-transparent" aria-label="Units section">
-            <div className="w-content-width mx-auto flex flex-col gap-6">
+            <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-6">
               <div className="flex flex-col items-center justify-center w-full mx-auto text-center">
-                <div className="w-full md:w-8/10 flex flex-col gap-3 items-center">
+                <div className="w-full flex flex-col gap-3 items-center">
                   <h2 className="blur-text text-6xl font-medium text-balance">Nossas Unidades</h2>
                   <p className="blur-text text-sm md:text-base font-medium text-gray-300 mt-4 mb-6">Encontre a Fulltime mais próxima de você e venha treinar.</p>
                 </div>
               </div>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
-                <GlassCard hoverEffect="float" className="p-0 relative h-full text-foreground overflow-hidden flex flex-col">
-                  <div className="w-full aspect-video overflow-hidden">
+                <GlassCard hoverEffect="float" className="p-0 relative h-full w-full overflow-hidden flex flex-col">
+                  <div className="w-full aspect-[4/3] md:aspect-video overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" alt="Unidade Ibituruna" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 rounded-t-2xl" />
                   </div>
                   <div className="p-8 flex flex-col gap-4 flex-1">
@@ -246,8 +244,8 @@ function App() {
                     </a>
                   </div>
                 </GlassCard>
-                <GlassCard hoverEffect="float" className="p-0 relative h-full text-foreground overflow-hidden flex flex-col">
-                  <div className="w-full aspect-video overflow-hidden">
+                <GlassCard hoverEffect="float" className="p-0 relative h-full w-full overflow-hidden flex flex-col">
+                  <div className="w-full aspect-[4/3] md:aspect-video overflow-hidden">
                     <img src={unidadeSaoJose} alt="Unidade São José" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 rounded-t-2xl" />
                   </div>
                   <div className="p-8 flex flex-col gap-4 flex-1">
@@ -258,8 +256,8 @@ function App() {
                     </a>
                   </div>
                 </GlassCard>
-                <GlassCard hoverEffect="float" className="p-0 relative h-full text-foreground overflow-hidden flex flex-col">
-                  <div className="w-full aspect-video overflow-hidden">
+                <GlassCard hoverEffect="float" className="p-0 relative h-full w-full overflow-hidden flex flex-col">
+                  <div className="w-full aspect-[4/3] md:aspect-video overflow-hidden">
                     <img src={majorImg} alt="Unidade Major Prates" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 rounded-t-2xl" />
                   </div>
                   <div className="p-8 flex flex-col gap-4 flex-1">
@@ -270,8 +268,8 @@ function App() {
                     </a>
                   </div>
                 </GlassCard>
-                <GlassCard hoverEffect="float" className="p-0 relative h-full text-foreground overflow-hidden flex flex-col">
-                  <div className="w-full aspect-video overflow-hidden">
+                <GlassCard hoverEffect="float" className="p-0 relative h-full w-full overflow-hidden flex flex-col">
+                  <div className="w-full aspect-[4/3] md:aspect-video overflow-hidden">
                     <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop" alt="Unidade Planalto" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 rounded-t-2xl" />
                   </div>
                   <div className="p-8 flex flex-col gap-4 flex-1">
@@ -289,10 +287,10 @@ function App() {
 
         {/* Contato */}
         <div id="contato" data-section="contact">
-          <section aria-label="Contact section" className="relative py-20 w-full bg-slate-900/30">
-            <div className="w-content-width mx-auto">
+          <section aria-label="Contact section" className="relative py-20 w-full bg-[#003399]">
+            <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:auto-rows-fr">
-                <GlassCard id="formConsultarPlanos-container" className="p-8 md:p-12 flex items-center justify-center h-full flex-col">
+                <GlassCard id="formConsultarPlanos-container" className="p-12 flex items-center justify-center h-full w-full flex-col">
                   <form id="formConsultarPlanos" className="relative z-1 w-full flex flex-col gap-6" onSubmit={handleConsultarPlanos}>
                     <div className="w-full flex flex-col gap-2 text-center">
                       <h2 className="blur-text text-white text-6xl font-medium text-balance">Consultar Planos</h2>
@@ -317,7 +315,7 @@ function App() {
                     </div>
                   </form>
                 </GlassCard>
-                <GlassCard className="p-0 overflow-hidden h-full flex flex-col">
+                <GlassCard className="p-0 overflow-hidden h-full w-full flex flex-col shadow-2xl">
                   <img src={fotoForms} alt="Academia" className="w-full h-full object-cover min-h-[400px] md:min-h-full rounded-2xl" />
                 </GlassCard>
               </div>
@@ -326,8 +324,8 @@ function App() {
         </div>
 
         {/* Footer */}
-        <footer className="relative overflow-hidden w-full bg-[#003399] text-white py-10 mt-20">
-          <div className="relative w-content-width mx-auto z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+        <footer className="relative w-full z-10 bg-[#003399]/70 backdrop-blur-2xl border-t border-white/20 text-white py-10 mt-20 shadow-[0_-15px_30px_rgba(0,0,0,0.4)]">
+          <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8">
             <a href="#hero" className="cursor-pointer">
               <img src={logo} alt="Fulltime Academia" className="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" />
             </a>
