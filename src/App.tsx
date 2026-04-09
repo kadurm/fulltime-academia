@@ -156,29 +156,29 @@ function App() {
         </div>
       </div>
 
-      <nav className={`fixed z-[1000] top-0 left-0 w-full transition-all duration-500 ease-in-out bg-background/0 backdrop-blur-0 md:h-20 ${navScrolled ? 'nav-scrolled' : ''}`}>
-        <div className="relative flex flex-col items-center md:flex-row md:justify-between w-full md:max-w-7xl mx-auto px-8 md:px-8 py-6 md:py-0 h-full">
-          <a href="#hero" className="cursor-pointer mb-4 md:mb-0 flex-shrink-0">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-[#003399]/80 backdrop-blur-lg border-b border-white/10 shadow-lg transition-all duration-300">
+        <div className="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+          <a href="#hero" className="cursor-pointer flex-shrink-0">
             <img src={logo} alt="Fulltime Academia" className="w-14 md:w-16 h-auto object-contain transition-transform hover:scale-105" />
           </a>
           <div className="w-full md:w-auto flex flex-row justify-between items-center md:gap-8" role="navigation">
-            <div className="flex flex-row flex-wrap gap-3 md:gap-6 items-center text-sm md:text-base">
-              <a href="#hero" className="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Início</a>
-              <a href="#sobre" className="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Sobre</a>
-              <a href="#unidades" className="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Unidades</a>
-              <a href="#contato" className="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Contato</a>
-              <a href="public/suplementos.html" className="relative inline-block bg-transparent border-none p-0 cursor-pointer text-foreground whitespace-nowrap hover:text-accent transition-colors">Loja</a>
+            <div className="flex flex-row flex-wrap gap-2 md:gap-4 items-center">
+              <a href="#hero" className="px-5 py-2 rounded-full text-white/80 hover:text-white hover:bg-white/15 transition-all duration-300 text-sm font-medium tracking-wide">Início</a>
+              <a href="#sobre" className="px-5 py-2 rounded-full text-white/80 hover:text-white hover:bg-white/15 transition-all duration-300 text-sm font-medium tracking-wide">Sobre</a>
+              <a href="#unidades" className="px-5 py-2 rounded-full text-white/80 hover:text-white hover:bg-white/15 transition-all duration-300 text-sm font-medium tracking-wide">Unidades</a>
+              <a href="#contato" className="px-5 py-2 rounded-full text-white/80 hover:text-white hover:bg-white/15 transition-all duration-300 text-sm font-medium tracking-wide">Contato</a>
+              <a href="public/suplementos.html" className="px-5 py-2 rounded-full text-white/80 hover:text-white hover:bg-white/15 transition-all duration-300 text-sm font-medium tracking-wide">Loja</a>
             </div>
-            <button id="checkout-btn" className="relative p-2 text-foreground hover:text-accent transition-colors" onClick={toggleCart}>
+            <button id="checkout-btn" className="relative p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/25 hover:scale-105 transition-all duration-300 flex items-center justify-center text-white" onClick={toggleCart}>
               <ShoppingCart size={20} />
-              <span id="cart-badge" className="absolute top-0 right-0 bg-blue-500 text-white rounded-full text-[10px] font-bold w-4 h-4 flex items-center justify-center">{cartBadge}</span>
+              <span id="cart-badge" className="absolute -top-1 -right-1 bg-blue-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-md">{cartBadge}</span>
             </button>
           </div>
         </div>
       </nav>
 
       {/* Hero */}
-      <div id="hero" data-section="hero">
+      <div id="hero" data-section="hero" className="pt-32">
         <section className="relative w-full h-fit md:min-h-screen flex items-center justify-center py-hero-page-padding">
           <div className="w-full flex flex-col gap-4 md:gap-5 relative z-10">
             <div className="w-content-width mx-auto mt-6 md:mt-0">
