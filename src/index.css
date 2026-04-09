@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-background: #003399;
+    --color-foreground: #fafafa;
+    --color-card: #383838;
+    --color-border: #484848;
+    --color-accent: #3b82f6;
+    --color-background-accent: #1f2937;
+    --color-primary-cta: #fafafa;
+    --color-primary-cta-text: #09090b;
+    --color-secondary-cta: #27272a;
+    --color-secondary-cta-text: #fafafa;
+
+    --radius-lg: 1rem;
+    --theme-border-radius: var(--radius-lg);
+    --theme-border-radius-capped: var(--radius-lg);
+  }
+}
