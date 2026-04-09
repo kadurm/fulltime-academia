@@ -96,21 +96,21 @@ const Loja: React.FC = () => {
       </div>
 
       {/* Grid de Produtos */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 container mx-auto px-6 lg:px-12 max-w-7xl pb-20">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8 container mx-auto px-4 md:px-6 pb-20">
         {produtosFiltrados.map(p => (
           <GlassCard key={p.id} className="p-0 flex flex-col h-full overflow-hidden border-white/5 hover:border-blue-500/30 transition-all">
-            <div className="h-64 w-full overflow-hidden">
+            <div className="h-36 md:h-64 w-full overflow-hidden">
               <img src={p.imagem} alt={p.nome} className="h-full w-full object-cover rounded-t-2xl transition-transform duration-500 group-hover:scale-110" />
             </div>
-            <div className="p-6 md:p-8 flex flex-col flex-1 gap-2">
-              <h3 className="text-xl font-bold text-white text-center">{p.nome}</h3>
-              <p className="text-sm text-gray-400 text-center line-clamp-2">{p.descricao}</p>
-              <span className="text-2xl font-bold text-blue-400 text-center mt-2">{p.preco}</span>
+            <div className="p-3 md:p-8 flex flex-col flex-1 gap-1 md:gap-2">
+              <h3 className="text-xs md:text-lg font-bold text-white text-center line-clamp-1">{p.nome}</h3>
+              <p className="text-[10px] md:text-sm text-gray-400 text-center line-clamp-2">{p.descricao}</p>
+              <span className="text-sm md:text-xl font-bold text-blue-400 text-center mt-1 md:mt-3">{p.preco}</span>
               <button 
                 onClick={() => addToCart(p)}
-                className="mt-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20"
+                className="mt-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 md:py-3 text-[10px] md:text-sm rounded-lg md:rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20"
               >
-                <ShoppingCart size={18} />
+                <ShoppingCart size={14} className="md:w-[18px] md:h-[18px]" />
                 Carrinho
               </button>
             </div>

@@ -34,8 +34,8 @@ module.exports = async (req, res) => {
       payment_method_types: ['card'],
       line_items,
       mode: 'payment',
-      success_url: `${req.headers.origin}/index.html?success=true`,
-      cancel_url: `${req.headers.origin}/suplementos.html?canceled=true`,
+      success_url: `${req.headers.origin}/?success=true`,
+      cancel_url: `${req.headers.origin}/loja?canceled=true`,
     });
 
     return res.status(200).json({ url: session.url });
