@@ -23,7 +23,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
     };
 
     window.addEventListener('resize', resize);
-    resize(); // Inicialização imediata
+    resize();
 
     // Partículas
     const particles = Array.from({ length: 15 }, () => ({
@@ -35,13 +35,14 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
     }));
 
     const render = () => {
-      // Limpeza e preenchimento de fundo a cada frame
+      // 1. Limpar fundo e preencher base sólida
       let bgColor = '#020617';
       if (shopStatus === 'checkout') bgColor = '#000000';
       
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, w, h);
 
+      // 2. Configurações de Cor e Velocidade
       let baseColor = '#003399';
       let waveSpeed = 0.02;
 
@@ -52,7 +53,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
         waveSpeed = 0.01;
       }
 
-      // 1. Renderizar Ondas Senoidais
+      // 3. Renderizar Ondas Senoidais
       const drawWave = (offset: number, amplitude: number, opacity: number, speedMult: number) => {
         ctx.beginPath();
         ctx.moveTo(0, h * 0.7);
@@ -71,7 +72,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
       drawWave(2, 30, 0.2, 0.8);
       drawWave(4, 50, 0.15, 1.2);
 
-      // 2. Renderizar Partículas
+      // 4. Renderizar Partículas (Luz Refratada)
       particles.forEach(p => {
         p.y -= p.speed;
         if (p.y < -0.1) p.y = 1.1;
@@ -101,7 +102,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
     };
   }, [shopStatus]);
 
-  return <canvas ref={canvasRef} className="fixed top-0 left-0 w-screen h-screen pointer-events-none z-[-50]" />;
+  return <canvas ref={canvasRef} className="fixed inset-0 w-full h-full pointer-events-none z-0" />;
 };
 
 function hexToRgba(hex: string, opacity: number) {

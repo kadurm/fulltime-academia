@@ -3,10 +3,14 @@
 @tailwind utilities;
 
 @layer base {
-  html, body, #root {
-    min-height: 100vh;
+  html, body {
     background-color: #020617;
     overflow-x: hidden;
+  }
+
+  #root {
+    background-color: transparent;
+    min-height: 100vh;
   }
 
   :root {
