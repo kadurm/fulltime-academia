@@ -347,9 +347,9 @@
       });
 
       grid.innerHTML = filtered.map(p => `
-        <div class="glass-card card-produto overflow-hidden">
+        <div class="glass-card card-produto overflow-hidden !p-0">
           <div class="img-container w-full aspect-square">
-            <img src="${p.imagem}" alt="${p.nome}" class="w-full h-full object-cover">
+            <img src="${p.imagem}" alt="${p.nome}" class="w-full h-full object-cover rounded-t-2xl">
           </div>
           <div class="p-4 flex flex-col flex-1">
             <h3 class="font-bold text-lg">${p.nome}</h3>
