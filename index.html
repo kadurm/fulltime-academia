@@ -50,6 +50,16 @@
             '6/10': '60%',
             '3/10': '30%',
             '7/10': '70%',
+          },
+          keyframes: {
+            shine: {
+              '0%': { left: '-100%' },
+              '20%': { left: '200%' },
+              '100%': { left: '200%' },
+            }
+          },
+          animation: {
+            'shine-glass': 'shine 6s infinite',
           }
         }
       }
@@ -372,7 +382,7 @@
         </div>
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 md:grid-rows-[28rem_28rem] 2xl:grid-rows-[32rem_32rem]">
           <div class="min-h-0 md:col-span-1 md:min-h-0 md:overflow-hidden">
-            <div class="bg-gray-900/80 backdrop-blur-md border border-white/10 shadow-2xl shadow-gray-300 transition-transform duration-300 hover:-translate-y-2 flex flex-col gap-5 p-5 rounded-theme-capped min-h-0 h-full">
+            <div class="glass-card-3d flex flex-col gap-5 p-5 rounded-theme-capped min-h-0 h-full">
               <div class="relative z-1 flex flex-col gap-1 items-center text-center">
                 <div
                   class="h-15 w-[3.75rem] mb-1 aspect-square rounded-theme primary-button flex items-center justify-center">
@@ -402,7 +412,7 @@
             </div>
           </div>
           <div class="min-h-0 md:col-span-1 md:min-h-0 md:overflow-hidden">
-            <div class="bg-gray-900/80 backdrop-blur-md border border-white/10 shadow-2xl shadow-gray-300 transition-transform duration-300 hover:-translate-y-2 flex flex-col gap-5 p-5 rounded-theme-capped min-h-0 h-full">
+            <div class="glass-card-3d flex flex-col gap-5 p-5 rounded-theme-capped min-h-0 h-full">
               <div class="relative z-1 flex flex-col gap-1 items-center text-center">
                 <div
                   class="h-15 w-[3.75rem] mb-1 aspect-square rounded-theme primary-button flex items-center justify-center">
@@ -433,7 +443,7 @@
             </div>
           </div>
           <div class="min-h-0 md:col-span-1 md:min-h-0 md:overflow-hidden">
-            <div class="bg-gray-900/80 backdrop-blur-md border border-white/10 shadow-2xl shadow-gray-300 transition-transform duration-300 hover:-translate-y-2 flex flex-col gap-5 p-5 rounded-theme-capped min-h-0 h-full">
+            <div class="glass-card-3d flex flex-col gap-5 p-5 rounded-theme-capped min-h-0 h-full">
               <div class="relative z-1 flex flex-col gap-1 items-center text-center">
                 <div
                   class="h-15 w-[3.75rem] mb-1 aspect-square rounded-theme primary-button flex items-center justify-center">
@@ -463,7 +473,7 @@
             </div>
           </div>
           <div class="min-h-0 md:col-span-1 md:min-h-0 md:overflow-hidden">
-            <div class="bg-gray-900/80 backdrop-blur-md border border-white/10 shadow-2xl shadow-gray-300 transition-transform duration-300 hover:-translate-y-2 flex flex-col gap-5 p-5 rounded-theme-capped min-h-0 h-full">
+            <div class="glass-card-3d flex flex-col gap-5 p-5 rounded-theme-capped min-h-0 h-full">
               <div class="relative z-1 flex flex-col gap-1 items-center text-center">
                 <div
                   class="h-15 w-[3.75rem] mb-1 aspect-square rounded-theme primary-button flex items-center justify-center">
