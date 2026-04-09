@@ -17,6 +17,14 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
     let w: number, h: number;
     let phase = 0;
 
+    const resize = () => {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener('resize', resize);
+    resize(); // Inicialização imediata
+
     // Partículas
     const particles = Array.from({ length: 15 }, () => ({
       x: Math.random(),
@@ -26,30 +34,22 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
       opacity: Math.random() * 0.5 + 0.2
     }));
 
-    const resize = () => {
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
-    };
-
-    window.addEventListener('resize', resize);
-    resize();
-
     const render = () => {
-      ctx.clearRect(0, 0, w, h);
+      // Limpeza e preenchimento de fundo a cada frame
+      let bgColor = '#020617';
+      if (shopStatus === 'checkout') bgColor = '#000000';
+      
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, w, h);
 
-      // Configuração baseada no status
       let baseColor = '#003399';
       let waveSpeed = 0.02;
-      let bgColor = '#020617'; // slate-950
 
       if (shopStatus === 'offer') {
-        baseColor = '#4c1d95'; // roxo profundo
+        baseColor = '#4c1d95';
         waveSpeed = 0.04;
       } else if (shopStatus === 'checkout') {
-        bgColor = '#000000';
         waveSpeed = 0.01;
-        ctx.fillStyle = bgColor;
-        ctx.fillRect(0, 0, w, h);
       }
 
       // 1. Renderizar Ondas Senoidais
@@ -71,7 +71,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
       drawWave(2, 30, 0.2, 0.8);
       drawWave(4, 50, 0.15, 1.2);
 
-      // 2. Renderizar Partículas (Luz Refratada)
+      // 2. Renderizar Partículas
       particles.forEach(p => {
         p.y -= p.speed;
         if (p.y < -0.1) p.y = 1.1;
@@ -101,10 +101,9 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
     };
   }, [shopStatus]);
 
-  return <canvas ref={canvasRef} className="fixed inset-0 z-[-1] w-full h-full bg-slate-950" />;
+  return <canvas ref={canvasRef} className="fixed top-0 left-0 w-screen h-screen pointer-events-none z-[-50]" />;
 };
 
-// Helper para converter Hex para RGBA
 function hexToRgba(hex: string, opacity: number) {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);

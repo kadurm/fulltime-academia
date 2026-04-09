@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  html, body, #root {
+    min-height: 100vh;
+    background-color: #020617;
+    overflow-x: hidden;
+  }
+
   :root {
     --color-background: #003399;
     --color-foreground: #fafafa;

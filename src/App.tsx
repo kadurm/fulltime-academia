@@ -38,36 +38,7 @@ function App() {
 
     document.querySelectorAll('.blur-text').forEach(el => observer.observe(el));
 
-    // 3. Canvas de Fundo (Simulação Webild)
-    const canvas = document.getElementById('bg-canvas') as HTMLCanvasElement;
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      let time = 0;
-      const resize = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      };
-      window.addEventListener('resize', resize);
-      resize();
-      const animate = () => {
-        time += 0.005;
-        if (ctx) {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          const cx = canvas.width / 2 + Math.sin(time) * (canvas.width * 0.1);
-          const cy = canvas.height / 2 + Math.cos(time * 0.8) * (canvas.height * 0.1);
-          const radius = Math.max(canvas.width, canvas.height) * 0.6;
-          const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, radius);
-          gradient.addColorStop(0, 'rgba(59, 130, 246, 0.04)');
-          gradient.addColorStop(1, 'rgba(0, 51, 153, 0)');
-          ctx.fillStyle = gradient;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-        requestAnimationFrame(animate);
-      };
-      animate();
-    }
-
-    // 4. Lógica do Carrossel Hero (Coverflow 3D Perfeito)
+    // 3. Lógica do Carrossel Hero (Coverflow 3D Perfeito)
     const carrosselLogic = () => {
       const container = document.getElementById('main-carousel');
       if (!container) return;
@@ -96,7 +67,7 @@ function App() {
     };
     const cleanupCarrossel = carrosselLogic();
 
-    // 5. Scroll Suave
+    // 4. Scroll Suave
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a');
@@ -116,7 +87,7 @@ function App() {
     };
     document.addEventListener('click', handleAnchorClick);
 
-    // 6. Carrinho Badge
+    // 5. Carrinho Badge
     const updateBadge = () => {
       const cart = JSON.parse(localStorage.getItem('fulltime_cart') || '[]');
       const totalItems = cart.reduce((sum: number, item: any) => sum + (item.quantidade || 1), 0);
@@ -148,12 +119,8 @@ function App() {
 
   return (
     <div className="antialiased text-white">
-      {/* Background Global Escuro com Esferas Refrativas */}
-      <div className="fixed inset-0 z-[-1] bg-slate-950 overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] bg-blue-600/30 rounded-full mix-blend-screen filter blur-[100px] opacity-70 animate-blob"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[30vw] h-[30vw] bg-teal-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-[40%] left-[40%] w-[25vw] h-[25vw] bg-indigo-500/20 rounded-full mix-blend-screen filter blur-[100px] opacity-70 animate-blob animation-delay-4000"></div>
-      </div>
+      {/* Background Dinâmico em Canvas */}
+      <AnimatedBackground shopStatus="default" />
 
       <nav className="fixed top-0 left-0 w-full z-50 bg-[#003399]/80 backdrop-blur-lg border-b border-white/10 shadow-lg transition-all duration-300">
         <div className="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -177,7 +144,7 @@ function App() {
       </nav>
 
       {/* Hero */}
-      <div id="hero" data-section="hero" className="pt-32">
+      <div id="hero" data-section="hero" className="pt-32 bg-transparent">
         <section className="relative w-full h-fit md:min-h-screen flex items-center justify-center py-hero-page-padding">
           <div className="w-full flex flex-col gap-4 md:gap-5 relative z-10">
             <div className="w-content-width mx-auto mt-6 md:mt-0">
@@ -200,7 +167,7 @@ function App() {
       </div>
 
       {/* Funcionalidades (Diferenciais) */}
-      <section id="sobre" className="bg-slate-950/40 py-20 relative overflow-hidden" aria-label="Feature section">
+      <section id="sobre" className="bg-slate-900/30 py-20 relative overflow-hidden" aria-label="Feature section">
         <div className="container mx-auto px-4 flex flex-col gap-12 relative z-10">
           <div className="flex flex-col items-center justify-center w-full mx-auto text-center">
             <div className="w-full md:w-8/10 flex flex-col gap-3 items-center">
@@ -260,7 +227,7 @@ function App() {
 
       {/* Unidades */}
       <div id="unidades" data-section="unidades">
-        <section className="relative py-20 w-full" aria-label="Units section">
+        <section className="relative py-20 w-full bg-transparent" aria-label="Units section">
           <div className="w-content-width mx-auto flex flex-col gap-6">
             <div className="flex flex-col items-center justify-center w-full mx-auto text-center">
               <div className="w-full md:w-8/10 flex flex-col gap-3 items-center">
