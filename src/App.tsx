@@ -14,6 +14,12 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
+    const handleCartUpdate = () => setIsCartOpen(true);
+    window.addEventListener('cartUpdated', handleCartUpdate);
+    return () => window.removeEventListener('cartUpdated', handleCartUpdate);
+  }, []);
+
+  useEffect(() => {
     // Carrinho Badge Update
     const updateBadge = () => {
       const cart = JSON.parse(localStorage.getItem('fulltime_cart') || '[]');
