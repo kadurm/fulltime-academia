@@ -25,6 +25,10 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const location = useLocation();
 
+  useEffect(() => {
+    console.log("ROTA ATUAL:", location.pathname);
+  }, [location]);
+
   const getThemeColors = () => {
     switch (location.pathname) {
       case '/loja':
@@ -156,7 +160,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
 
   return (
     <div 
-      className="fixed inset-0 pointer-events-none z-0 transition-colors duration-[2000ms] ease-in-out bg-[#020617]"
+      className="fixed inset-0 pointer-events-none z-0 transition-all duration-[2000ms] ease-in-out"
       style={{ backgroundColor: theme.aura, backgroundBlendMode: 'overlay' }}
     >
       <canvas ref={canvasRef} className="w-full h-full" />
@@ -171,9 +175,3 @@ function hexToRgba(hex: string, opacity: number) {
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 }
 
-function hexToRgba(hex: string, opacity: number) {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
-}
