@@ -73,7 +73,7 @@ const Home: React.FC = () => {
   return (
     <div className="flex flex-col w-full">
       {/* Hero */}
-      <div id="hero" data-section="hero" className="pt-24 md:pt-32 bg-transparent">
+      <div id="hero" data-section="hero" className="pt-24 md:pt-32 bg-transparent scroll-mt-24 md:scroll-mt-32">
         <section className="relative w-full h-fit md:min-h-screen flex items-center justify-center py-hero-page-padding">
           <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-4 md:gap-5 relative z-10">
             <div className="items-center text-center flex flex-col gap-3 md:gap-3">
@@ -94,7 +94,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Funcionalidades (Diferenciais) */}
-      <section id="sobre" className="bg-slate-900/30 py-12 md:py-16 relative overflow-hidden" aria-label="Feature section">
+      <section id="sobre" className="bg-slate-900/30 py-12 md:py-16 relative overflow-hidden scroll-mt-24 md:scroll-mt-32" aria-label="Feature section">
         <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-12 relative z-10">
           <div className="flex flex-col items-center justify-center w-full mx-auto text-center">
             <div className="w-full flex flex-col gap-3 items-center">
@@ -153,7 +153,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Unidades */}
-      <div id="unidades" data-section="unidades">
+      <div id="unidades" data-section="unidades" className="scroll-mt-24 md:scroll-mt-32">
         <section className="relative py-12 md:py-16 w-full bg-transparent" aria-label="Units section">
           <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-6">
             <div className="flex flex-col items-center justify-center w-full mx-auto text-center">
@@ -225,7 +225,7 @@ const Home: React.FC = () => {
       </div>
 
       {/* Contato */}
-      <div id="contato" data-section="contact">
+      <div id="contato" data-section="contact" className="scroll-mt-24 md:scroll-mt-32">
         <section aria-label="Contact section" className="relative py-12 md:py-16 w-full bg-[#003399]">
           <div className="container mx-auto px-6 lg:px-12 max-w-7xl">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:auto-rows-fr">

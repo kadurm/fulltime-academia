@@ -5,6 +5,7 @@
 2. Antes de iniciar qualquer nova tarefa, releia obrigatoriamente este arquivo `agent.md` para assimilar o contexto atualizado por agentes em outros terminais.
 
 ## Últimas Atualizações
+- 2026-04-11: Fixação do bug de sobreposição da Navbar nos links de âncora via `scroll-mt-24 md:scroll-mt-32` nas seções da Home e confirmação de `scroll-smooth` no HTML.
 - 2026-04-11: Sincronização estrutural do Hero em `Loja.tsx` com `Home.tsx`, replicando a hierarquia de containers e classes de alinhamento para unificar o comportamento visual.
 - 2026-04-11: Ajuste fino de padding superior em `Loja.tsx` para `pt-32` no mobile.
 - 2026-04-11: Padronização do respiro superior (safe zone) dos Heros em `Home.tsx` e `Loja.tsx`.
