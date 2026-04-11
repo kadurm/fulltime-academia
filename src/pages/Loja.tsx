@@ -102,7 +102,7 @@ const Loja: React.FC = () => {
             <div className="aspect-square w-full overflow-hidden">
               <img src={p.imagem} alt={p.nome} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
             </div>
-            <div className="p-2 md:p-4 flex flex-col flex-1 gap-1 md:gap-2">
+            <div className="p-2 md:p-3 flex flex-col flex-1 gap-1 md:gap-2">
               <h3 className="!text-[15px] md:!text-[18px] !font-bold text-white text-center w-full truncate">{p.nome}</h3>
               <p className="!text-[10px] md:!text-[12px] text-white/70 text-center w-full line-clamp-2 mt-1 !leading-tight">{p.descricao}</p>
               <span className="!text-[10px] md:!text-[14px] !font-bold text-blue-400 !text-center !w-full mt-1 md:mt-3">{p.preco}</span>
