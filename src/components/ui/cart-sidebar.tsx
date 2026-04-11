@@ -75,7 +75,7 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
       <div className="fixed right-0 top-0 h-full w-full md:w-[400px] z-[60] bg-[#003399]/80 backdrop-blur-2xl border-l border-white/20 p-6 flex flex-col text-white shadow-2xl animate-in slide-in-from-right duration-300">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold">Seu Carrinho</h2>
+          <h2 className="text-2xl md:text-3xl font-medium text-white">Seu Carrinho</h2>
           <button 
             onClick={onClose}
             className="p-2 hover:bg-white/10 rounded-full transition-colors"
@@ -98,12 +98,12 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
                   <img src={item.imagem} alt={item.name} className="h-20 w-20 object-cover rounded-xl flex-shrink-0" />
                   <div className="flex flex-col flex-1 gap-2">
                     <div className="flex justify-between items-start">
-                      <h3 className="font-semibold text-sm line-clamp-1">{item.name}</h3>
+                      <h3 className="!text-[15px] md:!text-[18px] !font-bold text-white line-clamp-2">{item.name}</h3>
                       <button onClick={() => removeItem(index)} className="text-red-400 hover:text-red-300">
                         <Trash2 size={16} />
                       </button>
                     </div>
-                    <p className="text-blue-400 font-bold">{item.price}</p>
+                    <p className="!text-[10px] md:!text-[14px] !font-bold text-blue-400">{item.price}</p>
                     <div className="flex items-center gap-3 mt-auto">
                       <div className="flex items-center bg-black/20 rounded-lg border border-white/10 p-1">
                         <button onClick={() => updateQty(index, -1)} className="p-1 hover:bg-white/10 rounded">
