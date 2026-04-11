@@ -63,8 +63,8 @@ const Loja: React.FC = () => {
         <section className="relative w-full h-fit flex items-center justify-center py-10 md:py-20">
           <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-4 md:gap-5 relative z-10">
             <div className="items-center text-center flex flex-col gap-3 md:gap-3">
-              <h2 className="text-center text-4xl md:text-6xl font-medium text-balance mb-4 text-white">Potencialize Seus Resultados</h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">Suplementação premium para elevar o seu treino ao próximo nível.</p>
+              <h2 className="text-center text-4xl md:text-5xl font-medium text-balance mb-4 text-white">Potencialize Seus Resultados</h2>
+              <p className="text-gray-400 max-w-2xl mx-auto leading-relaxed">Suplementação premium para elevar o seu treino ao próximo nível.</p>
             </div>
           </div>
         </section>
@@ -111,7 +111,7 @@ const Loja: React.FC = () => {
             </div>
             <div className="p-2 md:p-3 flex flex-col flex-1 gap-1 md:gap-2">
               <h3 className="!text-[15px] md:!text-[18px] !font-bold text-white text-center w-full truncate">{p.nome}</h3>
-              <p className="!text-[10px] md:!text-[12px] text-white/70 text-center w-full line-clamp-2 mt-1 !leading-tight">{p.descricao}</p>
+              <p className="!text-[10px] md:!text-[12px] text-white/70 text-center w-full line-clamp-2 mt-1 !leading-normal">{p.descricao}</p>
               <span className="!text-[10px] md:!text-[14px] !font-bold text-blue-400 !text-center !w-full mt-1 md:mt-3">{p.preco}</span>
               <button 
                 onClick={() => addToCart(p)}

@@ -98,8 +98,8 @@ const Home: React.FC = () => {
         <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-12 relative z-10">
           <div className="flex flex-col items-center justify-center w-full mx-auto text-center">
             <div className="w-full flex flex-col gap-3 items-center">
-              <h2 className="blur-text text-white text-4xl md:text-5xl font-medium text-balance">O Melhor para o seu Treino</h2>
-              <p className="blur-text text-sm md:text-base font-medium text-gray-400 mt-4 mb-6">Recursos exclusivos pensados para sua performance e bem‑estar.</p>
+              <h2 className="blur-text text-white text-4xl md:text-5xl font-medium tracking-tight text-balance">O Melhor para o seu Treino</h2>
+              <p className="blur-text text-sm md:text-base font-medium text-gray-400 mt-4 mb-6 leading-relaxed">Recursos exclusivos pensados para sua performance e bem‑estar.</p>
             </div>
           </div>
           
@@ -158,8 +158,8 @@ const Home: React.FC = () => {
           <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-6">
             <div className="flex flex-col items-center justify-center w-full mx-auto text-center">
               <div className="w-full flex flex-col gap-3 items-center">
-                <h2 className="blur-text text-4xl md:text-5xl font-medium text-balance">Nossas Unidades</h2>
-                <p className="blur-text text-sm md:text-base font-medium text-gray-300 mt-4 mb-6">Encontre a Fulltime mais próxima de você e venha treinar.</p>
+                <h2 className="blur-text text-4xl md:text-5xl font-medium tracking-tight text-balance">Nossas Unidades</h2>
+                <p className="blur-text text-sm md:text-base font-medium text-gray-300 mt-4 mb-6 leading-relaxed">Encontre a Fulltime mais próxima de você e venha treinar.</p>
               </div>
             </div>
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -232,8 +232,8 @@ const Home: React.FC = () => {
               <GlassCard id="formConsultarPlanos-container" className="p-6 md:p-10 flex items-center justify-center h-full w-full flex-col">
                 <form id="formConsultarPlanos" className="relative z-1 w-full flex flex-col gap-4" onSubmit={handleConsultarPlanos}>
                   <div className="w-full flex flex-col gap-2 text-center">
-                    <h2 className="blur-text text-white text-4xl md:text-5xl font-medium text-balance">Consultar Planos</h2>
-                    <p className="blur-text text-sm md:text-base font-medium text-white/80 mt-4 mb-6">Entre em contato para saber mais</p>
+                    <h2 className="blur-text text-white text-4xl md:text-5xl font-medium tracking-tight text-balance">Consultar Planos</h2>
+                    <p className="blur-text text-sm md:text-base font-medium text-white/80 mt-4 mb-6 leading-relaxed">Entre em contato para saber mais</p>
                   </div>
                   <div className="w-full flex flex-col gap-4">
                     <input id="nomeConsulta" type="text" placeholder="Nome" aria-label="Nome" className="w-full relative z-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-base text-white placeholder:text-white/60 focus:outline-none" required />
