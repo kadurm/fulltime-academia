@@ -58,7 +58,7 @@ const Loja: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen">
-      <section className="pt-24 md:pt-32 pb-10 text-center container mx-auto px-6 max-w-7xl">
+      <section className="pt-32 md:pt-32 pb-10 text-center container mx-auto px-6 max-w-7xl">
         <h2 className="text-center text-4xl md:text-6xl font-medium text-balance mb-4 text-white">Potencialize Seus Resultados</h2>
         <p className="text-gray-400 max-w-2xl mx-auto">Suplementação premium para elevar o seu treino ao próximo nível.</p>
       </section>
