@@ -4,6 +4,7 @@ import { AnimatedBackground } from './components/ui/animated-background';
 import { ShoppingCart } from 'lucide-react';
 import Home from './pages/Home';
 import Loja from './pages/Loja';
+import Admin from './pages/Admin';
 import { CartSidebar } from './components/ui/cart-sidebar';
 
 // Importando imagem da logo
@@ -66,6 +67,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/loja" element={<Loja />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
 
         <footer className="relative w-full z-10 bg-[#003399]/70 backdrop-blur-2xl border-t border-white/20 text-white py-10 mt-20 shadow-[0_-15px_30px_rgba(0,0,0,0.4)]">
