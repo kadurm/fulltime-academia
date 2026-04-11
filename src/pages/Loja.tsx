@@ -103,8 +103,8 @@ const Loja: React.FC = () => {
               <img src={p.imagem} alt={p.nome} className="h-full w-full object-cover rounded-t-2xl transition-transform duration-500 group-hover:scale-110" />
             </div>
             <div className="p-3 md:p-8 flex flex-col flex-1 gap-1 md:gap-2">
-              <h3 className="text-xs md:text-sm font-bold text-white text-center w-full truncate">{p.nome}</h3>
-              <p className="text-[10px] md:text-xs text-white/70 text-center w-full line-clamp-2 mt-1 leading-tight">{p.descricao}</p>
+              <h3 className="!text-[12px] md:!text-[14px] !font-bold text-white text-center w-full truncate">{p.nome}</h3>
+              <p className="!text-[10px] md:!text-[12px] text-white/70 text-center w-full line-clamp-2 mt-1 !leading-tight">{p.descricao}</p>
               <span className="text-sm md:text-xl font-bold text-blue-400 text-center mt-1 md:mt-3">{p.preco}</span>
               <button 
                 onClick={() => addToCart(p)}
