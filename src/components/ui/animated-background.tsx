@@ -30,12 +30,14 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
   useEffect(() => {
     const updateCartCount = () => {
       const cart = JSON.parse(localStorage.getItem('fulltime_cart') || '[]');
-      setCartCount(cart.reduce((acc: number, item: any) => acc + (item.quantidade || 0), 0));
+      const count = cart.reduce((acc: number, item: any) => acc + (item.quantidade || 0), 0);
+      setCartCount(count);
+      console.log("Background State:", { isAdmin, cartCount: count });
     };
     updateCartCount();
     window.addEventListener('cartUpdated', updateCartCount);
     return () => window.removeEventListener('cartUpdated', updateCartCount);
-  }, []);
+  }, [isAdmin]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -163,9 +165,9 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
 
   // Aura de Background Dinâmica com Transição Suave
   const auraColor = isAdmin 
-    ? 'rgba(255, 215, 0, 0.3)' 
+    ? 'rgba(255, 215, 0, 0.6)' 
     : cartCount > 0 
-      ? 'rgba(59, 130, 246, 0.5)' 
+      ? 'rgba(59, 130, 246, 0.8)' 
       : 'rgba(0, 51, 153, 0.2)';
 
   return (
