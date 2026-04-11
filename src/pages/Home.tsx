@@ -73,7 +73,7 @@ const Home: React.FC = () => {
   return (
     <div className="flex flex-col w-full">
       {/* Hero */}
-      <div id="hero" data-section="hero" className="pt-32 bg-transparent">
+      <div id="hero" data-section="hero" className="pt-24 md:pt-32 bg-transparent">
         <section className="relative w-full h-fit md:min-h-screen flex items-center justify-center py-hero-page-padding">
           <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-4 md:gap-5 relative z-10">
             <div className="items-center text-center flex flex-col gap-3 md:gap-3">

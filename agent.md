@@ -5,6 +5,7 @@
 2. Antes de iniciar qualquer nova tarefa, releia obrigatoriamente este arquivo `agent.md` para assimilar o contexto atualizado por agentes em outros terminais.
 
 ## Últimas Atualizações
+- 2026-04-11: Padronização do respiro superior (safe zone) dos Heros em `Home.tsx` e `Loja.tsx` para `pt-24` no mobile e `md:pt-32` no desktop.
 - 2026-04-11: Ajuste de layout em `src/pages/Loja.tsx`: restauração do visual de imagens "coladas nas bordas" com `aspect-square` e `object-cover`, além de compactação dos paddings de texto para otimização do grid mobile.
 - 2026-04-08: Reestruturação da aplicação com React e Vite (`src/App.tsx`, `src/pages`, `src/components`).
 - 2026-04-08: Integração de Roteamento SPA (`react-router-dom`) com as rotas `/` (Home) e `/loja` (Loja de Suplementos).
