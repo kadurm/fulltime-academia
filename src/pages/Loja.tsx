@@ -105,7 +105,7 @@ const Loja: React.FC = () => {
             <div className="p-3 md:p-8 flex flex-col flex-1 gap-1 md:gap-2">
               <h3 className="!text-[15px] md:!text-[18px] !font-bold text-white text-center w-full truncate">{p.nome}</h3>
               <p className="!text-[10px] md:!text-[12px] text-white/70 text-center w-full line-clamp-2 mt-1 !leading-tight">{p.descricao}</p>
-              <span className="text-sm md:text-xl font-bold text-blue-400 text-center mt-1 md:mt-3">{p.preco}</span>
+              <span className="!text-[10px] md:!text-[14px] !font-bold text-blue-400 !text-center !w-full mt-1 md:mt-3">{p.preco}</span>
               <button 
                 onClick={() => addToCart(p)}
                 className="mt-auto bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 md:py-3 text-[10px] md:text-sm rounded-lg md:rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20"
