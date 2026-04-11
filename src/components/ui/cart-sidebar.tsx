@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { X, Trash2, Plus, Minus } from 'lucide-react';
 
 interface CartItem {
@@ -16,6 +17,12 @@ interface CartSidebarProps {
 
 export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const navigate = useNavigate();
+
+  const handleExploreProducts = () => {
+    onClose();
+    navigate('/loja');
+  };
 
   const loadCart = () => {
     const cart = JSON.parse(localStorage.getItem('fulltime_cart') || '[]');
@@ -87,9 +94,17 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
         {/* Body */}
         <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
           {cartItems.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full opacity-50">
-              <ShoppingCart size={64} className="mb-4" />
-              <p>Seu carrinho está vazio.</p>
+            <div className="flex flex-col items-center justify-center h-full text-center">
+              <div className="opacity-50 flex flex-col items-center">
+                <ShoppingCart size={64} className="mb-4" />
+                <p className="text-lg">Seu carrinho está vazio.</p>
+              </div>
+              <button 
+                onClick={handleExploreProducts}
+                className="mt-6 w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors shadow-lg shadow-blue-600/20"
+              >
+                Explorar Produtos
+              </button>
             </div>
           ) : (
             <div className="flex flex-col gap-6">
