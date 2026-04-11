@@ -159,10 +159,7 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
   }, [theme]);
 
   return (
-    <div 
-      className="fixed inset-0 pointer-events-none z-0 transition-all duration-[2000ms] ease-in-out"
-      style={{ backgroundColor: theme.aura, backgroundBlendMode: 'overlay' }}
-    >
+    <div className="fixed inset-0 pointer-events-none z-0 bg-[#030712]">
       <canvas ref={canvasRef} className="w-full h-full" />
     </div>
   );
