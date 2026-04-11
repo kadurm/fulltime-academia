@@ -59,51 +59,6 @@
     padding: 0 5% !important; /* Symmetric margins */
   }
 
-  /* 3. GRID LOJA 2X2 */
-  #produtos-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 12px !important;
-    padding: 12px 5% !important; /* Symmetric margins */
-    width: 100% !important;
-    align-items: stretch !important;
-  }
-
-  #produtos-grid .glass-card {
-    min-height: 320px !important;
-    padding: 0 !important; /* Edge-to-edge image */
-    overflow: hidden !important;
-  }
-
-  #produtos-grid .img-container {
-    height: 140px !important;
-    width: 100% !important;
-  }
-
-  #produtos-grid .img-container img {
-    border-radius: 12px 12px 0 0 !important;
-  }
-
-  #produtos-grid .p-4 {
-    padding: 12px !important; /* Content padding */
-  }
-
-  #produtos-grid h3 {
-    font-size: 0.85rem !important;
-    font-weight: 700 !important;
-  }
-
-  #produtos-grid .product-price {
-    font-size: 1rem !important;
-    margin-top: 8px !important;
-  }
-
-  #produtos-grid .primary-button {
-    margin-top: auto !important;
-    padding: 10px !important;
-    font-size: 0.75rem !important;
-  }
-
   /* 4. Refinamento Estético Form */
   #formConsultarPlanos-container {
     padding: 2.5rem 5% !important;
