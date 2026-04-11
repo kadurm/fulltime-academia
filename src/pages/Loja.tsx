@@ -96,13 +96,13 @@ const Loja: React.FC = () => {
       </div>
 
       {/* Grid de Produtos */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 container mx-auto px-4 md:px-6 pb-20">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-4 container mx-auto px-4 md:px-6 pb-20">
         {produtosFiltrados.map(p => (
-          <GlassCard key={p.id} className="p-0 flex flex-col h-full overflow-hidden border-white/5 hover:border-blue-500/30 transition-all">
-            <div className="h-36 md:h-64 w-full overflow-hidden">
-              <img src={p.imagem} alt={p.nome} className="h-full w-full object-cover rounded-t-2xl transition-transform duration-500 group-hover:scale-110" />
+          <GlassCard key={p.id} className="p-0 flex flex-col h-full max-h-[380px] overflow-hidden border-white/5 hover:border-blue-500/30 transition-all">
+            <div className="h-32 md:h-40 lg:h-44 w-full overflow-hidden bg-white/5">
+              <img src={p.imagem} alt={p.nome} className="h-full w-full object-contain rounded-t-2xl transition-transform duration-500 group-hover:scale-110" />
             </div>
-            <div className="p-3 md:p-8 flex flex-col flex-1 gap-1 md:gap-2">
+            <div className="p-3 md:p-4 flex flex-col flex-1 gap-1 md:gap-2">
               <h3 className="!text-[15px] md:!text-[18px] !font-bold text-white text-center w-full truncate">{p.nome}</h3>
               <p className="!text-[10px] md:!text-[12px] text-white/70 text-center w-full line-clamp-2 mt-1 !leading-tight">{p.descricao}</p>
               <span className="!text-[10px] md:!text-[14px] !font-bold text-blue-400 !text-center !w-full mt-1 md:mt-3">{p.preco}</span>
