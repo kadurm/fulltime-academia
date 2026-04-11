@@ -298,13 +298,6 @@ const Admin: React.FC = () => {
           >
             Categorias
           </button>
-          <button
-            onClick={handleLogout}
-            className="p-3 bg-red-500/20 hover:bg-red-500/40 text-red-400 rounded-xl border border-red-500/20 transition-all"
-            title="Sair"
-          >
-            <LogOut size={20} />
-          </button>
         </div>
 
         {/* Tabela de Produtos */}
