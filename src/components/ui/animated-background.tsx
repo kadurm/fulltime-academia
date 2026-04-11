@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 interface AnimatedBackgroundProps {
   shopStatus?: 'default' | 'cart' | 'checkout' | 'offer';
@@ -22,6 +23,19 @@ interface Lightning {
 
 export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStatus = 'default' }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const location = useLocation();
+  const isAdmin = location.pathname === '/admin';
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cart = JSON.parse(localStorage.getItem('fulltime_cart') || '[]');
+      setCartCount(cart.reduce((acc: number, item: any) => acc + (item.quantidade || 0), 0));
+    };
+    updateCartCount();
+    window.addEventListener('cartUpdated', updateCartCount);
+    return () => window.removeEventListener('cartUpdated', updateCartCount);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -61,28 +75,32 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
     };
 
     const render = () => {
-      // Configurações por Status
-      let bgColor = '#020617';
+      // Configurações por Status e Contexto
+      let bgColor = 'transparent';
       let lineColor = '#003399';
       let lightningColor = '#06b6d4'; // cyan
       let speedMult = 1;
 
-      switch (shopStatus) {
-        case 'cart':
-        case 'offer':
-          lineColor = '#7c3aed'; // purple
-          lightningColor = '#d946ef'; // magenta
-          speedMult = 1.2;
-          break;
-        case 'checkout':
-          bgColor = '#000000';
-          lineColor = '#1e293b'; // slate-800
-          lightningColor = '#fbbf24'; // amber/gold
-          speedMult = 0.6;
-          break;
+      // Prioridade: Admin > Cart > Default
+      if (isAdmin) {
+        lineColor = '#FFD700'; // Gold
+        lightningColor = '#FFFACD'; // Light Gold
+        speedMult = 0.8;
+      } else if (cartCount > 0) {
+        lineColor = '#3b82f6'; // Vibrant Blue
+        lightningColor = '#60a5fa'; // Lighter Blue
+        speedMult = 1.2;
+      }
+
+      // Sobrescrever com shopStatus se necessário (ex: checkout)
+      if (shopStatus === 'checkout') {
+        lineColor = '#1e293b';
+        lightningColor = '#fbbf24';
+        speedMult = 0.6;
       }
 
       // 1. Limpar Frame
+      ctx.clearRect(0, 0, w, h);
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, w, h);
 
@@ -91,7 +109,6 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
         l.x += l.speed * speedMult;
         l.y -= l.speed * speedMult;
 
-        // Desenhar rastro da linha
         ctx.beginPath();
         ctx.strokeStyle = hexToRgba(lineColor, l.opacity);
         ctx.lineWidth = l.thickness;
@@ -99,10 +116,8 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
         ctx.lineTo(l.x, l.y);
         ctx.stroke();
 
-        // Colisão com bordas (topo ou direita)
         if (l.y <= 0 || l.x >= w) {
           createLightning(l.x, l.y);
-          // Reset para a base ou esquerda
           if (Math.random() > 0.5) {
             l.x = Math.random() * w;
             l.y = h + l.length;
@@ -144,10 +159,31 @@ export const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ shopStat
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [shopStatus]);
+  }, [shopStatus, isAdmin, cartCount]);
 
-  return <canvas ref={canvasRef} className="fixed inset-0 w-full h-full pointer-events-none z-0" />;
+  // Aura de Background Dinâmica com Transição Suave
+  const auraColor = isAdmin 
+    ? 'rgba(255, 215, 0, 0.3)' 
+    : cartCount > 0 
+      ? 'rgba(59, 130, 246, 0.5)' 
+      : 'rgba(0, 51, 153, 0.2)';
+
+  return (
+    <div 
+      className="fixed inset-0 pointer-events-none z-0 transition-all duration-[2000ms] ease-in-out bg-[#020617]"
+      style={{ backgroundColor: auraColor, backgroundBlendMode: 'overlay' }}
+    >
+      <canvas ref={canvasRef} className="w-full h-full" />
+    </div>
+  );
 };
+
+function hexToRgba(hex: string, opacity: number) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+}
 
 function hexToRgba(hex: string, opacity: number) {
   const r = parseInt(hex.slice(1, 3), 16);
