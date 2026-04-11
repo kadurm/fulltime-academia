@@ -58,10 +58,17 @@ const Loja: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen">
-      <section className="pt-32 md:pt-32 pb-10 text-center container mx-auto px-6 max-w-7xl">
-        <h2 className="text-center text-4xl md:text-6xl font-medium text-balance mb-4 text-white">Potencialize Seus Resultados</h2>
-        <p className="text-gray-400 max-w-2xl mx-auto">Suplementação premium para elevar o seu treino ao próximo nível.</p>
-      </section>
+      {/* Hero */}
+      <div id="hero" data-section="hero" className="pt-24 md:pt-32 bg-transparent">
+        <section className="relative w-full h-fit flex items-center justify-center py-10 md:py-20">
+          <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-4 md:gap-5 relative z-10">
+            <div className="items-center text-center flex flex-col gap-3 md:gap-3">
+              <h2 className="text-center text-4xl md:text-6xl font-medium text-balance mb-4 text-white">Potencialize Seus Resultados</h2>
+              <p className="text-gray-400 max-w-2xl mx-auto">Suplementação premium para elevar o seu treino ao próximo nível.</p>
+            </div>
+          </div>
+        </section>
+      </div>
 
       {/* Busca e Filtros */}
       <div className="container mx-auto px-6 max-w-7xl mb-12 flex flex-col gap-8">
