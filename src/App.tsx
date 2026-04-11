@@ -10,6 +10,15 @@ import { CartSidebar } from './components/ui/cart-sidebar';
 // Importando imagem da logo
 import logo from '/logo.png';
 
+// Componente para resetar o scroll ao trocar de rota
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
+
 const Navbar = ({ cartBadge, setIsCartOpen }: { cartBadge: number, setIsCartOpen: (open: boolean) => void }) => {
   const location = useLocation();
   const isAdminPath = location.pathname === "/admin";
@@ -22,12 +31,12 @@ const Navbar = ({ cartBadge, setIsCartOpen }: { cartBadge: number, setIsCartOpen
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-[#003399]/70 backdrop-blur-2xl border-b border-white/20 shadow-[0_15px_30px_rgba(0,0,0,0.4),inset_0_-1px_0_rgba(255,255,255,0.1)] transition-all duration-300">
       <div className="container mx-auto px-6 lg:px-12 max-w-7xl py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-        <Link to="/" className="cursor-pointer flex-shrink-0">
+        <Link to="/" className="cursor-pointer flex-shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <img src={logo} alt="Fulltime Academia" className="w-14 md:w-16 h-auto object-contain transition-transform hover:scale-105" />
         </Link>
         <div className="w-full md:w-auto flex flex-row justify-between items-center md:gap-8" role="navigation">
           <div className="flex flex-row flex-nowrap w-full justify-between gap-0 md:gap-4 items-center">
-            <Link to="/" className="px-1 md:px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-[10px] md:text-sm font-medium tracking-tighter md:tracking-wide whitespace-nowrap">Início</Link>
+            <Link to="/" className="px-1 md:px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-[10px] md:text-sm font-medium tracking-tighter md:tracking-wide whitespace-nowrap" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Início</Link>
             <a href="/#sobre" className="px-1 md:px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-[10px] md:text-sm font-medium tracking-tighter md:tracking-wide whitespace-nowrap">Sobre</a>
             <a href="/#unidades" className="px-1 md:px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-[10px] md:text-sm font-medium tracking-tighter md:tracking-wide whitespace-nowrap">Unidades</a>
             <a href="/#contato" className="px-1 md:px-5 py-2 rounded-full text-white hover:bg-white/20 transition-all duration-300 text-[10px] md:text-sm font-medium tracking-tighter md:tracking-wide whitespace-nowrap">Contato</a>
@@ -84,6 +93,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <AnimatedBackground shopStatus="default" />
       
       <div className="relative z-10 w-full min-h-screen antialiased text-white">
