@@ -96,7 +96,7 @@ const Loja: React.FC = () => {
       </div>
 
       {/* Grid de Produtos */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8 container mx-auto px-4 md:px-6 pb-20">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 container mx-auto px-4 md:px-6 pb-20">
         {produtosFiltrados.map(p => (
           <GlassCard key={p.id} className="p-0 flex flex-col h-full overflow-hidden border-white/5 hover:border-blue-500/30 transition-all">
             <div className="h-36 md:h-64 w-full overflow-hidden">
