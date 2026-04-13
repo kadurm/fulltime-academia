@@ -1,7 +1,11 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+import Stripe from 'stripe';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: '2023-10-16',
+});
 
 export default async function handler(req, res) {
-  // CORS Headers para permitir chamadas do frontend
+  // Configuração global de CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -11,30 +15,34 @@ export default async function handler(req, res) {
   );
 
   if (req.method === 'OPTIONS') {
-    res.status(200).end();
-    return;
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+    return res.status(200).end();
   }
 
   try {
+    if (req.method !== 'POST') {
+      return res.status(405).json({ error: 'Method Not Allowed' });
+    }
+
     const { cartItems } = req.body;
 
-    if (!cartItems || cartItems.length === 0) {
-      return res.status(400).json({ error: 'Carrinho vazio' });
+    if (!cartItems || !Array.isArray(cartItems) || cartItems.length === 0) {
+      return res.status(400).json({ error: 'Carrinho de compras está vazio ou é inválido.' });
     }
 
     if (!process.env.STRIPE_SECRET_KEY) {
-      throw new Error('STRIPE_SECRET_KEY não configurada no ambiente.');
+      throw new Error('STRIPE_SECRET_KEY não foi configurada nas variáveis de ambiente da Vercel.');
     }
 
     const line_items = cartItems.map((item) => {
-      // Converte o preço de "R$ 159,90" para centavos (ex: 15990)
+      // Limpeza rigorosa do valor: remove prefixo, pontos de milhar e troca vírgula por ponto
+      const priceString = item.price.replace('R$', '').trim();
       const unit_amount = Math.round(
-        parseFloat(item.price.replace('R$', '').replace(/\./g, '').replace(',', '.')) * 100
+        parseFloat(priceString.replace(/\./g, '').replace(',', '.')) * 100
       );
+
+      if (isNaN(unit_amount)) {
+        throw new Error(`Preço inválido para o item: ${item.name}`);
+      }
 
       return {
         price_data: {
@@ -58,8 +66,11 @@ export default async function handler(req, res) {
     });
 
     return res.status(200).json({ url: session.url });
-  } catch (err) {
-    console.error('Stripe Checkout Error:', err);
-    return res.status(500).json({ error: err.message });
+  } catch (error) {
+    console.error('Fatal Stripe Checkout Error:', error);
+    // Garantia de retorno JSON em 100% dos casos de erro
+    return res.status(500).json({ 
+      error: error.message || 'Ocorreu um erro interno inesperado no servidor.' 
+    });
   }
 }
