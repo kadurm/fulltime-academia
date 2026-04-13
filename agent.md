@@ -5,6 +5,7 @@
 2. Antes de iniciar qualquer nova tarefa, releia obrigatoriamente este arquivo `agent.md` para assimilar o contexto atualizado por agentes em outros terminais.
 
 ## Últimas Atualizações
+- 2026-04-13: Integração do Stripe Checkout via Vercel Serverless Functions (`api/checkout.js`) e conexão com o botão de finalização de compra no `CartSidebar.tsx`.
 - 2026-04-11: Melhoria de UX no `CartSidebar.tsx`: Adição de botão CTA "Explorar Produtos" no estado de carrinho vazio, com navegação automática para `/loja`.
 - 2026-04-11: Nivelamento tipográfico global: Sincronização de Heros (md:text-5xl), padronização de títulos de seção (tracking-tight) e ajuste de line-height (leading-relaxed/normal) entre `Home.tsx` e `Loja.tsx`.
 - 2026-04-11: Implementação da restauração de scroll global (`ScrollToTop`) e comportamento de scroll suave ao topo no botão "Início" e logo da Navbar em `App.tsx`.

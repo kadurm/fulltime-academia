@@ -68,6 +68,35 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
     }, 0);
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleCheckout = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cartItems }),
+      });
+
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error('Erro ao criar sessão de checkout:', data.error);
+        alert('Ocorreu um erro ao processar o checkout. Tente novamente.');
+      }
+    } catch (error) {
+      console.error('Erro no checkout:', error);
+      alert('Erro de conexão com o servidor.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -146,8 +175,12 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
                 R$ {calculateTotal().toFixed(2).replace('.', ',')}
               </span>
             </div>
-            <button className="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-4 rounded-2xl transition-all shadow-lg uppercase tracking-wider text-sm flex items-center justify-center gap-2">
-              Finalizar Compra
+            <button 
+              onClick={handleCheckout}
+              disabled={isLoading}
+              className="w-full bg-green-600 hover:bg-green-500 disabled:bg-green-800 disabled:opacity-50 text-white font-bold py-4 rounded-2xl transition-all shadow-lg uppercase tracking-wider text-sm flex items-center justify-center gap-2"
+            >
+              {isLoading ? 'Processando...' : 'Finalizar Compra'}
             </button>
           </div>
         )}

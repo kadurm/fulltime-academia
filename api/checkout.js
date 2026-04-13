@@ -2,18 +2,18 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Método não permitido' });
+    return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
   try {
-    const { cart } = req.body;
+    const { cartItems } = req.body;
 
-    if (!cart || cart.length === 0) {
+    if (!cartItems || cartItems.length === 0) {
       return res.status(400).json({ error: 'Carrinho vazio' });
     }
 
-    const line_items = cart.map((item) => {
-      // O preço vem como "R$ 159,90", precisamos converter para centavos
+    const line_items = cartItems.map((item) => {
+      // Converte o preço de "R$ 159,90" para 159.90 e depois para centavos (15990)
       const unit_amount = Math.round(
         parseFloat(item.price.replace('R$', '').replace('.', '').replace(',', '.')) * 100
       );
@@ -23,10 +23,11 @@ module.exports = async (req, res) => {
           currency: 'brl',
           product_data: {
             name: item.name,
+            images: item.imagem ? [item.imagem] : [],
           },
-          unit_amount,
+          unit_amount: unit_amount,
         },
-        quantity: item.quantidade || 1,
+        quantity: item.quantidade,
       };
     });
 
@@ -40,7 +41,7 @@ module.exports = async (req, res) => {
 
     return res.status(200).json({ url: session.url });
   } catch (err) {
-    console.error('Erro no Checkout Stripe:', err);
+    console.error('Stripe Checkout Error:', err);
     return res.status(500).json({ error: err.message });
   }
 };
