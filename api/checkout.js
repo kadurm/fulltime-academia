@@ -44,14 +44,16 @@ export default async function handler(req, res) {
         throw new Error(`Preço inválido para o item: ${item.name}`);
       }
 
-      const isImageUrlValid = typeof item.imagem === 'string' && item.imagem.startsWith('http');
+      // Fallback inteligente para diferentes nomes de propriedade de imagem
+      const imgUrl = item.image || item.imagem || item.imageUrl || item.foto;
+      const isImageUrlValid = typeof imgUrl === 'string' && imgUrl.startsWith('http');
 
       return {
         price_data: {
           currency: 'brl',
           product_data: {
             name: item.name,
-            ...(isImageUrlValid ? { images: [item.imagem] } : {}),
+            ...(isImageUrlValid ? { images: [imgUrl] } : {}),
           },
           unit_amount: unit_amount,
         },
