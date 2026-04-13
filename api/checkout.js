@@ -33,52 +33,34 @@ export default async function handler(req, res) {
       throw new Error('STRIPE_SECRET_KEY não foi configurada nas variáveis de ambiente da Vercel.');
     }
 
-    const line_items = cartItems.map((item) => {
-      // Limpeza rigorosa do valor: remove prefixo, pontos de milhar e troca vírgula por ponto
+    // Calcula o valor total em centavos
+    const amount = cartItems.reduce((acc, item) => {
       const priceString = item.price.replace('R$', '').trim();
-      const unit_amount = Math.round(
+      const unitAmount = Math.round(
         parseFloat(priceString.replace(/\./g, '').replace(',', '.')) * 100
       );
+      return acc + (unitAmount * item.quantidade);
+    }, 0);
 
-      if (isNaN(unit_amount)) {
-        throw new Error(`Preço inválido para o item: ${item.name}`);
-      }
+    if (isNaN(amount) || amount <= 0) {
+      throw new Error('Valor total do carrinho inválido.');
+    }
 
-      // Fallback inteligente para diferentes nomes de propriedade de imagem
-      const imgUrl = item.image || item.imagem || item.imageUrl || item.foto;
-      const isImageUrlValid = typeof imgUrl === 'string' && imgUrl.startsWith('http');
-
-      return {
-        price_data: {
-          currency: 'brl',
-          product_data: {
-            name: item.name,
-            ...(isImageUrlValid ? { images: [imgUrl] } : {}),
-          },
-          unit_amount: unit_amount,
-        },
-        quantity: item.quantidade,
-      };
-    });
-
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items,
-      mode: 'payment',
-      shipping_address_collection: {
-        allowed_countries: ['BR'],
+    // Cria o PaymentIntent no Stripe
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: 'brl',
+      automatic_payment_methods: {
+        enabled: true,
       },
-      billing_address_collection: 'auto',
-      success_url: `${req.headers.origin}/?success=true`,
-      cancel_url: `${req.headers.origin}/loja?canceled=true`,
+      // Coleta automática de endereço de entrega pode ser habilitada via Elementos no Frontend
     });
 
-    return res.status(200).json({ url: session.url });
+    return res.status(200).json({ clientSecret: paymentIntent.client_secret });
   } catch (error) {
-    console.error('Fatal Stripe Checkout Error:', error);
-    // Garantia de retorno JSON em 100% dos casos de erro
+    console.error('Fatal Payment Intent Error:', error);
     return res.status(500).json({ 
-      error: error.message || 'Ocorreu um erro interno inesperado no servidor.' 
+      error: error.message || 'Ocorreu um erro ao criar a intenção de pagamento.' 
     });
   }
 }

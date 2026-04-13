@@ -5,6 +5,9 @@
 2. Antes de iniciar qualquer nova tarefa, releia obrigatoriamente este arquivo `agent.md` para assimilar o contexto atualizado por agentes em outros terminais.
 
 ## Últimas Atualizações
+- 2026-04-13: Pivot de arquitetura para Checkout Transparente (White-label) usando Stripe Elements e PaymentIntents, mantendo o usuário 100% no domínio da Fulltime.
+- 2026-04-13: Criação da página `src/pages/Checkout.tsx` com resumo de pedido, formulário de pagamento integrado e tema Glassmorphism.
+- 2026-04-13: Refatoração do endpoint `api/checkout.js` para geração de `PaymentIntent` (clientSecret).
 - 2026-04-13: Correção de exibição de imagens no Stripe Checkout: implementado fallback inteligente para propriedades de imagem (`image`, `imagem`, `imageUrl`, `foto`) garantindo compatibilidade com Cloudinary.
 - 2026-04-13: Habilitação de coleta de endereço de entrega (apenas Brasil) e endereço de cobrança no Stripe Checkout para suporte a produtos físicos.
 - 2026-04-11: Melhoria de UX no `CartSidebar.tsx`: Adição de botão CTA "Explorar Produtos" no estado de carrinho vazio, com navegação automática para `/loja`.
