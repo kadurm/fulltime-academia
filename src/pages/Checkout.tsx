@@ -7,7 +7,7 @@ import {
   useElements,
 } from '@stripe/react-stripe-js';
 import { GlassCard } from '../components/ui/glass-card';
-import { ShoppingCart, ArrowLeft, CreditCard, ShieldCheck } from 'lucide-react';
+import { ShoppingCart, ArrowLeft, CreditCard, ShieldCheck, User, Fingerprint, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
@@ -25,6 +25,17 @@ const CheckoutForm = ({ clientSecret }: { clientSecret: string }) => {
   const elements = useElements();
   const [message, setMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Estados para dados brasileiros
+  const [formData, setFormData] = useState({
+    name: '',
+    cpf: '',
+    phone: ''
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,6 +48,19 @@ const CheckoutForm = ({ clientSecret }: { clientSecret: string }) => {
       elements,
       confirmParams: {
         return_url: `${window.location.origin}/?success=true`,
+        shipping: {
+          name: formData.name,
+          address: {
+            country: 'BR',
+            line1: 'Endereço coletado pelo Stripe', // O Stripe coletará o endereço se habilitado no PaymentElement
+          }
+        },
+        billing_details: {
+          name: formData.name,
+          phone: formData.phone,
+          // O Stripe não tem campo nativo para CPF no billing_details de cartão, 
+          // mas ele é passado via metadados ou campos customizados se necessário.
+        }
       },
     });
 
@@ -49,21 +73,81 @@ const CheckoutForm = ({ clientSecret }: { clientSecret: string }) => {
     setIsLoading(false);
   };
 
+  const inputStyle = "w-full bg-white/5 border border-white/10 rounded-xl px-11 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-blue-500/50 transition-all";
+  const labelStyle = "text-xs font-bold text-white/40 uppercase tracking-widest mb-2 block ml-1";
+
   return (
     <form id="payment-form" onSubmit={handleSubmit} className="flex flex-col gap-6">
+      {/* Campos de Identificação Brasileira */}
+      <div className="grid gap-4">
+        <div>
+          <label className={labelStyle}>Nome Completo</label>
+          <div className="relative">
+            <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+            <input 
+              type="text" 
+              name="name"
+              required
+              placeholder="Ex: João Silva" 
+              className={inputStyle}
+              value={formData.name}
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          <div>
+            <label className={labelStyle}>CPF</label>
+            <div className="relative">
+              <Fingerprint size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+              <input 
+                type="text" 
+                name="cpf"
+                required
+                placeholder="000.000.000-00" 
+                className={inputStyle}
+                value={formData.cpf}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+          <div>
+            <label className={labelStyle}>Telefone</label>
+            <div className="relative">
+              <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20" />
+              <input 
+                type="tel" 
+                name="phone"
+                required
+                placeholder="(00) 00000-0000" 
+                className={inputStyle}
+                value={formData.phone}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="h-px bg-white/10 my-2" />
+
+      <label className={labelStyle}>Dados do Cartão</label>
       <PaymentElement id="payment-element" options={{ layout: 'tabs' }} />
+      
       <button
         disabled={isLoading || !stripe || !elements}
         id="submit"
-        className="w-full bg-green-600 hover:bg-green-500 disabled:bg-green-800 disabled:opacity-50 text-white font-bold py-4 rounded-2xl transition-all shadow-lg uppercase tracking-wider text-sm flex items-center justify-center gap-2 mt-4"
+        className="w-full bg-[#003399] hover:bg-blue-600 disabled:bg-blue-900 disabled:opacity-50 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-blue-900/20 uppercase tracking-wider text-sm flex items-center justify-center gap-2 mt-4"
       >
         <span id="button-text">
           {isLoading ? "Processando..." : "Pagar Agora"}
         </span>
       </button>
+      
       {message && <div id="payment-message" className="text-red-400 text-center text-sm font-medium p-3 bg-red-400/10 rounded-lg border border-red-400/20">{message}</div>}
       
-      <div className="flex items-center justify-center gap-4 text-white/40 text-[10px] uppercase tracking-widest mt-4">
+      <div className="flex items-center justify-center gap-4 text-white/40 text-[10px] uppercase tracking-widest mt-2">
         <div className="flex items-center gap-1">
           <ShieldCheck size={12} />
           Pagamento Seguro
@@ -137,7 +221,14 @@ const Checkout = () => {
             <div className="flex flex-col gap-4">
               {cartItems.map((item) => (
                 <div key={item.id} className="flex gap-4 p-4 bg-white/5 rounded-2xl border border-white/10 items-center">
-                  <img src={item.imagem} alt={item.name} className="h-16 w-16 object-cover rounded-xl border border-white/10" />
+                  <img 
+                    src={item.imagem || "/logo.png"} 
+                    alt={item.name} 
+                    className="h-16 w-16 object-cover rounded-xl border border-white/10"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "/logo.png";
+                    }}
+                  />
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-white truncate">{item.name}</h3>
                     <p className="text-sm text-white/40">{item.quantidade}x un.</p>
@@ -166,7 +257,7 @@ const Checkout = () => {
             <div className="relative z-10">
               <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                 <CreditCard className="text-blue-400" />
-                Dados do Cartão
+                Checkout
               </h2>
 
               {isLoading ? (
@@ -180,8 +271,8 @@ const Checkout = () => {
                   appearance: {
                     theme: 'night',
                     variables: {
-                      colorPrimary: '#3b82f6',
-                      colorBackground: 'transparent',
+                      colorPrimary: '#003399',
+                      colorBackground: '#020617',
                       colorText: '#ffffff',
                       colorDanger: '#ef4444',
                       fontFamily: 'Inter Tight, system-ui, sans-serif',
@@ -190,12 +281,15 @@ const Checkout = () => {
                     },
                     rules: {
                       '.Input': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                        backgroundColor: 'rgba(255, 255, 255, 0.05)',
                         border: '1px solid rgba(255, 255, 255, 0.1)',
                       },
                       '.Label': {
-                        color: 'rgba(255, 255, 255, 0.6)',
-                        fontSize: '14px',
+                        color: 'rgba(255, 255, 255, 0.4)',
+                        fontSize: '12px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.1em',
+                        fontWeight: '700',
                         marginBottom: '8px',
                       }
                     }
