@@ -63,6 +63,10 @@ export default async function handler(req, res) {
       payment_method_types: ['card'],
       line_items,
       mode: 'payment',
+      shipping_address_collection: {
+        allowed_countries: ['BR'],
+      },
+      billing_address_collection: 'auto',
       success_url: `${req.headers.origin}/?success=true`,
       cancel_url: `${req.headers.origin}/loja?canceled=true`,
     });
