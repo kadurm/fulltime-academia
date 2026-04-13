@@ -73,6 +73,8 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
   const handleCheckout = async () => {
     try {
       setIsLoading(true);
+      console.log('Iniciando checkout com itens:', cartItems);
+      
       const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: {
@@ -81,17 +83,21 @@ export const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => 
         body: JSON.stringify({ cartItems }),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `Erro HTTP: ${response.status}`);
+      }
+
       const data = await response.json();
 
       if (data.url) {
         window.location.href = data.url;
       } else {
-        console.error('Erro ao criar sessão de checkout:', data.error);
-        alert('Ocorreu um erro ao processar o checkout. Tente novamente.');
+        throw new Error('URL de checkout não retornada pelo servidor.');
       }
-    } catch (error) {
-      console.error('Erro no checkout:', error);
-      alert('Erro de conexão com o servidor.');
+    } catch (error: any) {
+      console.error('Erro detalhado no checkout:', error);
+      alert(`Erro no Checkout: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
