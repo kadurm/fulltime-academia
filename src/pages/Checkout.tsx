@@ -19,6 +19,7 @@ interface CartItem {
 
 const Checkout = () => {
   const [step, setStep] = useState(1);
+  const [showAddressDetails, setShowAddressDetails] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isCepLoading, setIsCepLoading] = useState(false);
@@ -50,8 +51,21 @@ const Checkout = () => {
     const cep = customerData.cep.replace(/\D/g, '');
     if (cep.length === 8) {
       handleCepLookup(cep);
+      setShowAddressDetails(true);
     }
   }, [customerData.cep]);
+
+  const handleNextStep = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const { nome, email, cpf, cep, rua, numero, bairro, cidade, uf } = customerData;
+    
+    if (!nome || !email || !cpf || !cep || !rua || !numero || !bairro || !cidade || !uf) {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    setStep(2);
+  };
 
   const handleCepLookup = async (cep: string) => {
     try {
@@ -223,42 +237,49 @@ const Checkout = () => {
                       <input type="text" name="cep" required placeholder="00000-000" className={inputStyle} value={customerData.cep} onChange={handleCustomerChange} />
                       {isCepLoading && <Loader2 size={16} className="absolute right-3 top-[38px] animate-spin text-blue-400" />}
                     </div>
-                    <div>
-                      <label className={labelStyle}>Nº</label>
-                      <input 
-                        type="text" 
-                        name="numero" 
-                        ref={numeroRef}
-                        required 
-                        placeholder="123" 
-                        className={inputStyle} 
-                        value={customerData.numero} 
-                        onChange={handleCustomerChange} 
-                      />
-                    </div>
                   </div>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <label className={labelStyle}>Rua / Logradouro</label>
-                      <input type="text" name="rua" required placeholder="Av. Principal" className={inputStyle} value={customerData.rua} onChange={handleCustomerChange} />
+
+                  {showAddressDetails && (
+                    <div className="space-y-4 animate-in fade-in slide-in-from-top-4 duration-500">
+                      <div className="grid grid-cols-3 gap-4">
+                        <div className="col-span-2">
+                          <label className={labelStyle}>Rua / Logradouro</label>
+                          <input type="text" name="rua" required placeholder="Av. Principal" className={inputStyle} value={customerData.rua} onChange={handleCustomerChange} />
+                        </div>
+                        <div>
+                          <label className={labelStyle}>Nº</label>
+                          <input 
+                            type="text" 
+                            name="numero" 
+                            ref={numeroRef}
+                            required 
+                            placeholder="123" 
+                            className={inputStyle} 
+                            value={customerData.numero} 
+                            onChange={handleCustomerChange} 
+                          />
+                        </div>
+                      </div>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <label className={labelStyle}>Bairro</label>
+                          <input type="text" name="bairro" required placeholder="Centro" className={inputStyle} value={customerData.bairro} onChange={handleCustomerChange} />
+                        </div>
+                        <div className="grid grid-cols-3 gap-4">
+                          <div className="col-span-2">
+                            <label className={labelStyle}>Cidade</label>
+                            <input type="text" name="cidade" required placeholder="Cidade" className={inputStyle} value={customerData.cidade} onChange={handleCustomerChange} />
+                          </div>
+                          <div>
+                            <label className={labelStyle}>UF</label>
+                            <input type="text" name="uf" required placeholder="UF" className={inputStyle} value={customerData.uf} onChange={handleCustomerChange} />
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <label className={labelStyle}>Bairro</label>
-                      <input type="text" name="bairro" required placeholder="Centro" className={inputStyle} value={customerData.bairro} onChange={handleCustomerChange} />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="col-span-2">
-                      <label className={labelStyle}>Cidade</label>
-                      <input type="text" name="cidade" required placeholder="Cidade" className={inputStyle} value={customerData.cidade} onChange={handleCustomerChange} />
-                    </div>
-                    <div>
-                      <label className={labelStyle}>UF</label>
-                      <input type="text" name="uf" required placeholder="UF" className={inputStyle} value={customerData.uf} onChange={handleCustomerChange} />
-                    </div>
-                  </div>
+                  )}
                 </div>
-                <button onClick={() => setStep(2)} className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg uppercase tracking-wider text-xs">Ir para Pagamento</button>
+                <button onClick={handleNextStep} className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg uppercase tracking-wider text-xs">Ir para Pagamento</button>
               </div>
             )}
 
