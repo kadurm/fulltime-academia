@@ -35,7 +35,29 @@ const Admin: React.FC = () => {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [categorias, setCategorias] = useState<string[]>([]);
   const [busca, setBusca] = useState('');
+  const [periodo, setPeriodo] = useState('all');
   const [isLoadingData, setIsLoadingData] = useState(true);
+
+  // Filtragem de Pedidos por Período
+  const pedidosFiltradosDashboard = useMemo(() => {
+    const safePedidos = Array.isArray(pedidos) ? pedidos : [];
+    if (periodo === 'all') return safePedidos;
+
+    const agora = new Date().getTime();
+    let limite = 0;
+
+    if (periodo === 'hoje') {
+      const hoje = new Date();
+      hoje.setHours(0, 0, 0, 0);
+      limite = hoje.getTime();
+    } else if (periodo === '7dias') {
+      limite = agora - (7 * 24 * 60 * 60 * 1000);
+    } else if (periodo === '30dias') {
+      limite = agora - (30 * 24 * 60 * 60 * 1000);
+    }
+
+    return safePedidos.filter(p => new Date(p.data).getTime() >= limite);
+  }, [pedidos, periodo]);
 
   // Estados dos Modais e Formulários
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,7 +79,7 @@ const Admin: React.FC = () => {
 
   // KPIs Dashboard
   const kpis = useMemo(() => {
-    const safePedidos = Array.isArray(pedidos) ? pedidos : [];
+    const safePedidos = pedidosFiltradosDashboard;
     const approved = safePedidos.filter(p => p?.statusPagamento === 'Aprovado' || p?.statusPagamento === 'Entregue');
     const revenue = approved.reduce((acc, p) => acc + (Number(p?.total) || 0), 0);
     const pending = safePedidos.filter(p => p?.statusPagamento?.includes('Pendente')).length;
@@ -69,11 +91,11 @@ const Admin: React.FC = () => {
       averageTicket: ticket,
       pendingOrders: pending
     };
-  }, [pedidos]);
+  }, [pedidosFiltradosDashboard]);
 
   // Dados para Gráfico de Métodos de Pagamento
   const chartData = useMemo(() => {
-    const safePedidos = Array.isArray(pedidos) ? pedidos : [];
+    const safePedidos = pedidosFiltradosDashboard;
     const pixCount = safePedidos.filter(p => p?.metodo === 'pix').length;
     const cardCount = safePedidos.filter(p => p?.metodo === 'credit_card' || p?.metodo === 'master' || p?.metodo === 'visa').length;
     
@@ -81,7 +103,7 @@ const Admin: React.FC = () => {
       { name: 'Pix', value: pixCount },
       { name: 'Cartão', value: cardCount }
     ];
-  }, [pedidos]);
+  }, [pedidosFiltradosDashboard]);
 
   const COLORS = ['#22c55e', '#3b82f6'];
 
@@ -443,7 +465,25 @@ const Admin: React.FC = () => {
             </GlassCard>
           </>
         ) : (
-          <div className="flex flex-col gap-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            {/* Filtro de Período */}
+            <div className="flex justify-center md:justify-start gap-2 bg-white/5 p-1.5 rounded-2xl border border-white/10 w-fit self-center md:self-start">
+              {[
+                { id: 'hoje', label: 'Hoje' },
+                { id: '7dias', label: '7 Dias' },
+                { id: '30dias', label: '30 Dias' },
+                { id: 'all', label: 'Tudo' }
+              ].map((opt) => (
+                <button
+                  key={opt.id}
+                  onClick={() => setPeriodo(opt.id)}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${periodo === opt.id ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+
             {/* KPI Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <GlassCard className="p-6 flex flex-col gap-2 border-white/10 bg-blue-500/10">
