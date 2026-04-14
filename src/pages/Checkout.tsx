@@ -178,6 +178,7 @@ const Checkout = () => {
   const generateWhatsAppMessage = () => {
     const productsList = cartItems.map(item => `- ${item.name} (${item.quantidade}x) - ${item.price}`).join('\n');
     const total = calculateTotal().toFixed(2).replace('.', ',');
+    const statusPagamento = paymentMethod === 'pix' ? 'Pix (Aguardando Confirmação)' : 'Cartão de Crédito (Aprovado)';
     
     const message = `*Novo Pedido - Fulltime Academia*\n\n` +
       `*Cliente:* ${customerData.nome || 'Não informado'}\n` +
@@ -190,7 +191,7 @@ const Checkout = () => {
       `CEP: ${customerData.cep || '00000-000'}\n\n` +
       `*Itens do Pedido:*\n${productsList}\n\n` +
       `*Total:* R$ ${total}\n\n` +
-      `*Forma de Pagamento:* Pix (Aguardando Confirmação)`;
+      `*Forma de Pagamento:* ${statusPagamento}`;
 
     const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '5538999592075';
     return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
