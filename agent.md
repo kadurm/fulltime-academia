@@ -5,9 +5,9 @@
 2. Antes de iniciar qualquer nova tarefa, releia obrigatoriamente este arquivo `agent.md` para assimilar o contexto atualizado por agentes em outros terminais.
 
 ## Últimas Atualizações
+- 2026-04-13: Aplicação do tema `dark` nativo ao Payment Brick do Mercado Pago para integração visual com o site.
 - 2026-04-13: Substituição definitiva do Stripe pelo Mercado Pago (Payment Brick) com credenciais de teste configuradas.
 - 2026-04-13: Migração total do checkout transparente para Mercado Pago usando Payment Brick (Cartões e Pix).
-- 2026-04-13: Implementação do endpoint serverless `api/process_payment.js` utilizando a SDK oficial do Mercado Pago.
 - 2026-04-11: Melhoria de UX no `CartSidebar.tsx`: Adição de botão CTA "Explorar Produtos" no estado de carrinho vazio, com navegação automática para `/loja`.
 - 2026-04-11: Nivelamento tipográfico global: Sincronização de Heros (md:text-5xl), padronização de títulos de seção (tracking-tight) e ajuste de line-height (leading-relaxed/normal) entre `Home.tsx` e `Loja.tsx`.
 - 2026-04-11: Implementação da restauração de scroll global (`ScrollToTop`) e comportamento de scroll suave ao topo no botão "Início" e logo da Navbar em `App.tsx`.

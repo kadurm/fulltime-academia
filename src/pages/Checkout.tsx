@@ -42,13 +42,12 @@ const Checkout = () => {
 
   const customization = {
     paymentMethods: {
-      bankTransfer: 'all' as const, // Para Pix
+      bankTransfer: 'all' as const,
       creditCard: 'all' as const,
-      debitCard: 'all' as const,
     },
     visual: {
       style: {
-        theme: 'dark' as const,
+        theme: 'dark' as const, // Força o tema escuro oficial do Mercado Pago
       }
     }
   };
