@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { GlassCard } from '../components/ui/glass-card';
-import { Trash2, Edit, Plus, X, LogOut, Search } from 'lucide-react';
+import { Trash2, Edit, Plus, X, LogOut, Search, DollarSign, ShoppingBag, TrendingUp, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 
 interface Produto {
   id: number;
@@ -34,30 +35,34 @@ const Admin: React.FC = () => {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [categorias, setCategorias] = useState<string[]>([]);
   const [busca, setBusca] = useState('');
-  // ... (rest of states)
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalTitle, setModalTitle] = useState('Novo');
-  const [editingId, setEditingId] = useState<number | null>(null);
 
-  const [formNome, setFormNome] = useState('');
-  const [formCategoria, setFormCategoria] = useState('');
-  const [formDescricao, setFormDescricao] = useState('');
-  const [formPreco, setFormPreco] = useState('');
-  const [formImagem, setFormImagem] = useState('');
+  // KPIs Dashboard
+  const kpis = useMemo(() => {
+    const approved = pedidos.filter(p => p.statusPagamento === 'Aprovado' || p.statusPagamento === 'Entregue');
+    const revenue = approved.reduce((acc, p) => acc + p.total, 0);
+    const pending = pedidos.filter(p => p.statusPagamento.includes('Pendente')).length;
+    const ticket = approved.length > 0 ? revenue / approved.length : 0;
 
-  const [isCatModalOpen, setIsCatModalOpen] = useState(false);
-  const [novaCat, setNovaCat] = useState('');
-  const [editingCatIndex, setEditingCatIndex] = useState<number | null>(null);
-  const [editingCatValue, setEditingCatValue] = useState('');
+    return {
+      revenue,
+      totalOrders: pedidos.length,
+      averageTicket: ticket,
+      pendingOrders: pending
+    };
+  }, [pedidos]);
 
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  // Dados para Gráfico de Métodos de Pagamento
+  const chartData = useMemo(() => {
+    const pixCount = pedidos.filter(p => p.metodo === 'pix').length;
+    const cardCount = pedidos.filter(p => p.metodo === 'credit_card' || p.metodo === 'master').length;
+    
+    return [
+      { name: 'Pix', value: pixCount },
+      { name: 'Cartão', value: cardCount }
+    ];
+  }, [pedidos]);
 
-  useEffect(() => {
-    if (sessionStorage.getItem("krm_admin_auth") === "true") {
-      setIsAuthenticated(true);
-      fetchData();
-    }
-  }, []);
+  const COLORS = ['#22c55e', '#3b82f6'];
 
   const fetchData = async () => {
     try {
@@ -90,6 +95,8 @@ const Admin: React.FC = () => {
       console.error("Erro ao atualizar pedido:", error);
     }
   };
+
+  // ... (rest of the functions handleLogin, handleLogout, formatPrice, etc)
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -390,72 +397,128 @@ const Admin: React.FC = () => {
             </GlassCard>
           </>
         ) : (
-          <>
-            {/* Header Pedidos */}
-            <div className="flex flex-col items-center mb-12 gap-6 text-center">
-              <h1 className="text-4xl md:text-5xl font-semibold">Gestão de Pedidos</h1>
-              <p className="text-white/40 max-w-md">Gerencie aqui os pedidos recebidos via Mercado Pago e Pix.</p>
+          <div className="flex flex-col gap-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            {/* KPI Cards */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <GlassCard className="p-6 flex flex-col gap-2 border-white/10 bg-blue-500/10">
+                <div className="flex justify-between items-start">
+                  <DollarSign className="text-blue-400" size={24} />
+                  <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Receita</span>
+                </div>
+                <div className="text-2xl font-bold">R$ {kpis.revenue.toFixed(2).replace('.', ',')}</div>
+                <div className="text-[10px] text-white/40">Vendas aprovadas</div>
+              </GlassCard>
+
+              <GlassCard className="p-6 flex flex-col gap-2 border-white/10">
+                <div className="flex justify-between items-start">
+                  <ShoppingBag className="text-purple-400" size={24} />
+                  <span className="text-[10px] font-bold text-purple-400 uppercase tracking-widest">Pedidos</span>
+                </div>
+                <div className="text-2xl font-bold">{kpis.totalOrders}</div>
+                <div className="text-[10px] text-white/40">Total realizado</div>
+              </GlassCard>
+
+              <GlassCard className="p-6 flex flex-col gap-2 border-white/10">
+                <div className="flex justify-between items-start">
+                  <TrendingUp className="text-green-400" size={24} />
+                  <span className="text-[10px] font-bold text-green-400 uppercase tracking-widest">Ticket</span>
+                </div>
+                <div className="text-2xl font-bold">R$ {kpis.averageTicket.toFixed(2).replace('.', ',')}</div>
+                <div className="text-[10px] text-white/40">Média por venda</div>
+              </GlassCard>
+
+              <GlassCard className="p-6 flex flex-col gap-2 border-white/10 bg-yellow-500/10">
+                <div className="flex justify-between items-start">
+                  <Clock className="text-yellow-400" size={24} />
+                  <span className="text-[10px] font-bold text-yellow-400 uppercase tracking-widest">Pendentes</span>
+                </div>
+                <div className="text-2xl font-bold">{kpis.pendingOrders}</div>
+                <div className="text-[10px] text-white/40">Aguardando Pix</div>
+              </GlassCard>
             </div>
 
-            {/* Tabela de Pedidos */}
-            <GlassCard className="p-0 overflow-hidden bg-slate-900/40 border-white/10">
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="border-b border-white/10 bg-white/5 text-left">
-                      <th className="p-4 text-xs font-medium text-gray-400 uppercase tracking-wider">Data</th>
-                      <th className="p-4 text-xs font-medium text-gray-400 uppercase tracking-wider">Cliente</th>
-                      <th className="p-4 text-xs font-medium text-gray-400 uppercase tracking-wider">Total</th>
-                      <th className="p-4 text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
-                      <th className="p-4 text-center text-xs font-medium text-gray-400 uppercase tracking-wider">Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/5">
-                    {pedidos.map((pedido) => (
-                      <tr key={pedido.id} className="hover:bg-white/5 transition-colors">
-                        <td className="p-4 text-sm text-white/60">
-                          {new Date(pedido.data).toLocaleDateString('pt-BR')} <br/>
-                          <span className="text-[10px] opacity-40">{new Date(pedido.data).toLocaleTimeString('pt-BR')}</span>
-                        </td>
-                        <td className="p-4">
-                          <div className="font-bold text-white truncate max-w-[150px]">{pedido.cliente}</div>
-                          <div className="text-[10px] text-white/40 uppercase tracking-widest">{pedido.metodo}</div>
-                        </td>
-                        <td className="p-4 font-bold text-blue-400">R$ {pedido.total.toFixed(2).replace('.', ',')}</td>
-                        <td className="p-4">
-                          <span className={`px-2 py-1 rounded-full text-[10px] font-bold uppercase ${
-                            pedido.statusPagamento === 'Aprovado' ? 'bg-green-500/20 text-green-400' : 
-                            pedido.statusPagamento === 'Recusado' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'
-                          }`}>
-                            {pedido.statusPagamento}
-                          </span>
-                        </td>
-                        <td className="p-4">
-                          <div className="flex justify-center gap-2">
+            {/* Charts Section */}
+            <div className="grid lg:grid-cols-3 gap-6">
+              <GlassCard className="lg:col-span-1 p-6 border-white/10 min-h-[300px] flex flex-col items-center">
+                <h3 className="text-sm font-bold uppercase tracking-widest text-white/40 mb-6">Métodos de Pagamento</h3>
+                <ResponsiveContainer width="100%" height={200}>
+                  <PieChart>
+                    <Pie
+                      data={chartData}
+                      innerRadius={60}
+                      outerRadius={80}
+                      paddingAngle={5}
+                      dataKey="value"
+                    >
+                      {chartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
+                      itemStyle={{ color: '#fff' }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="flex gap-4 mt-4">
+                  <div className="flex items-center gap-2 text-[10px] font-bold">
+                    <div className="w-2 h-2 rounded-full bg-green-500" /> PIX
+                  </div>
+                  <div className="flex items-center gap-2 text-[10px] font-bold">
+                    <div className="w-2 h-2 rounded-full bg-blue-500" /> CARTÃO
+                  </div>
+                </div>
+              </GlassCard>
+
+              <GlassCard className="lg:col-span-2 p-6 border-white/10 flex flex-col">
+                <h3 className="text-sm font-bold uppercase tracking-widest text-white/40 mb-6">Pedidos Recentes</h3>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left">
+                    <thead>
+                      <tr className="text-[10px] text-white/20 uppercase tracking-widest border-b border-white/5">
+                        <th className="pb-3 font-medium">Data</th>
+                        <th className="pb-3 font-medium">Cliente</th>
+                        <th className="pb-3 font-medium">Total</th>
+                        <th className="pb-3 font-medium">Status</th>
+                        <th className="pb-3 text-right font-medium">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {pedidos.slice(0, 10).map((pedido) => (
+                        <tr key={pedido.id} className="text-sm">
+                          <td className="py-4 text-white/60">
+                            {new Date(pedido.data).toLocaleDateString('pt-BR')}
+                          </td>
+                          <td className="py-4 font-bold truncate max-w-[120px]">{pedido.cliente}</td>
+                          <td className="py-4 text-blue-400 font-bold">R$ {pedido.total.toFixed(2).replace('.', ',')}</td>
+                          <td className="py-4">
+                            <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${
+                              pedido.statusPagamento === 'Aprovado' || pedido.statusPagamento === 'Entregue' ? 'bg-green-500/20 text-green-400' : 
+                              pedido.statusPagamento === 'Recusado' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'
+                            }`}>
+                              {pedido.statusPagamento}
+                            </span>
+                          </td>
+                          <td className="py-4 text-right">
                             <select 
                               value={pedido.statusPagamento}
                               onChange={(e) => updatePedidoStatus(pedido.id, e.target.value)}
-                              className="bg-black/40 border border-white/10 rounded px-2 py-1 text-[10px] text-white outline-none focus:border-blue-500"
+                              className="bg-white/5 border border-white/10 rounded px-2 py-1 text-[10px] text-white outline-none focus:border-blue-500"
                             >
                               <option value="Aprovado">Aprovado</option>
                               <option value="Pendente (Pix)">Pendente</option>
                               <option value="Recusado">Recusado</option>
                               <option value="Entregue">Entregue</option>
                             </select>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                    {pedidos.length === 0 && (
-                      <tr>
-                        <td colSpan={5} className="p-20 text-center text-white/20 italic">Nenhum pedido encontrado.</td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
-            </GlassCard>
-          </>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </GlassCard>
+            </div>
+          </div>
         )}
       </div>
 
