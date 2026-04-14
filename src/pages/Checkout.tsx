@@ -52,14 +52,12 @@ const CheckoutForm = ({ clientSecret }: { clientSecret: string }) => {
           name: formData.name,
           address: {
             country: 'BR',
-            line1: 'Endereço coletado pelo Stripe', // O Stripe coletará o endereço se habilitado no PaymentElement
+            line1: 'Endereço de Entrega (Coletado via Checkout)',
           }
         },
         billing_details: {
           name: formData.name,
           phone: formData.phone,
-          // O Stripe não tem campo nativo para CPF no billing_details de cartão, 
-          // mas ele é passado via metadados ou campos customizados se necessário.
         }
       },
     });
@@ -271,8 +269,8 @@ const Checkout = () => {
                   appearance: {
                     theme: 'night',
                     variables: {
-                      colorPrimary: '#003399',
-                      colorBackground: '#020617',
+                      colorPrimary: '#3b82f6',
+                      colorBackground: '#111827',
                       colorText: '#ffffff',
                       colorDanger: '#ef4444',
                       fontFamily: 'Inter Tight, system-ui, sans-serif',

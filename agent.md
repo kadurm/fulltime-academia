@@ -5,9 +5,9 @@
 2. Antes de iniciar qualquer nova tarefa, releia obrigatoriamente este arquivo `agent.md` para assimilar o contexto atualizado por agentes em outros terminais.
 
 ## Últimas Atualizações
+- 2026-04-13: Ativação de Pix e Cartão no Checkout Transparente via `PaymentElement` e `automatic_payment_methods`.
+- 2026-04-13: Refinamento final de UI no Stripe Elements com tema `night` e paleta de cores personalizada.
 - 2026-04-13: Refinamento do Checkout Transparente com campos para Nome, CPF e Telefone, e estilização Glassmorphism personalizada para o mercado brasileiro.
-- 2026-04-13: Pivot de arquitetura para Checkout Transparente (White-label) usando Stripe Elements e PaymentIntents, mantendo o usuário 100% no domínio da Fulltime.
-- 2026-04-13: Criação da página `src/pages/Checkout.tsx` com resumo de pedido, formulário de pagamento integrado e tema Glassmorphism.
 - 2026-04-11: Melhoria de UX no `CartSidebar.tsx`: Adição de botão CTA "Explorar Produtos" no estado de carrinho vazio, com navegação automática para `/loja`.
 - 2026-04-11: Nivelamento tipográfico global: Sincronização de Heros (md:text-5xl), padronização de títulos de seção (tracking-tight) e ajuste de line-height (leading-relaxed/normal) entre `Home.tsx` e `Loja.tsx`.
 - 2026-04-11: Implementação da restauração de scroll global (`ScrollToTop`) e comportamento de scroll suave ao topo no botão "Início" e logo da Navbar em `App.tsx`.
