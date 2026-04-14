@@ -37,6 +37,24 @@ const Admin: React.FC = () => {
   const [busca, setBusca] = useState('');
   const [isLoadingData, setIsLoadingData] = useState(true);
 
+  // Estados dos Modais e Formulários
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('Novo');
+  const [editingId, setEditingId] = useState<number | null>(null);
+
+  const [formNome, setFormNome] = useState('');
+  const [formCategoria, setFormCategoria] = useState('');
+  const [formDescricao, setFormDescricao] = useState('');
+  const [formPreco, setFormPreco] = useState('');
+  const [formImagem, setFormImagem] = useState('');
+
+  const [isCatModalOpen, setIsCatModalOpen] = useState(false);
+  const [novaCat, setNovaCat] = useState('');
+  const [editingCatIndex, setEditingCatIndex] = useState<number | null>(null);
+  const [editingCatValue, setEditingCatValue] = useState('');
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   // KPIs Dashboard
   const kpis = useMemo(() => {
     const safePedidos = Array.isArray(pedidos) ? pedidos : [];
@@ -57,7 +75,7 @@ const Admin: React.FC = () => {
   const chartData = useMemo(() => {
     const safePedidos = Array.isArray(pedidos) ? pedidos : [];
     const pixCount = safePedidos.filter(p => p?.metodo === 'pix').length;
-    const cardCount = safePedidos.filter(p => p?.metodo === 'credit_card' || p?.metodo === 'master').length;
+    const cardCount = safePedidos.filter(p => p?.metodo === 'credit_card' || p?.metodo === 'master' || p?.metodo === 'visa').length;
     
     return [
       { name: 'Pix', value: pixCount },
@@ -94,6 +112,15 @@ const Admin: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (sessionStorage.getItem("krm_admin_auth") === "true") {
+      setIsAuthenticated(true);
+      fetchData();
+    } else {
+      setIsLoadingData(false);
+    }
+  }, []);
+
   const updatePedidoStatus = async (id: string, newStatus: string) => {
     try {
       await fetch('/api/pedidos', {
@@ -106,8 +133,6 @@ const Admin: React.FC = () => {
       console.error("Erro ao atualizar pedido:", error);
     }
   };
-
-  // ... (rest of the functions handleLogin, handleLogout, formatPrice, etc)
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -545,7 +570,7 @@ const Admin: React.FC = () => {
               </GlassCard>
             </div>
           </div>
-        ) : null}
+        )}
       </div>
 
       {/* Modal Novo/Editar */}
