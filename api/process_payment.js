@@ -39,26 +39,29 @@ export default async function handler(req, res) {
       };
     }
 
-    // --- SALVAR PEDIDO NO KV ---
+    // --- SALVAR PEDIDO NO KV (Resiliente) ---
     const isSuccess = response.status === 'approved' || (req.body.payment_method_id === 'pix' && response.status === 'pending');
     
     if (isSuccess) {
-      const { customerData, cartItems } = req.body.metadata || {}; // Assumindo metadados enviados no body ou extrair de payer se enviado
-      // Nota: Caso não haja metadados, utilizaremos o que estiver no payload
-      
-      const novoPedido = {
-        id: response.id.toString(),
-        data: new Date().toISOString(),
-        cliente: req.body.payer?.email || 'N/A',
-        items: cartItems || [],
-        total: req.body.transaction_amount,
-        metodo: req.body.payment_method_id,
-        statusPagamento: response.status === 'approved' ? 'Aprovado' : 'Pendente (Pix)',
-        origem: 'Mercado Pago'
-      };
+      try {
+        const { customerData, cartItems } = req.body.metadata || {};
+        
+        const novoPedido = {
+          id: response.id.toString(),
+          data: new Date().toISOString(),
+          cliente: req.body.payer?.email || 'N/A',
+          items: cartItems || [],
+          total: req.body.transaction_amount,
+          metodo: req.body.payment_method_id,
+          statusPagamento: response.status === 'approved' ? 'Aprovado' : 'Pendente (Pix)',
+          origem: 'Mercado Pago'
+        };
 
-      const pedidosAtuais = await kv.get("pedidos") || [];
-      await kv.set("pedidos", [novoPedido, ...pedidosAtuais]);
+        const pedidosAtuais = await kv.get("pedidos") || [];
+        await kv.set("pedidos", [novoPedido, ...pedidosAtuais]);
+      } catch (dbError) {
+        console.error('Erro ao salvar pedido no KV (Fluxo continuado):', dbError);
+      }
     }
 
     return res.status(200).json({

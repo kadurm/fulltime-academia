@@ -192,6 +192,10 @@ const Checkout = () => {
         body: JSON.stringify(payload),
       });
 
+      if (!response.ok) {
+        throw new Error('Falha na comunicação com o servidor de pagamentos.');
+      }
+
       const result = await response.json();
 
       if (result.error) throw new Error(result.error);
@@ -208,7 +212,7 @@ const Checkout = () => {
       }
     } catch (error: any) {
       console.error(error);
-      alert('Erro: ' + error.message);
+      alert('Erro ao processar pagamento. Verifique os dados ou tente novamente.');
     } finally {
       setIsLoading(false);
     }
