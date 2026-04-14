@@ -35,17 +35,19 @@ const Admin: React.FC = () => {
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [categorias, setCategorias] = useState<string[]>([]);
   const [busca, setBusca] = useState('');
+  const [isLoadingData, setIsLoadingData] = useState(true);
 
   // KPIs Dashboard
   const kpis = useMemo(() => {
-    const approved = pedidos.filter(p => p.statusPagamento === 'Aprovado' || p.statusPagamento === 'Entregue');
-    const revenue = approved.reduce((acc, p) => acc + p.total, 0);
-    const pending = pedidos.filter(p => p.statusPagamento.includes('Pendente')).length;
+    const safePedidos = Array.isArray(pedidos) ? pedidos : [];
+    const approved = safePedidos.filter(p => p?.statusPagamento === 'Aprovado' || p?.statusPagamento === 'Entregue');
+    const revenue = approved.reduce((acc, p) => acc + (Number(p?.total) || 0), 0);
+    const pending = safePedidos.filter(p => p?.statusPagamento?.includes('Pendente')).length;
     const ticket = approved.length > 0 ? revenue / approved.length : 0;
 
     return {
       revenue,
-      totalOrders: pedidos.length,
+      totalOrders: safePedidos.length,
       averageTicket: ticket,
       pendingOrders: pending
     };
@@ -53,8 +55,9 @@ const Admin: React.FC = () => {
 
   // Dados para Gráfico de Métodos de Pagamento
   const chartData = useMemo(() => {
-    const pixCount = pedidos.filter(p => p.metodo === 'pix').length;
-    const cardCount = pedidos.filter(p => p.metodo === 'credit_card' || p.metodo === 'master').length;
+    const safePedidos = Array.isArray(pedidos) ? pedidos : [];
+    const pixCount = safePedidos.filter(p => p?.metodo === 'pix').length;
+    const cardCount = safePedidos.filter(p => p?.metodo === 'credit_card' || p?.metodo === 'master').length;
     
     return [
       { name: 'Pix', value: pixCount },
@@ -65,21 +68,29 @@ const Admin: React.FC = () => {
   const COLORS = ['#22c55e', '#3b82f6'];
 
   const fetchData = async () => {
+    setIsLoadingData(true);
     try {
       const [resP, resC, resO] = await Promise.all([
-        fetch('/api/produtos'),
-        fetch('/api/categorias'),
-        fetch('/api/pedidos')
+        fetch('/api/produtos').catch(() => ({ json: () => [] })),
+        fetch('/api/categorias').catch(() => ({ json: () => [] })),
+        fetch('/api/pedidos').catch(() => ({ json: () => [] }))
       ]);
-      const dataP = await resP.json();
-      const dataC = await resC.json();
-      const dataO = await resO.json();
-      setProdutos(dataP);
-      setCategorias(dataC);
-      setPedidos(dataO);
-      if (dataC.length > 0) setFormCategoria(dataC[0]);
+      
+      const dataP = await (resP as Response).json().catch(() => []);
+      const dataC = await (resC as Response).json().catch(() => []);
+      const dataO = await (resO as Response).json().catch(() => []);
+      
+      setProdutos(Array.isArray(dataP) ? dataP : []);
+      setCategorias(Array.isArray(dataC) ? dataC : []);
+      setPedidos(Array.isArray(dataO) ? dataO : []);
+      
+      if (Array.isArray(dataC) && dataC.length > 0) setFormCategoria(dataC[0]);
     } catch (error) {
       console.error("Erro ao carregar dados:", error);
+      setProdutos([]);
+      setPedidos([]);
+    } finally {
+      setIsLoadingData(false);
     }
   };
 
@@ -321,7 +332,12 @@ const Admin: React.FC = () => {
           </button>
         </div>
 
-        {activeTab === 'produtos' ? (
+        {isLoadingData ? (
+          <div className="flex flex-col items-center justify-center py-20 text-white/40 gap-4">
+            <Clock className="animate-spin" size={40} />
+            <p className="font-medium animate-pulse">Carregando Dashboard...</p>
+          </div>
+        ) : activeTab === 'produtos' ? (
           <>
             {/* Header Produtos */}
             <div className="flex flex-col items-center mb-12 gap-6 text-center">
@@ -391,6 +407,11 @@ const Admin: React.FC = () => {
                         </td>
                       </tr>
                     ))}
+                    {produtosFiltrados.length === 0 && (
+                      <tr>
+                        <td colSpan={5} className="p-20 text-center text-white/20 italic">Nenhum produto encontrado.</td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -450,7 +471,7 @@ const Admin: React.FC = () => {
                       paddingAngle={5}
                       dataKey="value"
                     >
-                      {chartData.map((entry, index) => (
+                      {chartData.map((_entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
@@ -484,26 +505,26 @@ const Admin: React.FC = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5">
-                      {pedidos.slice(0, 10).map((pedido) => (
-                        <tr key={pedido.id} className="text-sm">
+                      {Array.isArray(pedidos) && pedidos.slice(0, 10).map((pedido) => (
+                        <tr key={pedido.id} className="text-sm hover:bg-white/5 transition-colors group">
                           <td className="py-4 text-white/60">
-                            {new Date(pedido.data).toLocaleDateString('pt-BR')}
+                            {pedido?.data ? new Date(pedido.data).toLocaleDateString('pt-BR') : 'N/A'}
                           </td>
-                          <td className="py-4 font-bold truncate max-w-[120px]">{pedido.cliente}</td>
-                          <td className="py-4 text-blue-400 font-bold">R$ {pedido.total.toFixed(2).replace('.', ',')}</td>
+                          <td className="py-4 font-bold truncate max-w-[120px]">{pedido?.cliente || 'N/A'}</td>
+                          <td className="py-4 text-blue-400 font-bold">R$ {(pedido?.total || 0).toFixed(2).replace('.', ',')}</td>
                           <td className="py-4">
                             <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${
-                              pedido.statusPagamento === 'Aprovado' || pedido.statusPagamento === 'Entregue' ? 'bg-green-500/20 text-green-400' : 
-                              pedido.statusPagamento === 'Recusado' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'
+                              pedido?.statusPagamento === 'Aprovado' || pedido?.statusPagamento === 'Entregue' ? 'bg-green-500/20 text-green-400' : 
+                              pedido?.statusPagamento === 'Recusado' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'
                             }`}>
-                              {pedido.statusPagamento}
+                              {pedido?.statusPagamento || 'Pendente'}
                             </span>
                           </td>
                           <td className="py-4 text-right">
                             <select 
-                              value={pedido.statusPagamento}
+                              value={pedido?.statusPagamento || 'Pendente (Pix)'}
                               onChange={(e) => updatePedidoStatus(pedido.id, e.target.value)}
-                              className="bg-white/5 border border-white/10 rounded px-2 py-1 text-[10px] text-white outline-none focus:border-blue-500"
+                              className="bg-white/5 border border-white/10 rounded px-2 py-1 text-[10px] text-white outline-none focus:border-blue-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                             >
                               <option value="Aprovado">Aprovado</option>
                               <option value="Pendente (Pix)">Pendente</option>
@@ -513,13 +534,18 @@ const Admin: React.FC = () => {
                           </td>
                         </tr>
                       ))}
+                      {(!Array.isArray(pedidos) || pedidos.length === 0) && (
+                        <tr>
+                          <td colSpan={5} className="py-10 text-center text-white/20 italic">Nenhum pedido encontrado.</td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
               </GlassCard>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
 
       {/* Modal Novo/Editar */}
