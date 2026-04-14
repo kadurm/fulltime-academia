@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { GlassCard } from '../components/ui/glass-card';
-import { ShoppingCart, ArrowLeft, ShieldCheck, CreditCard, User, Mail, Fingerprint, MapPin, Hash, Building, Landmark, QrCode, Copy, CheckCircle2, Loader2 } from 'lucide-react';
+import { ShoppingCart, ArrowLeft, ShieldCheck, CreditCard, User, Mail, Fingerprint, MapPin, Hash, Building, Landmark, QrCode, Copy, CheckCircle2, Loader2, MessageCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 declare global {
@@ -173,6 +173,27 @@ const Checkout = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const generateWhatsAppMessage = () => {
+    const productsList = cartItems.map(item => `- ${item.name} (${item.quantidade}x) - ${item.price}`).join('\n');
+    const total = calculateTotal().toFixed(2).replace('.', ',');
+    
+    const message = `*Novo Pedido - Fulltime Academia*\n\n` +
+      `*Cliente:* ${customerData.nome || 'Não informado'}\n` +
+      `*CPF:* ${customerData.cpf || 'Não informado'}\n` +
+      `*E-mail:* ${customerData.email || 'Não informado'}\n\n` +
+      `*Endereço de Entrega:*\n` +
+      `${customerData.rua || 'Rua não informada'}, ${customerData.numero || 'S/N'}\n` +
+      `${customerData.bairro || 'Bairro não informado'}\n` +
+      `${customerData.cidade || 'Cidade não informada'} - ${customerData.uf || 'UF'}\n` +
+      `CEP: ${customerData.cep || '00000-000'}\n\n` +
+      `*Itens do Pedido:*\n${productsList}\n\n` +
+      `*Total:* R$ ${total}\n\n` +
+      `*Forma de Pagamento:* Pix (Aguardando Confirmação)`;
+
+    const whatsappNumber = import.meta.env.VITE_WHATSAPP_NUMBER || '5538999592075';
+    return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   };
 
   const inputStyle = "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/20 focus:outline-none focus:border-blue-500/50 transition-all text-sm";
@@ -354,7 +375,18 @@ const Checkout = () => {
                     </button>
                   </div>
                 </div>
-                <button onClick={() => navigate('/')} className="mt-4 text-sm text-white/40 hover:text-white underline underline-offset-4">Ir para Página Inicial</button>
+                <div className="flex flex-col gap-3 mt-4">
+                  <a 
+                    href={generateWhatsAppMessage()} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-4 rounded-xl transition-all shadow-lg uppercase tracking-wider text-xs flex items-center justify-center gap-2"
+                  >
+                    <MessageCircle size={18} />
+                    Enviar Comprovante via WhatsApp
+                  </a>
+                  <button onClick={() => navigate('/')} className="text-sm text-white/40 hover:text-white underline underline-offset-4">Ir para Página Inicial</button>
+                </div>
               </div>
             )}
           </GlassCard>
