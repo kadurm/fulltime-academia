@@ -1,11 +1,12 @@
 import { MercadoPagoConfig, Payment } from 'mercadopago';
+import { kv } from '@vercel/kv';
 
 const client = new MercadoPagoConfig({ 
   accessToken: process.env.MP_ACCESS_TOKEN || '' 
 });
 
 export default async function handler(req, res) {
-  // CORS
+  // ... (previous CORS headers)
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
@@ -36,6 +37,28 @@ export default async function handler(req, res) {
         qr_code_base64: response.point_of_interaction.transaction_data.qr_code_base64,
         ticket_url: response.point_of_interaction.transaction_data.ticket_url
       };
+    }
+
+    // --- SALVAR PEDIDO NO KV ---
+    const isSuccess = response.status === 'approved' || (req.body.payment_method_id === 'pix' && response.status === 'pending');
+    
+    if (isSuccess) {
+      const { customerData, cartItems } = req.body.metadata || {}; // Assumindo metadados enviados no body ou extrair de payer se enviado
+      // Nota: Caso não haja metadados, utilizaremos o que estiver no payload
+      
+      const novoPedido = {
+        id: response.id.toString(),
+        data: new Date().toISOString(),
+        cliente: req.body.payer?.email || 'N/A',
+        items: cartItems || [],
+        total: req.body.transaction_amount,
+        metodo: req.body.payment_method_id,
+        statusPagamento: response.status === 'approved' ? 'Aprovado' : 'Pendente (Pix)',
+        origem: 'Mercado Pago'
+      };
+
+      const pedidosAtuais = await kv.get("pedidos") || [];
+      await kv.set("pedidos", [novoPedido, ...pedidosAtuais]);
     }
 
     return res.status(200).json({

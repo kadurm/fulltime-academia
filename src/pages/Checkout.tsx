@@ -154,6 +154,10 @@ const Checkout = () => {
         payer: {
           email: customerData.email,
           identification: { type: 'CPF', number: customerData.cpf.replace(/\D/g, '') }
+        },
+        metadata: {
+          customerData,
+          cartItems
         }
       };
 
