@@ -69,7 +69,14 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    const handleCartUpdate = () => setIsCartOpen(true);
+    const handleCartUpdate = () => {
+      const cart = JSON.parse(localStorage.getItem('fulltime_cart') || '[]');
+      if (cart.length > 0) {
+        setIsCartOpen(true);
+      } else {
+        setIsCartOpen(false);
+      }
+    };
     window.addEventListener('cartUpdated', handleCartUpdate);
     return () => window.removeEventListener('cartUpdated', handleCartUpdate);
   }, []);
