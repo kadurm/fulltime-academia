@@ -60,6 +60,7 @@ const Checkout = () => {
 
           if (data.status === 'approved') {
             setPixStatus('approved');
+            clearCart();
             setStep(3);
             clearInterval(interval);
           }
@@ -71,6 +72,12 @@ const Checkout = () => {
 
     return () => clearInterval(interval);
   }, [paymentId, pixStatus]);
+
+  const clearCart = () => {
+    localStorage.removeItem('fulltime_cart');
+    setCartItems([]);
+    window.dispatchEvent(new Event('cartUpdated'));
+  };
 
   // Efeito para busca de CEP
   useEffect(() => {
@@ -190,6 +197,7 @@ const Checkout = () => {
         setPaymentId(result.id);
         // Não avança o step, apenas exibe o QR Code no Step 2
       } else if (result.status === 'approved') {
+        clearCart();
         setStep(3);
       } else {
         alert('Pagamento em processamento ou recusado: ' + result.status_detail);
