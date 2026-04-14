@@ -163,7 +163,7 @@ const Checkout = () => {
         setPixData(result.pix);
         setStep(3);
       } else if (result.status === 'approved') {
-        window.location.href = '/?success=true';
+        setStep(3);
       } else {
         alert('Pagamento em processamento ou recusado: ' + result.status_detail);
       }
@@ -358,23 +358,35 @@ const Checkout = () => {
               </div>
             )}
 
-            {step === 3 && pixData && (
+            {step === 3 && (
               <div className="flex flex-col gap-6 text-center animate-in zoom-in-95 duration-500">
                 <CheckCircle2 className="mx-auto text-green-500" size={64} />
-                <h2 className="text-2xl font-bold">Quase lá!</h2>
-                <p className="text-white/60 text-sm">Escaneie o QR Code abaixo ou copie o código para pagar.</p>
-                <div className="bg-white p-4 rounded-2xl inline-block mx-auto shadow-2xl">
-                  <img src={`data:image/jpeg;base64,${pixData.qr_code_base64}`} alt="QR Code Pix" className="w-48 h-48" />
-                </div>
-                <div className="flex flex-col gap-2 mt-4 text-left">
-                  <label className={labelStyle}>Código Pix (Copia e Cola)</label>
-                  <div className="relative">
-                    <input readOnly value={pixData.qr_code} className={inputStyle + " pr-12 truncate"} />
-                    <button onClick={() => { navigator.clipboard.writeText(pixData.qr_code); alert('Copiado!'); }} className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-300">
-                      <Copy size={18} />
-                    </button>
-                  </div>
-                </div>
+                <h2 className="text-2xl font-bold">
+                  {paymentMethod === 'pix' ? 'Quase lá!' : 'Pedido Confirmado!'}
+                </h2>
+                <p className="text-white/60 text-sm">
+                  {paymentMethod === 'pix' 
+                    ? 'Escaneie o QR Code abaixo ou copie o código para pagar.' 
+                    : 'Seu pagamento foi aprovado com sucesso!'}
+                </p>
+
+                {paymentMethod === 'pix' && pixData && (
+                  <>
+                    <div className="bg-white p-4 rounded-2xl inline-block mx-auto shadow-2xl">
+                      <img src={`data:image/jpeg;base64,${pixData.qr_code_base64}`} alt="QR Code Pix" className="w-48 h-48" />
+                    </div>
+                    <div className="flex flex-col gap-2 mt-4 text-left">
+                      <label className={labelStyle}>Código Pix (Copia e Cola)</label>
+                      <div className="relative">
+                        <input readOnly value={pixData.qr_code} className={inputStyle + " pr-12 truncate"} />
+                        <button onClick={() => { navigator.clipboard.writeText(pixData.qr_code); alert('Copiado!'); }} className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400 hover:text-blue-300">
+                          <Copy size={18} />
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
+
                 <div className="flex flex-col gap-3 mt-4">
                   <a 
                     href={generateWhatsAppMessage()} 
@@ -383,7 +395,7 @@ const Checkout = () => {
                     className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-4 rounded-xl transition-all shadow-lg uppercase tracking-wider text-xs flex items-center justify-center gap-2"
                   >
                     <MessageCircle size={18} />
-                    Enviar Comprovante via WhatsApp
+                    {paymentMethod === 'pix' ? 'Enviar Comprovante via WhatsApp' : 'Falar com Atendente'}
                   </a>
                   <button onClick={() => navigate('/')} className="text-sm text-white/40 hover:text-white underline underline-offset-4">Ir para Página Inicial</button>
                 </div>
