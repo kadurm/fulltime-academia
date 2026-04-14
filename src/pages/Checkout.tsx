@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { GlassCard } from '../components/ui/glass-card';
-import { ShoppingCart, ArrowLeft, ShieldCheck, CreditCard, User, Mail, Fingerprint, MapPin, Hash, Building, Landmark, QrCode, Copy, CheckCircle2 } from 'lucide-react';
+import { ShoppingCart, ArrowLeft, ShieldCheck, CreditCard, User, Mail, Fingerprint, MapPin, Hash, Building, Landmark, QrCode, Copy, CheckCircle2, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 declare global {
@@ -21,9 +21,13 @@ const Checkout = () => {
   const [step, setStep] = useState(1);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isCepLoading, setIsCepLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<'credit_card' | 'pix'>('credit_card');
   const [pixData, setPixData] = useState<any>(null);
   const navigate = useNavigate();
+  
+  // Ref para o input de número
+  const numeroRef = useRef<HTMLInputElement>(null);
 
   // Estados do Formulário
   const [customerData, setFormData] = useState({
@@ -40,6 +44,41 @@ const Checkout = () => {
     setCartItems(cart);
     if (cart.length === 0) navigate('/loja');
   }, [navigate]);
+
+  // Efeito para busca de CEP
+  useEffect(() => {
+    const cep = customerData.cep.replace(/\D/g, '');
+    if (cep.length === 8) {
+      handleCepLookup(cep);
+    }
+  }, [customerData.cep]);
+
+  const handleCepLookup = async (cep: string) => {
+    try {
+      setIsCepLoading(true);
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      const data = await response.json();
+
+      if (!data.erro) {
+        setFormData(prev => ({
+          ...prev,
+          rua: data.logradouro,
+          bairro: data.bairro,
+          cidade: data.localidade,
+          uf: data.uf
+        }));
+        
+        // Foco automático no número após preenchimento
+        setTimeout(() => {
+          numeroRef.current?.focus();
+        }, 100);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar CEP:', error);
+    } finally {
+      setIsCepLoading(false);
+    }
+  };
 
   const calculateTotal = () => {
     return cartItems.reduce((acc, item) => {
@@ -179,18 +218,44 @@ const Checkout = () => {
                     <input type="email" name="email" required placeholder="joao@email.com" className={inputStyle} value={customerData.email} onChange={handleCustomerChange} />
                   </div>
                   <div className="grid grid-cols-3 gap-4">
-                    <div className="col-span-2">
+                    <div className="col-span-2 relative">
                       <label className={labelStyle}>CEP</label>
                       <input type="text" name="cep" required placeholder="00000-000" className={inputStyle} value={customerData.cep} onChange={handleCustomerChange} />
+                      {isCepLoading && <Loader2 size={16} className="absolute right-3 top-[38px] animate-spin text-blue-400" />}
                     </div>
                     <div>
                       <label className={labelStyle}>Nº</label>
-                      <input type="text" name="numero" required placeholder="123" className={inputStyle} value={customerData.numero} onChange={handleCustomerChange} />
+                      <input 
+                        type="text" 
+                        name="numero" 
+                        ref={numeroRef}
+                        required 
+                        placeholder="123" 
+                        className={inputStyle} 
+                        value={customerData.numero} 
+                        onChange={handleCustomerChange} 
+                      />
                     </div>
                   </div>
-                  <div>
-                    <label className={labelStyle}>Rua / Logradouro</label>
-                    <input type="text" name="rua" required placeholder="Av. Principal" className={inputStyle} value={customerData.rua} onChange={handleCustomerChange} />
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label className={labelStyle}>Rua / Logradouro</label>
+                      <input type="text" name="rua" required placeholder="Av. Principal" className={inputStyle} value={customerData.rua} onChange={handleCustomerChange} />
+                    </div>
+                    <div>
+                      <label className={labelStyle}>Bairro</label>
+                      <input type="text" name="bairro" required placeholder="Centro" className={inputStyle} value={customerData.bairro} onChange={handleCustomerChange} />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="col-span-2">
+                      <label className={labelStyle}>Cidade</label>
+                      <input type="text" name="cidade" required placeholder="Cidade" className={inputStyle} value={customerData.cidade} onChange={handleCustomerChange} />
+                    </div>
+                    <div>
+                      <label className={labelStyle}>UF</label>
+                      <input type="text" name="uf" required placeholder="UF" className={inputStyle} value={customerData.uf} onChange={handleCustomerChange} />
+                    </div>
                   </div>
                 </div>
                 <button onClick={() => setStep(2)} className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl transition-all shadow-lg uppercase tracking-wider text-xs">Ir para Pagamento</button>
