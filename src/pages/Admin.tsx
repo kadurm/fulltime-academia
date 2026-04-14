@@ -36,6 +36,8 @@ const Admin: React.FC = () => {
   const [categorias, setCategorias] = useState<string[]>([]);
   const [busca, setBusca] = useState('');
   const [periodo, setPeriodo] = useState('all');
+  const [customStart, setCustomStart] = useState('');
+  const [customEnd, setCustomEnd] = useState('');
   const [isLoadingData, setIsLoadingData] = useState(true);
 
   // Filtragem de Pedidos por Período
@@ -50,14 +52,24 @@ const Admin: React.FC = () => {
       const hoje = new Date();
       hoje.setHours(0, 0, 0, 0);
       limite = hoje.getTime();
+      return safePedidos.filter(p => new Date(p.data).getTime() >= limite);
     } else if (periodo === '7dias') {
       limite = agora - (7 * 24 * 60 * 60 * 1000);
+      return safePedidos.filter(p => new Date(p.data).getTime() >= limite);
     } else if (periodo === '30dias') {
       limite = agora - (30 * 24 * 60 * 60 * 1000);
+      return safePedidos.filter(p => new Date(p.data).getTime() >= limite);
+    } else if (periodo === 'custom' && customStart && customEnd) {
+      const start = new Date(customStart + 'T00:00:00').getTime();
+      const end = new Date(customEnd + 'T23:59:59').getTime();
+      return safePedidos.filter(p => {
+        const d = new Date(p.data).getTime();
+        return d >= start && d <= end;
+      });
     }
 
-    return safePedidos.filter(p => new Date(p.data).getTime() >= limite);
-  }, [pedidos, periodo]);
+    return safePedidos;
+  }, [pedidos, periodo, customStart, customEnd]);
 
   // Estados dos Modais e Formulários
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -471,21 +483,42 @@ const Admin: React.FC = () => {
         ) : (
           <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             {/* Filtro de Período */}
-            <div className="flex justify-center md:justify-start gap-2 bg-white/5 p-1.5 rounded-2xl border border-white/10 w-fit self-center md:self-start">
-              {[
-                { id: 'hoje', label: 'Hoje' },
-                { id: '7dias', label: '7 Dias' },
-                { id: '30dias', label: '30 Dias' },
-                { id: 'all', label: 'Tudo' }
-              ].map((opt) => (
-                <button
-                  key={opt.id}
-                  onClick={() => setPeriodo(opt.id)}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${periodo === opt.id ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
-                >
-                  {opt.label}
-                </button>
-              ))}
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+              <div className="flex gap-2 bg-white/5 p-1.5 rounded-2xl border border-white/10 w-fit">
+                {[
+                  { id: 'hoje', label: 'Hoje' },
+                  { id: '7dias', label: '7 Dias' },
+                  { id: '30dias', label: '30 Dias' },
+                  { id: 'all', label: 'Tudo' },
+                  { id: 'custom', label: 'Personalizado' }
+                ].map((opt) => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setPeriodo(opt.id)}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${periodo === opt.id ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+
+              {periodo === 'custom' && (
+                <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-4 duration-500">
+                  <input 
+                    type="date" 
+                    value={customStart} 
+                    onChange={(e) => setCustomStart(e.target.value)}
+                    className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50"
+                  />
+                  <span className="text-white/20 text-xs font-bold">até</span>
+                  <input 
+                    type="date" 
+                    value={customEnd} 
+                    onChange={(e) => setCustomEnd(e.target.value)}
+                    className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50"
+                  />
+                </div>
+              )}
             </div>
 
             {/* KPI Cards */}
