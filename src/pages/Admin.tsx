@@ -80,9 +80,9 @@ const Admin: React.FC = () => {
   // KPIs Dashboard
   const kpis = useMemo(() => {
     const safePedidos = pedidosFiltradosDashboard;
-    const approved = safePedidos.filter(p => p?.statusPagamento === 'Aprovado' || p?.statusPagamento === 'Entregue');
+    const approved = safePedidos.filter(p => p?.statusPagamento === 'Aprovado' || p?.statusPagamento === 'Aguardando Envio' || p?.statusPagamento === 'Enviado' || p?.statusPagamento === 'Concluído');
     const revenue = approved.reduce((acc, p) => acc + (Number(p?.total) || 0), 0);
-    const pending = safePedidos.filter(p => p?.statusPagamento?.includes('Pendente')).length;
+    const pending = safePedidos.filter(p => p?.statusPagamento?.includes('Pendente') || p?.statusPagamento === 'Aguardando Envio').length;
     const ticket = approved.length > 0 ? revenue / approved.length : 0;
 
     return {
@@ -145,14 +145,18 @@ const Admin: React.FC = () => {
 
   const updatePedidoStatus = async (id: string, newStatus: string) => {
     try {
-      await fetch('/api/pedidos', {
+      const res = await fetch('/api/pedidos', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, status: newStatus })
       });
-      fetchData();
+      if (res.ok) {
+        alert('Status do pedido atualizado com sucesso!');
+        fetchData();
+      }
     } catch (error) {
       console.error("Erro ao atualizar pedido:", error);
+      alert('Erro ao atualizar o status do pedido.');
     }
   };
 
@@ -579,22 +583,24 @@ const Admin: React.FC = () => {
                           <td className="py-4 text-blue-400 font-bold">R$ {(pedido?.total || 0).toFixed(2).replace('.', ',')}</td>
                           <td className="py-4">
                             <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${
-                              pedido?.statusPagamento === 'Aprovado' || pedido?.statusPagamento === 'Entregue' ? 'bg-green-500/20 text-green-400' : 
-                              pedido?.statusPagamento === 'Recusado' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'
+                              pedido?.statusPagamento === 'Aprovado' || pedido?.statusPagamento === 'Concluído' ? 'bg-green-500/20 text-green-400' : 
+                              pedido?.statusPagamento === 'Aguardando Envio' || pedido?.statusPagamento === 'Enviado' ? 'bg-blue-500/20 text-blue-400' :
+                              pedido?.statusPagamento === 'Recusado' || pedido?.statusPagamento === 'Devolvido/Cancelado' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'
                             }`}>
                               {pedido?.statusPagamento || 'Pendente'}
                             </span>
                           </td>
                           <td className="py-4 text-right">
                             <select 
-                              value={pedido?.statusPagamento || 'Pendente (Pix)'}
+                              value={pedido?.statusPagamento || 'Pendente'}
                               onChange={(e) => updatePedidoStatus(pedido.id, e.target.value)}
                               className="bg-white/5 border border-white/10 rounded px-2 py-1 text-[10px] text-white outline-none focus:border-blue-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                             >
-                              <option value="Aprovado">Aprovado</option>
-                              <option value="Pendente (Pix)">Pendente</option>
-                              <option value="Recusado">Recusado</option>
-                              <option value="Entregue">Entregue</option>
+                              <option value="Pendente">Pendente</option>
+                              <option value="Aguardando Envio">Aguardando Envio</option>
+                              <option value="Enviado">Enviado</option>
+                              <option value="Concluído">Concluído</option>
+                              <option value="Devolvido/Cancelado">Devolvido/Cancelado</option>
                             </select>
                           </td>
                         </tr>
