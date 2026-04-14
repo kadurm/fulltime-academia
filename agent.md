@@ -5,6 +5,9 @@
 2. Antes de iniciar qualquer nova tarefa, releia obrigatoriamente este arquivo `agent.md` para assimilar o contexto atualizado por agentes em outros terminais.
 
 ## Últimas Atualizações
+- 2026-04-13: Implementação do Checkout Customizado (Core API) do Mercado Pago com UI 100% nativa (Stepper, Glassmorphism).
+- 2026-04-13: Integração do MercadoPago.js V2 para tokenização segura de cartões no frontend.
+- 2026-04-13: Atualização do endpoint `api/process_payment.js` para suportar payloads customizados de Cartão e Pix.
 - 2026-04-13: Aplicação do tema `dark` nativo ao Payment Brick do Mercado Pago para integração visual com o site.
 - 2026-04-13: Substituição definitiva do Stripe pelo Mercado Pago (Payment Brick) com credenciais de teste configuradas.
 - 2026-04-13: Migração total do checkout transparente para Mercado Pago usando Payment Brick (Cartões e Pix).

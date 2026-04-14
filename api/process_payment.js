@@ -25,14 +25,24 @@ export default async function handler(req, res) {
   try {
     const payment = new Payment(client);
     
-    // O Mercado Pago envia os dados do Brick no corpo da requisição
+    // O Mercado Pago Core API recebe o body customizado
     const response = await payment.create({ body: req.body });
+
+    // Se for Pix, extrair dados do QR Code
+    let pixData = null;
+    if (req.body.payment_method_id === 'pix' && response.point_of_interaction) {
+      pixData = {
+        qr_code: response.point_of_interaction.transaction_data.qr_code,
+        qr_code_base64: response.point_of_interaction.transaction_data.qr_code_base64,
+        ticket_url: response.point_of_interaction.transaction_data.ticket_url
+      };
+    }
 
     return res.status(200).json({
       id: response.id,
       status: response.status,
       status_detail: response.status_detail,
-      point_of_interaction: response.point_of_interaction // Para o QR Code do Pix
+      pix: pixData
     });
   } catch (error) {
     console.error('Mercado Pago Error:', error);
