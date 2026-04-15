@@ -59,16 +59,7 @@ const Loja: React.FC = () => {
   return (
     <div className="flex flex-col w-full min-h-screen">
       {/* Hero */}
-      <div id="hero" data-section="hero" className="pt-6 md:pt-8 bg-transparent">
-        <section className="relative w-full h-fit flex items-center justify-center pt-2 pb-5 md:pt-4 md:pb-10">
-          <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-4 md:gap-5 relative z-10">
-            <div className="items-center text-center flex flex-col gap-1">
-              <img src="/FullSuplementosSemFundo.png" alt="Full Suplementos" className="w-[68%] md:w-[48%] max-w-[400px] mx-auto object-contain" />
-              <p className="-mt-6 md:-mt-10 relative z-10 text-gray-400 max-w-2xl mx-auto leading-relaxed">Suplementação premium para levar seu treino ao próximo nível.</p>
-            </div>
-          </div>
-        </section>
-      </div>
+      <div id="hero" data-section="hero" className="pt-2 md:pt-4 bg-transparent"><section className="relative w-full h-fit flex items-center justify-center pt-0 pb-4 md:pb-8"><div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col relative z-10"><div className="items-center text-center flex flex-col"><img src="/FullSuplementosSemFundo.png" alt="Full Suplementos" className="w-[68%] md:w-[48%] max-w-[400px] mx-auto object-contain" /><p className="-mt-8 md:-mt-12 relative z-10 text-gray-400 max-w-2xl mx-auto leading-relaxed">Suplementação premium para levar seu treino ao próximo nível.</p></div></div></section></div>
 
       {/* Busca e Filtros */}
       <div className="container mx-auto px-6 max-w-7xl mb-12 flex flex-col gap-8">
