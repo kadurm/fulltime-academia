@@ -67,6 +67,7 @@ export default async function handler(req, res) {
           total: req.body.transaction_amount,
           metodo: req.body.payment_method_id,
           statusPagamento: response.status === 'approved' ? 'Aprovado' : 'Pendente (Pix)',
+          metadata: { customerData, cartItems },
           origem: 'Mercado Pago'
         };
 

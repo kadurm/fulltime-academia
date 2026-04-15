@@ -5,6 +5,11 @@
 2. Antes de iniciar qualquer nova tarefa, releia obrigatoriamente este arquivo `agent.md` para assimilar o contexto atualizado por agentes em outros terminais.
 
 ## Últimas Atualizações
+- 2026-04-15: Implementação de lógica funcional no modal de pedidos para processamento e limpeza de itens pendentes da tabela de logística.
+- 2026-04-15: Adição de modal detalhado com informações completas de entrega (endereço, contato) e otimização da fila de logística no Admin.
+- 2026-04-15: Sanitização de payloads enviados ao Mercado Pago para contornar limitações de tamanho de metadados.
+- 2026-04-15: Restauração da fidelidade visual 3D e profundidade do carrossel de aparelhos na Home.
+- 2026-04-15: Correção de regressão visual nos estilos globais e restauração da compatibilidade de layout.
 - 2026-04-13: Implementação de preenchimento automático de endereço via API ViaCEP no Checkout, com feedback visual de carregamento e foco automático no campo número.
 - 2026-04-13: Implementação do Checkout Customizado (Core API) do Mercado Pago com UI 100% nativa (Stepper, Glassmorphism).
 - 2026-04-13: Integração do MercadoPago.js V2 para tokenização segura de cartões no frontend.

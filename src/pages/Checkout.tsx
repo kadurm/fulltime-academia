@@ -34,7 +34,7 @@ const Checkout = () => {
 
   // Estados do Formulário
   const [customerData, setFormData] = useState({
-    nome: '', email: '', cpf: '',
+    nome: '', email: '', cpf: '', telefone: '',
     cep: '', rua: '', numero: '', bairro: '', cidade: '', uf: ''
   });
 
@@ -90,9 +90,9 @@ const Checkout = () => {
 
   const handleNextStep = (e: React.MouseEvent) => {
     e.preventDefault();
-    const { nome, email, cpf, cep, rua, numero, bairro, cidade, uf } = customerData;
+    const { nome, email, cpf, telefone, cep, rua, numero, bairro, cidade, uf } = customerData;
     
-    if (!nome || !email || !cpf || !cep || !rua || !numero || !bairro || !cidade || !uf) {
+    if (!nome || !email || !cpf || !telefone || !cep || !rua || !numero || !bairro || !cidade || !uf) {
       alert('Por favor, preencha todos os campos obrigatórios.');
       return;
     }
@@ -296,9 +296,15 @@ const Checkout = () => {
                       <input type="text" name="cpf" required placeholder="000.000.000-00" className={inputStyle} value={customerData.cpf} onChange={handleCustomerChange} />
                     </div>
                   </div>
-                  <div>
-                    <label className={labelStyle}>E-mail</label>
-                    <input type="email" name="email" required placeholder="joao@email.com" className={inputStyle} value={customerData.email} onChange={handleCustomerChange} />
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label className={labelStyle}>Telefone / WhatsApp</label>
+                      <input type="tel" name="telefone" required placeholder="(00) 00000-0000" className={inputStyle} value={customerData.telefone} onChange={handleCustomerChange} />
+                    </div>
+                    <div>
+                      <label className={labelStyle}>E-mail</label>
+                      <input type="email" name="email" required placeholder="joao@email.com" className={inputStyle} value={customerData.email} onChange={handleCustomerChange} />
+                    </div>
                   </div>
                   <div className="grid grid-cols-3 gap-4">
                     <div className="col-span-2 relative">

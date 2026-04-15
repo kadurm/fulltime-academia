@@ -116,7 +116,7 @@ const Admin: React.FC = () => {
     const safePedidos = pedidosFiltradosDashboard;
     const approved = safePedidos.filter(p => p?.statusPagamento === 'Aprovado' || p?.statusPagamento === 'Aguardando Envio' || p?.statusPagamento === 'Enviado' || p?.statusPagamento === 'Concluído');
     const revenue = approved.reduce((acc, p) => acc + (Number(p?.total) || 0), 0);
-    const pending = safePedidos.filter(p => p?.statusPagamento?.includes('Pendente') || p?.statusPagamento === 'Aguardando Envio').length;
+    const pending = safePedidos.filter(p => p?.statusPagamento === 'Aguardando Envio').length;
     const ticket = approved.length > 0 ? revenue / approved.length : 0;
 
     return {
@@ -589,7 +589,7 @@ const Admin: React.FC = () => {
                   <span className="text-[10px] font-bold text-yellow-400 uppercase tracking-widest">Pendentes</span>
                 </div>
                 <div className="text-2xl font-bold">{kpis.pendingOrders}</div>
-                <div className="text-[10px] text-white/40">Aguardando Pix</div>
+                <div className="text-[10px] text-white/40">Aguardando Envio</div>
               </GlassCard>
             </div>
 
@@ -667,6 +667,7 @@ const Admin: React.FC = () => {
                                 className="bg-white/5 border border-white/10 rounded px-2 py-1 text-[10px] text-white outline-none focus:border-blue-500 cursor-pointer"
                               >
                                 <option value="Pendente" className="bg-[#0f172a]">Pendente</option>
+                                <option value="Pendente (Pix)" className="bg-[#0f172a]">Pendente (Pix)</option>
                                 <option value="Aguardando Envio" className="bg-[#0f172a]">Aguardando Envio</option>
                                 <option value="Enviado" className="bg-[#0f172a]">Enviado</option>
                                 <option value="Concluído" className="bg-[#0f172a]">Concluído</option>
@@ -807,7 +808,7 @@ const Admin: React.FC = () => {
 
               {/* Botão Ação Rápida */}
               <button 
-                onClick={() => window.open(`https://wa.me/55${pedidoSelecionado.metadata?.customerData?.cpf?.replace(/\D/g, '')}`, '_blank')}
+                onClick={() => window.open(`https://wa.me/55${pedidoSelecionado.metadata?.customerData?.telefone?.replace(/\D/g, '')}`, '_blank')}
                 className="w-full py-4 bg-[#25D366] hover:bg-[#1da851] text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-green-600/20"
               >
                 Falar com Cliente via WhatsApp
