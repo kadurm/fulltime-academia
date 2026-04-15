@@ -522,7 +522,7 @@ const Admin: React.FC = () => {
                 </div>
 
                 {periodo === 'custom' && (
-                  <div className="flex items-center gap-1 sm:gap-3 animate-in fade-in slide-in-from-left-4 duration-500"><input type="date" value={customStart} onChange={(e) => setCustomStart(e.target.value)} className="w-[115px] sm:w-auto bg-white/5 border border-white/10 rounded-xl px-1 sm:px-3 py-2 text-[10px] sm:text-xs text-white outline-none focus:border-blue-500/50" /><span className="text-white/20 text-[10px] sm:text-xs font-bold">até</span><input type="date" value={customEnd} onChange={(e) => setCustomEnd(e.target.value)} className="w-[115px] sm:w-auto bg-white/5 border border-white/10 rounded-xl px-1 sm:px-3 py-2 text-[10px] sm:text-xs text-white outline-none focus:border-blue-500/50" /></div>
+                  <div className="flex w-full sm:w-auto items-center justify-between sm:justify-start gap-1 sm:gap-3 animate-in fade-in slide-in-from-left-4 duration-500 mt-2 sm:mt-0"><input type="date" value={customStart} onChange={(e) => setCustomStart(e.target.value)} className="w-[47%] sm:w-auto bg-white/5 border border-white/10 rounded-xl px-2 py-2 text-[10px] sm:text-xs text-white outline-none focus:border-blue-500/50" /><span className="text-white/20 text-[10px] sm:text-xs font-bold">até</span><input type="date" value={customEnd} onChange={(e) => setCustomEnd(e.target.value)} className="w-[47%] sm:w-auto bg-white/5 border border-white/10 rounded-xl px-2 py-2 text-[10px] sm:text-xs text-white outline-none focus:border-blue-500/50" /></div>
                 )}
               </div>
             </div>
