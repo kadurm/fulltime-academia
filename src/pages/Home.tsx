@@ -23,6 +23,8 @@ const Home: React.FC = () => {
       '/[Fulltime][FotoForms].jpeg',
       '/unidade-sao-jose.jpeg',
       '/[FullTime][Planalto][01].jpeg',
+      '/[FullTime][Ibi][01].jpeg',
+      '/[FullTime][Ibi][02].jpeg',
       '/[FullTime][Ibi][03].jpeg'
     ];
     return images.sort(() => Math.random() - 0.5);
