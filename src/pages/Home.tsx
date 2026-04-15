@@ -19,6 +19,7 @@ const Home: React.FC = () => {
       '/[Fulltime][Aparelhos][01].jpeg',
       '/[Fulltime][Aulas][01].jpeg',
       '/[Fulltime][Major].jpeg',
+      '/[Fulltime][Major][01].jpeg',
       '/[Fulltime][FotoForms].jpeg',
       '/unidade-sao-jose.jpeg',
       '/[FullTime][Planalto][01].jpeg',
