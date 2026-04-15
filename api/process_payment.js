@@ -26,8 +26,21 @@ export default async function handler(req, res) {
   try {
     const payment = new Payment(client);
     
-    // O Mercado Pago Core API recebe o body customizado
-    const response = await payment.create({ body: req.body });
+    // O Mercado Pago Core API recebe o body sanitizado para evitar erro de tamanho em metadata
+    const response = await payment.create({ 
+      body: { 
+        transaction_amount: req.body.transaction_amount, 
+        description: req.body.description, 
+        payment_method_id: req.body.payment_method_id, 
+        payer: {
+          email: req.body.payer?.email,
+          first_name: req.body.payer?.first_name,
+          identification: req.body.payer?.identification
+        }, 
+        token: req.body.token, 
+        installments: req.body.installments 
+      } 
+    });
 
     // Se for Pix, extrair dados do QR Code
     let pixData = null;

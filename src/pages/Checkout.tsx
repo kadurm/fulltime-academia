@@ -153,6 +153,7 @@ const Checkout = () => {
         description: 'Compra Fulltime Academia',
         payer: {
           email: customerData.email,
+          first_name: customerData.nome.split(' ')[0],
           identification: { type: 'CPF', number: customerData.cpf.replace(/\D/g, '') }
         },
         metadata: {
