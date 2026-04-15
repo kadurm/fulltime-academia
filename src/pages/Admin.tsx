@@ -33,6 +33,7 @@ interface Pedido {
       bairro: string;
       cidade: string;
       uf: string;
+      telefone: string;
     };
     cartItems?: any[];
   };
@@ -88,7 +89,7 @@ const Admin: React.FC = () => {
     }
 
     return safePedidos;
-  }, [pedidos, periodo, customStart, customEnd, showPendingPix]);
+  }, [pedidos, periodo, customStart, customEnd]);
 
   // Estados dos Modais e Formulários
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -111,9 +112,9 @@ const Admin: React.FC = () => {
   // KPIs Dashboard
   const kpis = useMemo(() => {
     const safePedidos = pedidosFiltradosDashboard;
-    const approved = safePedidos.filter(p => p?.statusPagamento === 'Aprovado' || p?.statusPagamento === 'Aguardando Envio' || p?.statusPagamento === 'Enviado' || p?.statusPagamento === 'Concluído');
+    const approved = safePedidos.filter(p => p?.statusPagamento === 'Pendente' || p?.statusPagamento === 'Enviado' || p?.statusPagamento === 'Concluído');
     const revenue = approved.reduce((acc, p) => acc + (Number(p?.total) || 0), 0);
-    const pending = safePedidos.filter(p => p?.statusPagamento === 'Aguardando Envio').length;
+    const pending = safePedidos.filter(p => p?.statusPagamento === 'Pendente').length;
     const ticket = approved.length > 0 ? revenue / approved.length : 0;
 
     return {
@@ -540,15 +541,6 @@ const Admin: React.FC = () => {
                   </div>
                 )}
               </div>
-
-              {/* Toggle Filtro Logístico */}
-              <button 
-                onClick={() => setShowPendingPix(!showPendingPix)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold border transition-all ${showPendingPix ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-500' : 'bg-white/5 border-white/10 text-white/40'}`}
-              >
-                {showPendingPix ? <AlertCircle size={16} /> : <Clock size={16} />}
-                {showPendingPix ? 'Ocultar Pix Pendentes' : 'Mostrar Pix Pendentes'}
-              </button>
             </div>
 
             {/* KPI Cards */}
@@ -586,7 +578,7 @@ const Admin: React.FC = () => {
                   <span className="text-[10px] font-bold text-yellow-400 uppercase tracking-widest">Pendentes</span>
                 </div>
                 <div className="text-2xl font-bold">{kpis.pendingOrders}</div>
-                <div className="text-[10px] text-white/40">Aguardando Envio</div>
+                <div className="text-[10px] text-white/40">Pago e Pendente</div>
               </GlassCard>
             </div>
 
@@ -901,18 +893,6 @@ const Admin: React.FC = () => {
                     <button onClick={() => handleDeleteCat(i)} className="opacity-60 hover:opacity-100 text-red-400 transition-opacity"><Trash2 size={16} /></button>
                   </div>
                 </div>
-              ))}
-            </div>
-            <button onClick={() => setIsCatModalOpen(false)} className="w-full mt-6 py-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all">Fechar</button>
-          </GlassCard>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default Admin;
-div>
               ))}
             </div>
             <button onClick={() => setIsCatModalOpen(false)} className="w-full mt-6 py-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all">Fechar</button>
