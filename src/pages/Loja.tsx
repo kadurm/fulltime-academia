@@ -62,8 +62,8 @@ const Loja: React.FC = () => {
       <div id="hero" data-section="hero" className="pt-12 md:pt-16 bg-transparent">
         <section className="relative w-full h-fit flex items-center justify-center pt-5 pb-10 md:pt-10 md:pb-20">
           <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-4 md:gap-5 relative z-10">
-            <div className="items-center text-center flex flex-col gap-3 md:gap-3">
-              <img src="/FullSuplementosSemFundo.png" alt="Full Suplementos" className="w-[68%] md:w-[48%] max-w-[400px] mx-auto object-contain mb-4" />
+            <div className="items-center text-center flex flex-col gap-1">
+              <img src="/FullSuplementosSemFundo.png" alt="Full Suplementos" className="w-[68%] md:w-[48%] max-w-[400px] mx-auto object-contain" />
               <p className="text-gray-400 max-w-2xl mx-auto leading-relaxed">Suplementação premium para levar seu treino ao próximo nível.</p>
             </div>
           </div>
