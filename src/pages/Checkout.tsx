@@ -75,7 +75,7 @@ const Checkout = () => {
 
   const clearCart = () => {
     localStorage.removeItem('fulltime_cart');
-    setCartItems([]);
+    // Mantemos cartItems em memória para que a mensagem do WhatsApp (Step 3) seja gerada corretamente
     window.dispatchEvent(new Event('cartUpdated'));
   };
 
