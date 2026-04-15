@@ -3,31 +3,33 @@
 This file provides the foundational context, architectural overview, and development guidelines for the Fulltime Academia project. It serves as a primary reference for AI agents to ensure alignment with project standards and goals.
 
 ## Project Overview
-Fulltime Academia is a modern web application for a gym franchise, featuring a high-performance landing page, an integrated supplement store, and a custom administrative panel (CMS). The project prioritizes simplicity, performance, and a "Mobile-First" approach.
+Fulltime Academia is a modern web application for a gym franchise, featuring a high-performance landing page, an integrated supplement store, and a custom administrative panel (CMS). The project prioritizes simplicity, performance, and a "Mobile-First" approach, now evolved into a robust Single Page Application (SPA).
 
 ### Core Stack
-- **Frontend:** Vanilla JavaScript, HTML5, and Tailwind CSS (via CDN). No heavy frameworks (React/Vue/Angular) are used to maintain low overhead.
+- **Frontend:** React (TypeScript), Vite, and Tailwind CSS. Modern UI components with glassmorphism effects.
+- **Roteamento:** React Router DOM (SPA) for seamless transitions between Home, Store, and Checkout.
 - **Backend:** Vercel Serverless Functions (Node.js) located in the `/api` directory.
-- **Database:** Vercel KV (Upstash Redis) for persistence (products, categories).
+- **Database:** Vercel KV (Upstash Redis) for persistence (products, categories, orders).
 - **Media:** Cloudinary for image storage and delivery, managed via the admin panel.
-- **Payments:** Stripe Checkout for secure transactions.
-- **Hosting & Deployment:** Vercel.
+- **Payments:** Mercado Pago Core API (Custom Checkout) for secure and native transactions.
+- **Hosting & Deployment:** Vercel with SPA rewrite rules.
 
 ## Directory Structure
 - `/api`: Serverless functions (backend routes).
   - `categorias.js`: CRUD for product categories.
-  - `checkout.js`: Stripe Checkout session creation.
+  - `process_payment.js`: Mercado Pago payment processing.
+  - `webhook.js`: Payment status update notifications.
   - `produtos.js`: CRUD for products stored in Vercel KV.
   - `upload.js`: Image upload integration with Cloudinary.
-- `/public`: Static web pages and assets.
-  - `admin.html`: CMS for managing products and categories.
-  - `suplementos.html`: The supplement store frontend.
-  - `mobile-fix.css`: Specific CSS overrides for mobile responsiveness.
-- `/src/assets`: Images and SVG icons used in the UI.
-- `index.html`: The main landing page.
+- `/src`: Application source code (React).
+  - `/pages`: Main views (Home.tsx, Loja.tsx, Checkout.tsx, Admin.tsx).
+  - `/components/ui`: Reusable UI components (GlassCard, CartSidebar, AnimatedBackground).
+  - `/lib`: Utility functions (utils.ts with `cn` helper).
+  - `App.tsx`: Main routing and layout wrapper.
+- `/public`: Static assets and legacy files.
 - `agent.md`: Critical synchronization file for AI agents (MUST be read before any task).
-- `package.json`: Project dependencies and scripts.
-- `vercel.json`: Vercel configuration for functions and environment.
+- `package.json`: Project dependencies and scripts (`dev`, `build`).
+- `vercel.json`: Vercel configuration for functions and SPA rewrites.
 
 ## Building and Running
 ### Local Development
@@ -48,16 +50,16 @@ npm run build
 
 ## Development Conventions & Rules
 1. **Instructional Priority:** Always read `agent.md` before starting a task and update its "## Últimas Atualizações" section after structural changes.
-2. **Mobile-First Design:** All UI components must be optimized for mobile first. Use Tailwind utility classes for responsiveness.
-3. **Vanilla Strategy:** Avoid adding external libraries or bundlers unless absolutely necessary. Maintain the project's lightweight nature.
-4. **Security:** Never expose API keys (Stripe, Cloudinary, KV) in the frontend. All sensitive operations must happen in `/api` functions.
-5. **UI/UX Consistency:**
+2. **Componentization React:** Prioritize the separation of responsibilities creating reusable components in `src/components/ui/`.
+3. **Mobile-First Design:** All UI components must be optimized for mobile first. Use Tailwind utility classes for responsiveness.
+4. **Design Fluido (Glassmorphism):** Maintain sections with semi-transparent backgrounds (`bg-slate-900/30`, `backdrop-blur`) to keep the `AnimatedBackground` canvas visible.
+5. **Security:** Never expose API keys (Mercado Pago, Cloudinary, KV) in the frontend. All sensitive operations must happen in `/api` functions.
+6. **UI/UX Consistency:**
    - Use the horizontal Flexbox navbar (no hamburger menus).
-   - Maintain the glassmorphism aesthetic (`backdrop-blur`, semi-transparent backgrounds).
    - Use the `Inter Tight` font family throughout.
-6. **Persistence:** Use Vercel KV for all data persistence needs.
+   - Use the `cn` utility for dynamic tailwind class merging.
 
 ## Current Objectives
-- Validate and integrate the `STRIPE_SECRET_KEY` in the local environment.
-- Ensure the supplement store cart is correctly connected to the Stripe Checkout flow.
-- Maintain UI consistency across the Landing Page and Store.
+- Validate the Mercado Pago webhook processing for automatic order status updates.
+- Maintain UI consistency across the Landing Page (Home) and the Store (Loja).
+- Ensure the logistics queue in the Admin panel correctly reflects payment status changes.

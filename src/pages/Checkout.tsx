@@ -248,7 +248,7 @@ const Checkout = () => {
   const labelStyle = "text-[10px] font-bold text-white/40 uppercase tracking-widest mb-1.5 block ml-1";
 
   return (
-    <div className="min-h-screen pt-32 pb-20 px-6">
+    <div className="min-h-screen pt-[160px] md:pt-32 pb-20 px-6">
       <div className="container mx-auto max-w-6xl">
         <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-8 group">
           <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />

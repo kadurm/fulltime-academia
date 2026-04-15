@@ -395,7 +395,7 @@ const Admin: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col w-full min-h-screen pt-[120px] pb-20 px-4 md:px-6">
+    <div className="flex flex-col w-full min-h-screen pt-[180px] md:pt-[120px] pb-20 px-4 md:px-6">
       <div className="max-w-5xl mx-auto w-full">
         {/* Tabs de Navegação */}
         <div className="flex justify-center gap-4 mb-12">
@@ -527,14 +527,14 @@ const Admin: React.FC = () => {
                       type="date" 
                       value={customStart} 
                       onChange={(e) => setCustomStart(e.target.value)}
-                      className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50 w-full"
+                      className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50 w-full sm:w-auto"
                     />
                     <span className="text-white/20 text-xs font-bold">até</span>
                     <input 
                       type="date" 
                       value={customEnd} 
                       onChange={(e) => setCustomEnd(e.target.value)}
-                      className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50 w-full"
+                      className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50 w-full sm:w-auto"
                     />
                   </div>
                 )}
