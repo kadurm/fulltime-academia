@@ -54,19 +54,19 @@ const Admin: React.FC = () => {
   const [customEnd, setCustomEnd] = useState('');
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [showPendingPix, setShowPendingPix] = useState(false);
-  const [selectedPedido, setSelectedPedido] = useState<Pedido | null>(null);
+  const [pedidoSelecionado, setPedidoSelecionado] = useState<any>(null);
 
   // Filtragem de Pedidos por Período e Logística
   const pedidosFiltradosDashboard = useMemo(() => {
     let safePedidos = Array.isArray(pedidos) ? pedidos : [];
     
-    // Filtro Logístico: Ocultar Pendentes por padrão na visão de logística
+    // Filtro Rígido de Pendentes (Ocultar por padrão)
     if (!showPendingPix) {
-      safePedidos = safePedidos.filter(p => p?.statusPagamento !== 'Pendente' && p?.statusPagamento !== 'Pendente (Pix)');
+      safePedidos = safePedidos.filter(p => (p?.statusPagamento || p?.status) !== 'Pendente' && (p?.statusPagamento || p?.status) !== 'Pendente (Pix)');
     }
 
     if (periodo === 'all') return safePedidos;
-
+    
     const agora = new Date().getTime();
     let limite = 0;
 
@@ -673,7 +673,7 @@ const Admin: React.FC = () => {
                                 <option value="Devolvido/Cancelado" className="bg-[#0f172a]">Devolvido/Cancelado</option>
                               </select>
                               <button 
-                                onClick={() => setSelectedPedido(pedido)}
+                                onClick={() => setPedidoSelecionado(pedido)}
                                 className="p-2 bg-white/5 hover:bg-blue-600/20 text-blue-400 rounded-lg transition-all border border-white/10"
                                 title="Ver Ficha do Pedido"
                               >
@@ -696,6 +696,126 @@ const Admin: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Modal Ficha do Pedido (Logística) */}
+      {pedidoSelecionado && (
+        <div className="fixed inset-0 z-[110] bg-black/90 backdrop-blur-xl flex items-center justify-center p-4">
+          <GlassCard className="w-full max-w-[650px] p-0 overflow-hidden bg-slate-900/90 border-white/10 shadow-2xl animate-in zoom-in-95 duration-300">
+            {/* Header Modal */}
+            <div className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
+              <div>
+                <h2 className="text-xl font-bold flex items-center gap-2 text-white">
+                  <Package className="text-blue-400" /> Ficha do Pedido
+                </h2>
+                <p className="text-[10px] text-white/40 uppercase tracking-widest mt-1">ID: {pedidoSelecionado.id}</p>
+              </div>
+              <button onClick={() => setPedidoSelecionado(null)} className="p-2 hover:bg-white/10 rounded-full transition-all">
+                <X size={24} />
+              </button>
+            </div>
+
+            <div className="p-8 overflow-y-auto max-h-[75vh] flex flex-col gap-8">
+              {/* Grid de Informações */}
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Dados do Cliente */}
+                <div className="flex flex-col gap-4">
+                  <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest flex items-center gap-2">
+                    <User size={14} /> Dados do Cliente
+                  </h3>
+                  <div className="space-y-3 bg-white/5 p-4 rounded-2xl border border-white/10">
+                    <div>
+                      <label className="text-[10px] text-white/40 block">NOME COMPLETO</label>
+                      <p className="font-bold text-sm">{pedidoSelecionado.metadata?.customerData?.nome || pedidoSelecionado.cliente}</p>
+                    </div>
+                    <div>
+                      <label className="text-[10px] text-white/40 block">CPF/ID</label>
+                      <p className="text-sm">{pedidoSelecionado.metadata?.customerData?.cpf || 'Não informado'}</p>
+                    </div>
+                    <div>
+                      <label className="text-[10px] text-white/40 block">E-MAIL</label>
+                      <p className="text-sm">{pedidoSelecionado.metadata?.customerData?.email || pedidoSelecionado.cliente}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Endereço */}
+                <div className="flex flex-col gap-4">
+                  <h3 className="text-xs font-bold text-green-400 uppercase tracking-widest flex items-center gap-2">
+                    <MapPin size={14} /> Entrega
+                  </h3>
+                  <div className="space-y-3 bg-white/5 p-4 rounded-2xl border border-white/10">
+                    <div>
+                      <label className="text-[10px] text-white/40 block">LOGRADOURO</label>
+                      <p className="text-sm font-bold">
+                        {pedidoSelecionado.metadata?.customerData?.rua || 'N/A'}, {pedidoSelecionado.metadata?.customerData?.numero || 'S/N'}
+                      </p>
+                      <p className="text-[10px] text-white/60">{pedidoSelecionado.metadata?.customerData?.bairro || 'Bairro N/A'}</p>
+                    </div>
+                    <div>
+                      <label className="text-[10px] text-white/40 block">CIDADE/UF</label>
+                      <p className="text-sm">{pedidoSelecionado.metadata?.customerData?.cidade || 'N/A'} - {pedidoSelecionado.metadata?.customerData?.uf || 'N/A'}</p>
+                    </div>
+                    <div>
+                      <label className="text-[10px] text-white/40 block">CEP</label>
+                      <p className="text-sm font-mono tracking-tighter">{pedidoSelecionado.metadata?.customerData?.cep || 'N/A'}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Itens do Pedido */}
+              <div className="flex flex-col gap-4">
+                <h3 className="text-xs font-bold text-purple-400 uppercase tracking-widest flex items-center gap-2">
+                  <ShoppingBag size={14} /> Itens Comprados
+                </h3>
+                <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+                  <table className="w-full text-left">
+                    <thead>
+                      <tr className="bg-white/5 text-[10px] text-white/40 uppercase tracking-widest">
+                        <th className="p-4 font-medium">Produto</th>
+                        <th className="p-4 text-center font-medium">Qtd</th>
+                        <th className="p-4 text-right font-medium">Valor Un.</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {(pedidoSelecionado.metadata?.cartItems || pedidoSelecionado.items || []).map((item: any, idx: number) => (
+                        <tr key={idx} className="text-sm">
+                          <td className="p-4 font-bold">{item.name || item.nome || 'Produto Indefinido'}</td>
+                          <td className="p-4 text-center">{item.quantidade || 1}x</td>
+                          <td className="p-4 text-right text-blue-400">{item.price || 'N/A'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Resumo Final */}
+              <div className="flex justify-between items-center p-6 bg-blue-600/10 rounded-2xl border border-blue-600/20">
+                <div>
+                  <label className="text-[10px] text-blue-400 font-bold uppercase tracking-widest block">Total do Pedido</label>
+                  <p className="text-3xl font-black text-white">R$ {pedidoSelecionado.total.toFixed(2).replace('.', ',')}</p>
+                </div>
+                <div className="text-right">
+                  <label className="text-[10px] text-white/40 uppercase tracking-widest block">Pagamento</label>
+                  <p className="text-sm font-bold flex items-center gap-2 justify-end">
+                    {pedidoSelecionado.metodo === 'pix' ? 'Pix' : 'Cartão'}
+                    {pedidoSelecionado.statusPagamento === 'Aprovado' ? <CheckCircle2 size={16} className="text-green-500" /> : <Clock size={16} className="text-yellow-500" />}
+                  </p>
+                </div>
+              </div>
+
+              {/* Botão Ação Rápida */}
+              <button 
+                onClick={() => window.open(`https://wa.me/55${pedidoSelecionado.metadata?.customerData?.cpf?.replace(/\D/g, '')}`, '_blank')}
+                className="w-full py-4 bg-[#25D366] hover:bg-[#1da851] text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-green-600/20"
+              >
+                Falar com Cliente via WhatsApp
+              </button>
+            </div>
+          </GlassCard>
+        </div>
+      )}
 
       {/* Modal Novo/Editar */}
       {isModalOpen && (
