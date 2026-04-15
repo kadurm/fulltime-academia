@@ -12,6 +12,21 @@ import suporte02Img from '/[Fulltime][Suporte][02].jpeg';
 import aparelhosImg from '/[Fulltime][Aparelhos][01].jpeg';
 
 const Home: React.FC = () => {
+  const shuffledImages = React.useMemo(() => {
+    const images = [
+      '/[Fulltime][Suporte][01].jpeg',
+      '/[Fulltime][Suporte][02].jpeg',
+      '/[Fulltime][Aparelhos][01].jpeg',
+      '/[Fulltime][Aulas][01].jpeg',
+      '/[Fulltime][Major].jpeg',
+      '/[Fulltime][FotoForms].jpeg',
+      '/unidade-sao-jose.jpeg',
+      '/[FullTime][Planalto][01].jpeg',
+      '/[FullTime][Ibi][03].jpeg'
+    ];
+    return images.sort(() => Math.random() - 0.5);
+  }, []);
+
   useEffect(() => {
     // 1. Animação de entrada (Intersection Observer)
     const observer = new IntersectionObserver((entries) => {
@@ -245,26 +260,6 @@ const Home: React.FC = () => {
                         <option value="Unidade Planalto" className="bg-[#003399]">Unidade Planalto</option>
                       </select>
                       <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50" size={16} />
-                    </div>
-                    <button type="submit" className="mt-4 bg-white hover:bg-gray-100 text-[#003399] font-bold py-3 rounded-xl transition-all duration-300 shadow-lg uppercase tracking-wider text-sm">
-                      Enviar Mensagem
-                    </button>
-                  </div>
-                </form>
-              </GlassCard>
-              <GlassCard className="p-0 overflow-hidden h-full w-full flex flex-col shadow-2xl">
-                <img src={fotoForms} alt="Academia" className="w-full h-full object-cover min-h-[400px] md:min-h-full rounded-2xl" />
-              </GlassCard>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-  );
-};
-
-export default Home;
-2 pointer-events-none opacity-50" size={16} />
                     </div>
                     <button type="submit" className="mt-4 bg-white hover:bg-gray-100 text-[#003399] font-bold py-3 rounded-xl transition-all duration-300 shadow-lg uppercase tracking-wider text-sm">
                       Enviar Mensagem
