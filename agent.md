@@ -30,17 +30,18 @@
 - **Backend:** Vercel Serverless Functions (Node.js) alocadas na pasta `/api`.
 - **Banco de Dados:** Vercel KV (Upstash Redis) para persistência dos produtos.
 - **Mídia:** Cloudinary para armazenamento de imagens via upload do painel de controle.
-- **Pagamentos:** Stripe Checkout (via `/api/checkout.js`).
+- **Pagamentos:** Mercado Pago Core API (via `/api/process_payment.js` e `/api/webhook.js`).
 - **Hospedagem:** Vercel (com `rewrites` configurados para suporte SPA).
 
 ## Regras Estritas de Desenvolvimento
 1. **Componentização React:** Priorizar a separação de responsabilidades criando componentes reutilizáveis em `src/components/ui/`.
 2. **Estilização Dinâmica:** Utilizar o utilitário `cn` (tailwind-merge e clsx) configurado em `src/lib/utils.ts` para composição de classes.
 3. **Design Fluido (Glassmorphism):** Manter as seções principais com fundos transparentes ou semi-translúcidos (`bg-slate-900/30`) para garantir que o fundo animado do Canvas permaneça visível.
-4. **Segurança:** Nunca expor chaves sensíveis (Stripe, Cloudinary, KV) no frontend.
+4. **Segurança:** Nunca expor chaves sensíveis (Mercado Pago, Cloudinary, KV) no frontend.
 5. **Responsividade Mobile-First:** Ajustar paddings, gaps e tipografia primariamente para telas menores, expandindo progressivamente com prefixos `md:` e `lg:`.
 
 ## Estado Atual do Projeto
 - **Concluído:** Migração bem-sucedida do layout estático Vanilla JS para uma Single Page Application React (Vite).
 - **Concluído:** Reestruturação da UI com componentes modernos (GlassCards, Navbar/Footer flutuantes 3D e Carrinho Sidebar sincronizado).
-- **Objetivo Imediato:** Injetar a chave secreta (`STRIPE_SECRET_KEY`) no ambiente local (`.env.local`) e validar o funil de pagamento conectando o carrinho global ao Stripe Checkout (Configuração pendente/adiada pelo usuário).
+- **Concluído:** Migração do Stripe para **Mercado Pago Core API** com checkout 100% customizado.
+- **Objetivo Imediato:** Validar o processamento de webhooks do Mercado Pago para atualização automática do status dos pedidos no banco de dados.
