@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { GlassCard } from '../components/ui/glass-card';
-import { Trash2, Edit, Plus, X, LogOut, Search, DollarSign, ShoppingBag, TrendingUp, Clock } from 'lucide-react';
+import { Trash2, Edit, Plus, X, LogOut, Search, DollarSign, ShoppingBag, TrendingUp, Clock, Eye, MapPin, User, Package, ChevronRight, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 
@@ -22,6 +22,20 @@ interface Pedido {
   metodo: string;
   statusPagamento: string;
   origem: string;
+  metadata?: {
+    customerData?: {
+      nome: string;
+      email: string;
+      cpf: string;
+      cep: string;
+      rua: string;
+      numero: string;
+      bairro: string;
+      cidade: string;
+      uf: string;
+    };
+    cartItems?: any[];
+  };
 }
 
 const Admin: React.FC = () => {
@@ -39,10 +53,18 @@ const Admin: React.FC = () => {
   const [customStart, setCustomStart] = useState('');
   const [customEnd, setCustomEnd] = useState('');
   const [isLoadingData, setIsLoadingData] = useState(true);
+  const [showPendingPix, setShowPendingPix] = useState(false);
+  const [selectedPedido, setSelectedPedido] = useState<Pedido | null>(null);
 
-  // Filtragem de Pedidos por Período
+  // Filtragem de Pedidos por Período e Logística
   const pedidosFiltradosDashboard = useMemo(() => {
-    const safePedidos = Array.isArray(pedidos) ? pedidos : [];
+    let safePedidos = Array.isArray(pedidos) ? pedidos : [];
+    
+    // Filtro Logístico: Ocultar Pendentes por padrão na visão de logística
+    if (!showPendingPix) {
+      safePedidos = safePedidos.filter(p => p?.statusPagamento !== 'Pendente' && p?.statusPagamento !== 'Pendente (Pix)');
+    }
+
     if (periodo === 'all') return safePedidos;
 
     const agora = new Date().getTime();
@@ -69,7 +91,7 @@ const Admin: React.FC = () => {
     }
 
     return safePedidos;
-  }, [pedidos, periodo, customStart, customEnd]);
+  }, [pedidos, periodo, customStart, customEnd, showPendingPix]);
 
   // Estados dos Modais e Formulários
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -482,43 +504,54 @@ const Admin: React.FC = () => {
           </>
         ) : (
           <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            {/* Filtro de Período */}
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
-              <div className="flex gap-2 bg-white/5 p-1.5 rounded-2xl border border-white/10 w-fit">
-                {[
-                  { id: 'hoje', label: 'Hoje' },
-                  { id: '7dias', label: '7 Dias' },
-                  { id: '30dias', label: '30 Dias' },
-                  { id: 'all', label: 'Tudo' },
-                  { id: 'custom', label: 'Personalizado' }
-                ].map((opt) => (
-                  <button
-                    key={opt.id}
-                    onClick={() => setPeriodo(opt.id)}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${periodo === opt.id ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
+            {/* Filtros de Pedidos */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex flex-wrap items-center gap-4">
+                <div className="flex gap-2 bg-white/5 p-1.5 rounded-2xl border border-white/10 w-fit">
+                  {[
+                    { id: 'hoje', label: 'Hoje' },
+                    { id: '7dias', label: '7 Dias' },
+                    { id: '30dias', label: '30 Dias' },
+                    { id: 'all', label: 'Tudo' },
+                    { id: 'custom', label: 'Personalizado' }
+                  ].map((opt) => (
+                    <button
+                      key={opt.id}
+                      onClick={() => setPeriodo(opt.id)}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${periodo === opt.id ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+
+                {periodo === 'custom' && (
+                  <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-4 duration-500">
+                    <input 
+                      type="date" 
+                      value={customStart} 
+                      onChange={(e) => setCustomStart(e.target.value)}
+                      className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50"
+                    />
+                    <span className="text-white/20 text-xs font-bold">até</span>
+                    <input 
+                      type="date" 
+                      value={customEnd} 
+                      onChange={(e) => setCustomEnd(e.target.value)}
+                      className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50"
+                    />
+                  </div>
+                )}
               </div>
 
-              {periodo === 'custom' && (
-                <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-4 duration-500">
-                  <input 
-                    type="date" 
-                    value={customStart} 
-                    onChange={(e) => setCustomStart(e.target.value)}
-                    className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50"
-                  />
-                  <span className="text-white/20 text-xs font-bold">até</span>
-                  <input 
-                    type="date" 
-                    value={customEnd} 
-                    onChange={(e) => setCustomEnd(e.target.value)}
-                    className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50"
-                  />
-                </div>
-              )}
+              {/* Toggle Filtro Logístico */}
+              <button 
+                onClick={() => setShowPendingPix(!showPendingPix)}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold border transition-all ${showPendingPix ? 'bg-yellow-500/10 border-yellow-500/20 text-yellow-500' : 'bg-white/5 border-white/10 text-white/40'}`}
+              >
+                {showPendingPix ? <AlertCircle size={16} /> : <Clock size={16} />}
+                {showPendingPix ? 'Ocultar Pix Pendentes' : 'Mostrar Pix Pendentes'}
+              </button>
             </div>
 
             {/* KPI Cards */}
@@ -596,25 +629,28 @@ const Admin: React.FC = () => {
               <GlassCard className="lg:col-span-2 p-6 border-white/10 flex flex-col">
                 <h3 className="text-sm font-bold uppercase tracking-widest text-white/40 mb-6">Pedidos Recentes</h3>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left">
+                  <table className="w-full text-left border-collapse">
                     <thead>
                       <tr className="text-[10px] text-white/20 uppercase tracking-widest border-b border-white/5">
                         <th className="pb-3 font-medium">Data</th>
                         <th className="pb-3 font-medium">Cliente</th>
                         <th className="pb-3 font-medium">Total</th>
-                        <th className="pb-3 font-medium">Status</th>
+                        <th className="pb-3 font-medium text-center">Status</th>
                         <th className="pb-3 text-right font-medium">Ações</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5">
-                      {Array.isArray(pedidos) && pedidos.slice(0, 10).map((pedido) => (
+                      {Array.isArray(pedidosFiltradosDashboard) && pedidosFiltradosDashboard.slice(0, 20).map((pedido) => (
                         <tr key={pedido.id} className="text-sm hover:bg-white/5 transition-colors group">
                           <td className="py-4 text-white/60">
                             {pedido?.data ? new Date(pedido.data).toLocaleDateString('pt-BR') : 'N/A'}
                           </td>
-                          <td className="py-4 font-bold truncate max-w-[120px]">{pedido?.cliente || 'N/A'}</td>
-                          <td className="py-4 text-blue-400 font-bold">R$ {(pedido?.total || 0).toFixed(2).replace('.', ',')}</td>
                           <td className="py-4">
+                            <div className="font-bold truncate max-w-[140px]">{pedido?.cliente || 'N/A'}</div>
+                            <div className="text-[10px] text-white/20 uppercase tracking-tighter">{pedido.id}</div>
+                          </td>
+                          <td className="py-4 text-blue-400 font-bold">R$ {(pedido?.total || 0).toFixed(2).replace('.', ',')}</td>
+                          <td className="py-4 text-center">
                             <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${
                               pedido?.statusPagamento === 'Aprovado' || pedido?.statusPagamento === 'Concluído' ? 'bg-green-500/20 text-green-400' : 
                               pedido?.statusPagamento === 'Aguardando Envio' || pedido?.statusPagamento === 'Enviado' ? 'bg-blue-500/20 text-blue-400' :
@@ -624,23 +660,32 @@ const Admin: React.FC = () => {
                             </span>
                           </td>
                           <td className="py-4 text-right">
-                            <select 
-                              value={pedido?.statusPagamento || 'Pendente'}
-                              onChange={(e) => updatePedidoStatus(pedido.id, e.target.value)}
-                              className="bg-white/5 border border-white/10 rounded px-2 py-1 text-[10px] text-white outline-none focus:border-blue-500 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                            >
-                              <option value="Pendente">Pendente</option>
-                              <option value="Aguardando Envio">Aguardando Envio</option>
-                              <option value="Enviado">Enviado</option>
-                              <option value="Concluído">Concluído</option>
-                              <option value="Devolvido/Cancelado">Devolvido/Cancelado</option>
-                            </select>
+                            <div className="flex items-center justify-end gap-3">
+                              <select 
+                                value={pedido?.statusPagamento || 'Pendente'}
+                                onChange={(e) => updatePedidoStatus(pedido.id, e.target.value)}
+                                className="bg-white/5 border border-white/10 rounded px-2 py-1 text-[10px] text-white outline-none focus:border-blue-500 cursor-pointer"
+                              >
+                                <option value="Pendente" className="bg-[#0f172a]">Pendente</option>
+                                <option value="Aguardando Envio" className="bg-[#0f172a]">Aguardando Envio</option>
+                                <option value="Enviado" className="bg-[#0f172a]">Enviado</option>
+                                <option value="Concluído" className="bg-[#0f172a]">Concluído</option>
+                                <option value="Devolvido/Cancelado" className="bg-[#0f172a]">Devolvido/Cancelado</option>
+                              </select>
+                              <button 
+                                onClick={() => setSelectedPedido(pedido)}
+                                className="p-2 bg-white/5 hover:bg-blue-600/20 text-blue-400 rounded-lg transition-all border border-white/10"
+                                title="Ver Ficha do Pedido"
+                              >
+                                <Eye size={16} />
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))}
-                      {(!Array.isArray(pedidos) || pedidos.length === 0) && (
+                      {(!Array.isArray(pedidosFiltradosDashboard) || pedidosFiltradosDashboard.length === 0) && (
                         <tr>
-                          <td colSpan={5} className="py-10 text-center text-white/20 italic">Nenhum pedido encontrado.</td>
+                          <td colSpan={5} className="py-20 text-center text-white/20 italic">Nenhum pedido encontrado com os filtros atuais.</td>
                         </tr>
                       )}
                     </tbody>
