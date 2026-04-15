@@ -522,19 +522,19 @@ const Admin: React.FC = () => {
                 </div>
 
                 {periodo === 'custom' && (
-                  <div className="flex items-center gap-3 animate-in fade-in slide-in-from-left-4 duration-500">
+                  <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 w-full sm:w-auto animate-in fade-in slide-in-from-left-4 duration-500">
                     <input 
                       type="date" 
                       value={customStart} 
                       onChange={(e) => setCustomStart(e.target.value)}
-                      className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50"
+                      className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50 w-full"
                     />
                     <span className="text-white/20 text-xs font-bold">até</span>
                     <input 
                       type="date" 
                       value={customEnd} 
                       onChange={(e) => setCustomEnd(e.target.value)}
-                      className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50"
+                      className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-blue-500/50 w-full"
                     />
                   </div>
                 )}
