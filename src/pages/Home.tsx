@@ -130,7 +130,7 @@ const Home: React.FC = () => {
                   <p className="text-gray-300">Equipamentos de musculação de última geração para resultados otimizados.</p>
                 </div>
                 <div className="mt-auto pt-6 w-full overflow-hidden rounded-xl h-36 md:h-40">
-                  <img src={aparelhosImg} alt="Gym machines" className="h-full w-full object-cover" />
+                  <img src="/[FullTime][Ibi][03].jpeg" alt="Treino Inteligente" className="h-full w-full object-cover" />
                 </div>
               </div>
             </GlassCard>
