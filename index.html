@@ -21,6 +21,240 @@
   <!-- SDK Mercado Pago -->
   <script src="https://sdk.mercadopago.com/js/v2"></script>
 
+  <style>
+    :root {
+      /* Cores e variáveis exatas da plataforma */
+      --color-background: #003399;
+      --color-foreground: #fafafa;
+      --color-card: #383838;
+      --color-border: #484848;
+      --color-accent: #3b82f6;
+      --color-background-accent: #1f2937;
+      --color-primary-cta: #fafafa;
+      --color-primary-cta-text: #09090b;
+      --color-secondary-cta: #27272a;
+      --color-secondary-cta-text: #fafafa;
+
+      --radius-lg: 1rem;
+      --theme-border-radius: var(--radius-lg);
+      --theme-border-radius-capped: var(--radius-lg);
+      --width-content-width: clamp(40rem, 75vw, 100rem);
+      --width-content-width-expanded: clamp(calc(40rem - (40rem - 100vw) / 2), 87.5vw, calc(100rem + (100vw - 100rem) / 2));
+      --vw: clamp(0.5rem, 0.92vw, 1rem);
+
+      --text-base: clamp(0.875rem, 1.058vw, 1rem);
+      --width-10: 2.5rem;
+      --width-5: 1.25rem;
+      --width-17_5: 4.375rem;
+      --vw-0_75: 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --width-content-width: 85vw;
+        --width-content-width-expanded: 90vw;
+      }
+      #hero h2 {
+        font-size: 2rem !important;
+        line-height: 1.1;
+      }
+      h2 {
+        font-size: 1.75rem !important;
+      }
+      h3 {
+        font-size: 1.25rem !important;
+      }
+      .section-subtitle {
+        font-size: 1rem !important;
+      }
+      .hero-carousel-wrapper, #main-carousel { 
+        margin-top: -1.5rem !important; 
+        margin-bottom: 0 !important; 
+      }
+    }
+
+    body {
+      font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--color-background);
+      color: var(--color-foreground);
+      overflow-x: hidden;
+      font-kerning: none;
+      text-rendering: optimizeSpeed;
+    }
+
+    h1, h2, h3, .section-subtitle, .blur-text {
+      text-align: center !important;
+    }
+
+    h2 {
+      font-size: 2.5rem !important;
+      line-height: 1.3 !important;
+      margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.75rem !important;
+      line-height: 1.3 !important;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem !important;
+      line-height: 1.6 !important;
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    /* Estilos UI da Plataforma - Original */
+    .card {
+      position: relative;
+      background-color: rgba(45, 45, 45, 0.9) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Remove pseudo-elemento que forçava borda sólida gradiente anterior */
+    .card::before {
+      display: none !important;
+    }
+
+    .primary-button {
+      background-color: var(--color-primary-cta);
+      background: linear-gradient(to bottom, color-mix(in srgb, var(--color-primary-cta), transparent 25%), var(--color-primary-cta));
+      box-shadow: color-mix(in srgb, var(--color-background) 25%, transparent) 0px 1px 1px 0px inset, color-mix(in srgb, var(--color-primary-cta) 15%, transparent) 3px 3px 3px 0px;
+    }
+
+    .secondary-button {
+      background-color: var(--color-secondary-cta);
+      background: radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--color-accent) 15%, transparent) 0%, transparent 40%), radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--color-accent) 15%, transparent) 0%, transparent 40%), var(--color-secondary-cta);
+      box-shadow: 2.10837px 3.16256px 9.48767px color-mix(in srgb, var(--color-accent) 10%, transparent);
+    }
+
+    /* Animações nativas */
+    .blur-text {
+      opacity: 0;
+      filter: blur(8px);
+      transform: translateY(15px);
+      transition: opacity 0.8s ease-out, filter 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .blur-text.in-view {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+
+    /* Galeria Rotacionada do Hero - animação de entrada */
+    .image-animate {
+      transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .image-animate.not-in-view {
+      opacity: 0 !important;
+      transform: translateX(0) translateY(50px) scale(0.6) rotate(0deg) !important;
+    }
+
+    html {
+      scroll-behavior: smooth !important;
+    }
+
+    #mobile-menu {
+      transition: all 0.3s ease;
+    }
+
+    .nav-scrolled {
+      background-color: rgba(0, 51, 153, 0.85) !important;
+      backdrop-filter: blur(12px) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Coverflow 3D perfeito com matemática orbital sem saltos */
+    .hero-carousel-wrapper { position: relative; width: 100%; height: 50vh; min-height: 400px; display: flex; justify-content: center; align-items: center; perspective: 1000px; overflow: hidden; margin: 2rem 0 0.5rem; }
+    .carousel-item { position: absolute; width: 280px; height: 380px; border-radius: 16px; object-fit: cover; transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 15px 35px rgba(0,0,0,0.5); opacity: 1 !important; filter: none !important; }
+    @media (max-width: 768px) { .carousel-item { width: 220px; height: 300px; } }
+
+    /* Marquee de Avaliações */
+    .marquee-container {
+      width: 100%;
+      overflow: hidden;
+      padding: 2rem 0;
+      position: relative;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: scrollMarquee 40s linear infinite;
+    }
+    @keyframes scrollMarquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .review-card {
+      flex: 0 0 auto;
+      width: 350px;
+      margin: 0 2rem;
+      padding: 1rem;
+      background: transparent !important;
+      border: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border-radius: 0 !important;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+      align-items: center;
+      box-shadow: none !important;
+    }
+    .review-stars {
+      color: #FFD700;
+      font-size: 1.25rem;
+      margin-bottom: 0.25rem;
+    }
+    .review-text {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--color-foreground);
+      text-align: center;
+      font-style: normal !important;
+    }
+    .review-author {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-foreground);
+      margin-top: 0.5rem;
+      display: block;
+      text-align: center;
+    }
+
+    .glass-card-3d {
+      background: rgba(17, 24, 39, 0.6);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+      border-right: 1px solid rgba(0, 0, 0, 0.5);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+    .glass-card-3d:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+    }
+    .glass-card-3d::before {
+      content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+      transform: skewX(-25deg);
+      animation: shineGlass 5s infinite;
+    }
+    @keyframes shineGlass {
+      0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; }
+    }
+  </style>
+
   <link rel="stylesheet" href="/mobile-fix.css?v=6">
 </head>
 
