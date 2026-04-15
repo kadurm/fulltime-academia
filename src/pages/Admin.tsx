@@ -501,9 +501,9 @@ const Admin: React.FC = () => {
         ) : (
           <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             {/* Filtros de Pedidos */}
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="flex gap-2 bg-white/5 p-1.5 rounded-2xl border border-white/10 w-fit">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-4 w-full">
+              <div className="flex flex-col lg:flex-row items-center gap-4 w-full">
+                <div className="flex w-full lg:w-fit gap-1 bg-white/5 p-1.5 rounded-2xl border border-white/10 justify-between">
                   {[
                     { id: 'hoje', label: 'Hoje' },
                     { id: '7dias', label: '7 Dias' },
@@ -514,7 +514,7 @@ const Admin: React.FC = () => {
                     <button
                       key={opt.id}
                       onClick={() => setPeriodo(opt.id)}
-                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${periodo === opt.id ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
+                      className={`flex-1 lg:flex-none px-1 sm:px-4 py-2 rounded-xl text-[9px] sm:text-xs font-bold transition-all text-center truncate ${periodo === opt.id ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'text-white/40 hover:text-white hover:bg-white/5'}`}
                     >
                       {opt.label}
                     </button>
@@ -522,7 +522,21 @@ const Admin: React.FC = () => {
                 </div>
 
                 {periodo === 'custom' && (
-                  <div className="flex w-full sm:w-auto items-center justify-between gap-2 animate-in fade-in slide-in-from-left-4 duration-500 mt-2 sm:mt-0"><input type="date" value={customStart} onChange={(e) => setCustomStart(e.target.value)} className="w-[45%] sm:w-auto min-w-0 bg-white/5 border border-white/10 rounded-xl px-2 py-2 text-xs text-white outline-none focus:border-blue-500/50" /><span className="text-white/20 text-xs font-bold">-</span><input type="date" value={customEnd} onChange={(e) => setCustomEnd(e.target.value)} className="w-[45%] sm:w-auto min-w-0 bg-white/5 border border-white/10 rounded-xl px-2 py-2 text-xs text-white outline-none focus:border-blue-500/50" /></div>
+                  <div className="flex w-full lg:w-auto items-center justify-between gap-2 animate-in fade-in slide-in-from-left-4 duration-500">
+                    <input
+                      type="date"
+                      value={customStart}
+                      onChange={(e) => setCustomStart(e.target.value)}
+                      className="w-[47%] lg:w-auto min-w-0 bg-white/5 border border-white/10 rounded-xl px-2 py-2 text-[10px] sm:text-xs text-white outline-none focus:border-blue-500/50"
+                    />
+                    <span className="text-white/20 text-xs font-bold">-</span>
+                    <input
+                      type="date"
+                      value={customEnd}
+                      onChange={(e) => setCustomEnd(e.target.value)}
+                      className="w-[47%] lg:w-auto min-w-0 bg-white/5 border border-white/10 rounded-xl px-2 py-2 text-[10px] sm:text-xs text-white outline-none focus:border-blue-500/50"
+                    />
+                  </div>
                 )}
               </div>
             </div>
