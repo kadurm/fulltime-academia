@@ -183,12 +183,10 @@ const Admin: React.FC = () => {
         body: JSON.stringify({ id, status: newStatus })
       });
       if (res.ok) {
-        alert('Status do pedido atualizado com sucesso!');
         fetchData();
       }
     } catch (error) {
       console.error("Erro ao atualizar pedido:", error);
-      alert('Erro ao atualizar o status do pedido.');
     }
   };
 
