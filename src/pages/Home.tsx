@@ -83,11 +83,9 @@ const Home: React.FC = () => {
 
             {/* Galeria Flutuante */}
             <div className="hero-carousel-wrapper" id="main-carousel">
-              <img alt="Locker room" loading="lazy" className="carousel-item" src={suporte01Img} />
-              <img alt="Strength training" loading="lazy" className="carousel-item" src={aparelhosImg} />
-              <img alt="Modern gym interior" loading="lazy" className="carousel-item" src={aulasImg} />
-              <img alt="Gym equipment" loading="lazy" className="carousel-item" src={majorImg} />
-              <img alt="Weight room" loading="lazy" className="carousel-item" src={unidadeSaoJose} />
+              {shuffledImages.map((src, index) => (
+                <img key={index} alt={`Foto Academia ${index + 1}`} loading="lazy" className="carousel-item" src={src} />
+              ))}
             </div>
           </div>
         </section>
@@ -247,6 +245,26 @@ const Home: React.FC = () => {
                         <option value="Unidade Planalto" className="bg-[#003399]">Unidade Planalto</option>
                       </select>
                       <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50" size={16} />
+                    </div>
+                    <button type="submit" className="mt-4 bg-white hover:bg-gray-100 text-[#003399] font-bold py-3 rounded-xl transition-all duration-300 shadow-lg uppercase tracking-wider text-sm">
+                      Enviar Mensagem
+                    </button>
+                  </div>
+                </form>
+              </GlassCard>
+              <GlassCard className="p-0 overflow-hidden h-full w-full flex flex-col shadow-2xl">
+                <img src={fotoForms} alt="Academia" className="w-full h-full object-cover min-h-[400px] md:min-h-full rounded-2xl" />
+              </GlassCard>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+};
+
+export default Home;
+2 pointer-events-none opacity-50" size={16} />
                     </div>
                     <button type="submit" className="mt-4 bg-white hover:bg-gray-100 text-[#003399] font-bold py-3 rounded-xl transition-all duration-300 shadow-lg uppercase tracking-wider text-sm">
                       Enviar Mensagem
