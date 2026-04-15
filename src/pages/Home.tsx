@@ -182,7 +182,7 @@ const Home: React.FC = () => {
               <div className="min-h-[22rem]">
                 <GlassCard hoverEffect="float" className="p-0 relative h-full w-full overflow-hidden flex flex-col">
                   <div className="w-full aspect-[4/3] md:aspect-video overflow-hidden">
-                    <img src="/[FullTime][Ibi][03].jpeg" alt="Unidade Ibituruna" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 rounded-t-2xl" />
+                    <img src="/[FullTime][Ibi][02].jpeg" alt="Unidade Ibituruna" className="w-full h-full object-cover transition-transform duration-500 hover:scale-110 rounded-t-2xl" />
                   </div>
                   <div className="p-8 flex flex-col gap-4 flex-1">
                     <h3 className="text-center font-bold text-xl">Unidade<br />Ibituruna</h3>
