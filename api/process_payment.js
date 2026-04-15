@@ -40,10 +40,10 @@ export default async function handler(req, res) {
     }
 
     // --- SALVAR PEDIDO NO KV (Resiliente) ---
-    const isSuccess = response.status === 'approved' || (req.body.payment_method_id === 'pix' && response.status === 'pending');
-    
-    if (isSuccess) {
-      try {
+    try {
+      const isSuccess = response.status === 'approved' || (req.body.payment_method_id === 'pix' && response.status === 'pending');
+      
+      if (isSuccess) {
         const { customerData, cartItems } = req.body.metadata || {};
         
         const novoPedido = {
@@ -59,9 +59,10 @@ export default async function handler(req, res) {
 
         const pedidosAtuais = await kv.get("pedidos") || [];
         await kv.set("pedidos", [novoPedido, ...pedidosAtuais]);
-      } catch (dbError) {
-        console.error('Erro ao salvar pedido no KV (Fluxo continuado):', dbError);
       }
+    } catch (dbError) {
+      // Logamos o erro mas permitimos que o fluxo do Mercado Pago continue para o cliente
+      console.error('ERRO CRÍTICO KV (Omissão segura):', dbError);
     }
 
     return res.status(200).json({

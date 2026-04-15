@@ -193,7 +193,8 @@ const Checkout = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Falha na comunicação com o servidor de pagamentos.');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Erro desconhecido no servidor de pagamentos');
       }
 
       const result = await response.json();
