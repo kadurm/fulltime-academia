@@ -633,7 +633,7 @@ const Admin: React.FC = () => {
                             {pedido?.data ? new Date(pedido.data).toLocaleDateString('pt-BR') : 'N/A'}
                           </td>
                           <td className="py-4">
-                            <div className="font-bold truncate max-w-[140px]">{pedido?.cliente || 'N/A'}</div>
+                            <div className="font-bold truncate max-w-[140px]">{pedido?.metadata?.customerData?.nome || pedido?.cliente || 'N/A'}</div>
                             <div className="text-[10px] text-white/20 uppercase tracking-tighter">{pedido.id}</div>
                           </td>
                           <td className="py-4 text-blue-400 font-bold">R$ {(pedido?.total || 0).toFixed(2).replace('.', ',')}</td>
