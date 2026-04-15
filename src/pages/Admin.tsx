@@ -522,7 +522,7 @@ const Admin: React.FC = () => {
                 </div>
 
                 {periodo === 'custom' && (
-                  <div className="flex w-full max-w-full sm:w-auto items-center justify-between sm:justify-start gap-1 sm:gap-3 animate-in fade-in slide-in-from-left-4 duration-500 mt-2 sm:mt-0"><input type="date" value={customStart} onChange={(e) => setCustomStart(e.target.value)} className="min-w-0 w-[45%] sm:w-auto bg-white/5 border border-white/10 rounded-xl px-1 sm:px-3 py-2 text-[10px] sm:text-xs text-white outline-none focus:border-blue-500/50" /><span className="text-white/20 text-[10px] sm:text-xs font-bold">-</span><input type="date" value={customEnd} onChange={(e) => setCustomEnd(e.target.value)} className="min-w-0 w-[45%] sm:w-auto bg-white/5 border border-white/10 rounded-xl px-1 sm:px-3 py-2 text-[10px] sm:text-xs text-white outline-none focus:border-blue-500/50" /></div>
+                  <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-1 sm:gap-3 w-[90%] max-w-[260px] sm:max-w-none sm:w-auto sm:flex animate-in fade-in slide-in-from-left-4 duration-500 mt-2 sm:mt-0"><input type="date" value={customStart} onChange={(e) => setCustomStart(e.target.value)} className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-1 sm:px-3 py-2 text-[10px] sm:text-xs text-white outline-none focus:border-blue-500/50" /><span className="text-white/20 text-[10px] sm:text-xs font-bold text-center">-</span><input type="date" value={customEnd} onChange={(e) => setCustomEnd(e.target.value)} className="w-full min-w-0 bg-white/5 border border-white/10 rounded-xl px-1 sm:px-3 py-2 text-[10px] sm:text-xs text-white outline-none focus:border-blue-500/50" /></div>
                 )}
               </div>
             </div>
