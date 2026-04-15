@@ -83,7 +83,7 @@ const Home: React.FC = () => {
     const nome = (form.elements.namedItem('nomeConsulta') as HTMLInputElement).value;
     const email = (form.elements.namedItem('emailConsulta') as HTMLInputElement).value;
     const unidade = (form.elements.namedItem('unidadeConsulta') as HTMLSelectElement).value;
-    const numeroZap = "5538999999999";
+    const numeroZap = "5538999592075";
     const textoBot = `Olá! Gostaria de consultar os planos. Meu nome é ${nome}, e-mail: ${email}. Tenho interesse na unidade: ${unidade}. Poderiam me passar mais opções e informações?`;
     window.open(`https://wa.me/${numeroZap}?text=${encodeURIComponent(textoBot)}`, "_blank");
   };
