@@ -708,7 +708,7 @@ const Admin: React.FC = () => {
                   <h3 className="text-xs font-bold text-blue-400 uppercase tracking-widest flex items-center gap-2">
                     <User size={14} /> Dados do Cliente
                   </h3>
-                  <div className="space-y-3 bg-white/5 p-4 rounded-2xl border border-white/10">
+                  <div className="space-y-3 bg-white/5 p-4 rounded-2xl border border-white/10 h-full">
                     <div>
                       <label className="text-[10px] text-white/40 block">NOME COMPLETO</label>
                       <p className="font-bold text-sm">{pedidoSelecionado.metadata?.customerData?.nome || pedidoSelecionado.cliente}</p>
@@ -729,7 +729,7 @@ const Admin: React.FC = () => {
                   <h3 className="text-xs font-bold text-green-400 uppercase tracking-widest flex items-center gap-2">
                     <MapPin size={14} /> Entrega
                   </h3>
-                  <div className="space-y-3 bg-white/5 p-4 rounded-2xl border border-white/10">
+                  <div className="space-y-3 bg-white/5 p-4 rounded-2xl border border-white/10 h-full">
                     <div>
                       <label className="text-[10px] text-white/40 block">LOGRADOURO</label>
                       <p className="text-sm font-bold">
@@ -786,7 +786,11 @@ const Admin: React.FC = () => {
                   <label className="text-[10px] text-white/40 uppercase tracking-widest block">Pagamento</label>
                   <p className="text-sm font-bold flex items-center gap-2 justify-end">
                     {pedidoSelecionado.metodo === 'pix' ? 'Pix' : 'Cartão'}
-                    {pedidoSelecionado.statusPagamento === 'Aprovado' ? <CheckCircle2 size={16} className="text-green-500" /> : <Clock size={16} className="text-yellow-500" />}
+                    {['Aprovado', 'Pendente', 'Aguardando Envio', 'Enviado', 'Concluído'].includes(pedidoSelecionado.statusPagamento || pedidoSelecionado.status) ? (
+                      <CheckCircle2 size={16} className="text-green-500" />
+                    ) : (
+                      <Clock size={16} className="text-yellow-500" />
+                    )}
                   </p>
                 </div>
               </div>
