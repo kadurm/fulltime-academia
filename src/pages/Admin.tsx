@@ -53,17 +53,14 @@ const Admin: React.FC = () => {
   const [customStart, setCustomStart] = useState('');
   const [customEnd, setCustomEnd] = useState('');
   const [isLoadingData, setIsLoadingData] = useState(true);
-  const [showPendingPix, setShowPendingPix] = useState(false);
   const [pedidoSelecionado, setPedidoSelecionado] = useState<any>(null);
 
   // Filtragem de Pedidos por Período e Logística
   const pedidosFiltradosDashboard = useMemo(() => {
     let safePedidos = Array.isArray(pedidos) ? pedidos : [];
     
-    // Filtro Rígido de Pendentes (Ocultar por padrão)
-    if (!showPendingPix) {
-      safePedidos = safePedidos.filter(p => (p?.statusPagamento || p?.status) !== 'Pendente' && (p?.statusPagamento || p?.status) !== 'Pendente (Pix)');
-    }
+    // Filtro Rígido: Apenas pedidos que já foram pagos/processados (ignora abandonos)
+    safePedidos = safePedidos.filter(p => (p?.statusPagamento || p?.status) !== 'Aguardando Pagamento');
 
     if (periodo === 'all') return safePedidos;
     
@@ -652,9 +649,9 @@ const Admin: React.FC = () => {
                           <td className="py-4 text-blue-400 font-bold">R$ {(pedido?.total || 0).toFixed(2).replace('.', ',')}</td>
                           <td className="py-4 text-center">
                             <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${
-                              pedido?.statusPagamento === 'Aprovado' || pedido?.statusPagamento === 'Concluído' ? 'bg-green-500/20 text-green-400' : 
-                              pedido?.statusPagamento === 'Aguardando Envio' || pedido?.statusPagamento === 'Enviado' ? 'bg-blue-500/20 text-blue-400' :
-                              pedido?.statusPagamento === 'Recusado' || pedido?.statusPagamento === 'Devolvido/Cancelado' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'
+                              pedido?.statusPagamento === 'Concluído' ? 'bg-green-500/20 text-green-400' : 
+                              pedido?.statusPagamento === 'Enviado' ? 'bg-blue-500/20 text-blue-400' :
+                              pedido?.statusPagamento === 'Devolvido/Cancelado' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'
                             }`}>
                               {pedido?.statusPagamento || 'Pendente'}
                             </span>
@@ -666,9 +663,7 @@ const Admin: React.FC = () => {
                                 onChange={(e) => updatePedidoStatus(pedido.id, e.target.value)}
                                 className="bg-white/5 border border-white/10 rounded px-2 py-1 text-[10px] text-white outline-none focus:border-blue-500 cursor-pointer"
                               >
-                                <option value="Pendente" className="bg-[#0f172a]">Pendente</option>
-                                <option value="Pendente (Pix)" className="bg-[#0f172a]">Pendente (Pix)</option>
-                                <option value="Aguardando Envio" className="bg-[#0f172a]">Aguardando Envio</option>
+                                <option value="Pendente" className="bg-[#0f172a]">Pendente (Pago)</option>
                                 <option value="Enviado" className="bg-[#0f172a]">Enviado</option>
                                 <option value="Concluído" className="bg-[#0f172a]">Concluído</option>
                                 <option value="Devolvido/Cancelado" className="bg-[#0f172a]">Devolvido/Cancelado</option>
@@ -906,6 +901,18 @@ const Admin: React.FC = () => {
                     <button onClick={() => handleDeleteCat(i)} className="opacity-60 hover:opacity-100 text-red-400 transition-opacity"><Trash2 size={16} /></button>
                   </div>
                 </div>
+              ))}
+            </div>
+            <button onClick={() => setIsCatModalOpen(false)} className="w-full mt-6 py-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all">Fechar</button>
+          </GlassCard>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Admin;
+div>
               ))}
             </div>
             <button onClick={() => setIsCatModalOpen(false)} className="w-full mt-6 py-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all">Fechar</button>

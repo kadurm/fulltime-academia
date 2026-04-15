@@ -36,10 +36,10 @@ export default async function handler(req, res) {
           if (index !== -1) {
             // Só atualiza se ainda não estiver processado para evitar loops/sobrescritas indevidas
             const statusAtual = pedidos[index].statusPagamento;
-            if (statusAtual === 'Pendente' || statusAtual === 'Pendente (Pix)') {
-              pedidos[index].statusPagamento = 'Aguardando Envio';
+            if (statusAtual === 'Aguardando Pagamento' || statusAtual === 'Pendente (Pix)') {
+              pedidos[index].statusPagamento = 'Pendente';
               await kv.set("pedidos", pedidos);
-              console.log(`SUCESSO: Pedido ${paymentId} movido para 'Aguardando Envio'.`);
+              console.log(`SUCESSO: Pedido ${paymentId} movido para 'Pendente'.`);
             }
           } else {
             console.log(`AVISO: Pedido ${paymentId} não encontrado no banco de dados.`);
