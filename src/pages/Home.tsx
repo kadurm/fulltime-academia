@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { GlassCard } from '../components/ui/glass-card';
 import { Zap, Users, Activity, Snowflake, ChevronDown } from 'lucide-react';
 
@@ -90,12 +91,18 @@ const Home: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full">
+      <Helmet>
+        <title>FullTime Academia | Musculação e Resultados em Montes Claros</title>
+        <meta name="description" content="Treine na melhor academia de Montes Claros. Unidades Planalto, Ibituruna e São José com musculação de ponta e suporte especializado." />
+        <link rel="canonical" href="https://fulltimeacademia.com.br/" />
+      </Helmet>
+
       {/* Hero */}
       <div id="hero" data-section="hero" className="pt-24 md:pt-32 bg-transparent scroll-mt-24 md:scroll-mt-32">
         <section className="relative w-full h-fit md:min-h-screen flex items-center justify-center py-hero-page-padding">
           <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-4 md:gap-5 relative z-10">
             <div className="items-center text-center flex flex-col gap-3 md:gap-3">
-              <h2 className="blur-text text-center text-4xl md:text-5xl font-medium text-balance">Transforme seu corpo<br />Supere seus limites</h2>
+              <h1 className="blur-text text-center text-4xl md:text-5xl font-medium text-balance">Transforme seu corpo<br />Supere seus limites</h1>
               <p className="text-sm md:text-base font-medium text-gray-300 mt-4 mb-6">Encontre a unidade Fulltime mais próxima de você.</p>
             </div>
 

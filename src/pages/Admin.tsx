@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { GlassCard } from '../components/ui/glass-card';
 import { Trash2, Edit, Plus, X, LogOut, Search, DollarSign, ShoppingBag, TrendingUp, Clock, Eye, MapPin, User, Package, ChevronRight, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -396,6 +397,11 @@ const Admin: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen pt-[180px] md:pt-[120px] pb-20 px-4 md:px-6">
+      <Helmet>
+        <title>Painel Administrativo | FullTime Academia</title>
+        <meta name="description" content="Gerenciamento de pedidos e produtos da FullTime Academia." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <div className="max-w-5xl mx-auto w-full">
         {/* Tabs de Navegação */}
         <div className="flex justify-center gap-4 mb-12">

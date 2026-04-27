@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Loja from './pages/Loja';
 import Admin from './pages/Admin';
 import Checkout from './pages/Checkout';
+import { HelmetProvider } from 'react-helmet-async';
 import { CartSidebar } from './components/ui/cart-sidebar';
 
 // Importando imagem da logo
@@ -100,32 +101,34 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <ScrollToTop />
-      <AnimatedBackground shopStatus="default" />
-      
-      <div className="relative z-10 w-full min-h-screen antialiased text-white">
-        <Navbar cartBadge={cartBadge} setIsCartOpen={setIsCartOpen} />
+    <HelmetProvider>
+      <Router>
+        <ScrollToTop />
+        <AnimatedBackground shopStatus="default" />
+        
+        <div className="relative z-10 w-full min-h-screen antialiased text-white">
+          <Navbar cartBadge={cartBadge} setIsCartOpen={setIsCartOpen} />
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/loja" element={<Loja />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/checkout" element={<Checkout />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/loja" element={<Loja />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/checkout" element={<Checkout />} />
+          </Routes>
 
-        <footer className="relative w-full z-10 bg-[#003399]/70 backdrop-blur-2xl border-t border-white/20 text-white py-10 mt-20 shadow-[0_-15px_30px_rgba(0,0,0,0.4)]">
-          <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8">
-            <Link to="/" className="cursor-pointer">
-              <img src={logo} alt="Fulltime Academia" className="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" />
-            </Link>
-            <span className="text-white/50 text-sm">© 2026 | KrM Corp</span>
-          </div>
-        </footer>
+          <footer className="relative w-full z-10 bg-[#003399]/70 backdrop-blur-2xl border-t border-white/20 text-white py-10 mt-20 shadow-[0_-15px_30px_rgba(0,0,0,0.4)]">
+            <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8">
+              <Link to="/" className="cursor-pointer">
+                <img src={logo} alt="Fulltime Academia" className="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" />
+              </Link>
+              <span className="text-white/50 text-sm">© 2026 | KrM Corp</span>
+            </div>
+          </footer>
 
-        <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-      </div>
-    </Router>
+          <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+        </div>
+      </Router>
+    </HelmetProvider>
   );
 }
 

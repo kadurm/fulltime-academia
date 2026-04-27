@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /checkout
+
+Sitemap: https://fulltimeacademia.com.br/sitemap.xml

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { GlassCard } from '../components/ui/glass-card';
 import { ShoppingCart, ArrowLeft, ShieldCheck, CreditCard, User, Mail, Fingerprint, MapPin, Hash, Building, Landmark, QrCode, Copy, CheckCircle2, Loader2, MessageCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -249,6 +250,11 @@ const Checkout = () => {
 
   return (
     <div className="min-h-screen pt-[200px] md:pt-32 pb-20 px-6">
+      <Helmet>
+        <title>Finalizar Compra | FullTime Academia</title>
+        <meta name="description" content="Complete seu pedido de suplementos com segurança na Full Suplementos." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <div className="container mx-auto max-w-6xl">
         <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-8 group">
           <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />

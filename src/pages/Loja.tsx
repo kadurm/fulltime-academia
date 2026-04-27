@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { GlassCard } from '../components/ui/glass-card';
 import { ShoppingCart, Search } from 'lucide-react';
 
@@ -58,6 +59,12 @@ const Loja: React.FC = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen">
+      <Helmet>
+        <title>Loja de Suplementos | FullTime Academia</title>
+        <meta name="description" content="Suplementação premium para potencializar seu treino. Whey, Creatina, Pré-treino e muito mais na Full Suplementos." />
+        <link rel="canonical" href="https://fulltimeacademia.com.br/loja" />
+      </Helmet>
+
       {/* Hero */}
       <div id="hero" data-section="hero" className="pt-2 md:pt-4 bg-transparent"><section className="relative w-full h-fit flex items-center justify-center pt-0 pb-4 md:pb-8"><div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col relative z-10"><div className="items-center text-center flex flex-col"><img src="/FullSuplementosSemFundo.png" alt="Full Suplementos" className="w-[68%] md:w-[48%] max-w-[400px] mx-auto object-contain animate-in fade-in slide-in-from-bottom-8 duration-1000 ease-out" /><p className="-mt-12 md:-mt-28 relative z-10 text-gray-400 max-w-2xl mx-auto leading-relaxed">Suplementação premium para levar seu treino ao próximo nível.</p></div></div></section></div>
 

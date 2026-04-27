@@ -5,6 +5,7 @@
 2. Antes de iniciar qualquer nova tarefa, releia obrigatoriamente este arquivo `agent.md` para assimilar o contexto atualizado por agentes em outros terminais.
 
 ## Últimas Atualizações
+- 2026-04-26: Otimização técnica de SEO: Implementação de `react-helmet-async` para metadados dinâmicos, correção estrutural do `index.html`, ajuste de hierarquia `H1` e criação de `robots.txt`/`sitemap.xml`.
 - 2026-04-15: Implementação de lógica funcional no modal de pedidos para processamento e limpeza de itens pendentes da tabela de logística.
 - 2026-04-15: Adição de modal detalhado com informações completas de entrega (endereço, contato) e otimização da fila de logística no Admin.
 - 2026-04-15: Sanitização de payloads enviados ao Mercado Pago para contornar limitações de tamanho de metadados.
