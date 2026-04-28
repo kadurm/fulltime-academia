@@ -1,14 +1,8 @@
 {
   "functions": {
-    "api/upload.js": {
-      "runtime": "@vercel/node@3.2.0"
-    },
-    "api/process_payment.js": {
-      "runtime": "@vercel/node@3.2.0"
+    "api/*.js": {
+      "maxDuration": 15
     }
-  },
-  "env": {
-    "NODE_VERSION": "20"
   },
   "rewrites": [
     {
