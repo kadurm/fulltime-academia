@@ -11,33 +11,31 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.2",
-    "autoprefixer": "^10.5.0",
-    "postcss": "^8.5.9",
-    "tailwindcss": "^4.2.2",
-    "vite": "^6.0.1"
-  },
   "dependencies": {
     "@mercadopago/sdk-react": "^1.0.7",
-    "@tailwindcss/vite": "^4.2.2",
-    "@types/react": "19.0.0",
-    "@types/react-dom": "19.0.0",
     "@vercel/kv": "^3.0.0",
-    "@vitejs/plugin-react": "^6.0.1",
     "class-variance-authority": "^0.7.1",
     "cloudinary": "^2.9.0",
     "clsx": "^2.1.1",
     "dotenv": "^17.4.0",
     "lucide-react": "^1.7.0",
     "mercadopago": "^2.12.0",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-helmet-async": "^2.0.1",
-    "react-is": "19.0.0",
     "react-router-dom": "^7.14.0",
     "recharts": "^3.8.1",
-    "stripe": "^22.0.1",
     "tailwind-merge": "^3.5.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.1"
   }
 }
