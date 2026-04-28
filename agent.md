@@ -5,7 +5,7 @@
 2. Antes de iniciar qualquer nova tarefa, releia obrigatoriamente este arquivo `agent.md` para assimilar o contexto atualizado por agentes em outros terminais.
 
 ## Últimas Atualizações
-- 2026-04-28: Sincronização técnica e visual: Padronização de Safe Zones (pt-[160px]) para mobile em todas as páginas para acomodar o Navbar empilhado. Correção de conflitos de CSS no `index.html` (alvos H1/H2). Integração funcional com `mobile-fix.css` através da adição do wrapper `#nav` no `App.tsx`. Consolidação de `useEffect`s de estado de carrinho.
+- 2026-04-28: Sincronização técnica e visual: Padronização de Safe Zones (pt-[160px]) para mobile em todas as páginas para acomodar o Navbar empilhado. Correção de conflitos de CSS no `index.html` (alvos H1/H2). Integração funcional com `mobile-fix.css` através da adição do wrapper `#nav` no `App.tsx`. Consolidação de `useEffect`s de estado de carrinho. Downgrade de dependências para Vite 6 e React 19 estável para garantir compatibilidade com CI/CD.
 - 2026-04-26: Otimização técnica de SEO: Implementação de `react-helmet-async` para metadados dinâmicos, correção estrutural do `index.html`, ajuste de hierarquia `H1` e criação de `robots.txt`/`sitemap.xml`.
 - 2026-04-15: Implementação de lógica funcional no modal de pedidos para processamento e limpeza de itens pendentes da tabela de logística.
 - 2026-04-15: Adição de modal detalhado com informações completas de entrega (endereço, contato) e otimização da fila de logística no Admin.
