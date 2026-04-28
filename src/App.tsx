@@ -106,17 +106,19 @@ function App() {
         <ScrollToTop />
         <AnimatedBackground shopStatus="default" />
         
-        <div className="relative z-10 w-full min-h-screen antialiased text-white">
+        <div className="relative z-10 w-full min-h-screen flex flex-col antialiased text-white">        
           <Navbar cartBadge={cartBadge} setIsCartOpen={setIsCartOpen} />
 
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/loja" element={<Loja />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/checkout" element={<Checkout />} />
-          </Routes>
+          <main className="flex-1 w-full flex flex-col">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/loja" element={<Loja />} />
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/checkout" element={<Checkout />} />
+            </Routes>
+          </main>
 
-          <footer className="relative w-full z-10 bg-[#003399]/70 backdrop-blur-2xl border-t border-white/20 text-white py-10 mt-20 shadow-[0_-15px_30px_rgba(0,0,0,0.4)]">
+          <footer className="relative w-full z-10 bg-[#003399]/70 backdrop-blur-2xl border-t border-white/20 text-white py-10 mt-auto shadow-[0_-15px_30px_rgba(0,0,0,0.4)]">
             <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8">
               <Link to="/" className="cursor-pointer">
                 <img src={logo} alt="Fulltime Academia" className="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" />
