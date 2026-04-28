@@ -31,7 +31,8 @@ const Navbar = ({ cartBadge, setIsCartOpen }: { cartBadge: number, setIsCartOpen
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-[#003399]/70 backdrop-blur-2xl border-b border-white/20 shadow-[0_15px_30px_rgba(0,0,0,0.4),inset_0_-1px_0_rgba(255,255,255,0.1)] transition-all duration-300">
+    <div id="nav">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-[#003399]/70 backdrop-blur-2xl border-b border-white/20 shadow-[0_15px_30px_rgba(0,0,0,0.4),inset_0_-1px_0_rgba(255,255,255,0.1)] transition-all duration-300">
       <div className="container mx-auto px-6 lg:px-12 max-w-7xl py-4 flex flex-col md:flex-row justify-between items-center gap-4">
         <Link to="/" className="cursor-pointer flex-shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <img src={logo} alt="Fulltime Academia" className="w-14 md:w-16 h-auto object-contain transition-transform hover:scale-105" />
@@ -62,6 +63,7 @@ const Navbar = ({ cartBadge, setIsCartOpen }: { cartBadge: number, setIsCartOpen
         </div>
       </div>
     </nav>
+    </div>
   );
 };
 
@@ -70,33 +72,28 @@ function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
-    const handleCartUpdate = () => {
-      const cart = JSON.parse(localStorage.getItem('fulltime_cart') || '[]');
-      if (cart.length > 0) {
-        setIsCartOpen(true);
-      } else {
-        setIsCartOpen(false);
-      }
-    };
-    window.addEventListener('cartUpdated', handleCartUpdate);
-    return () => window.removeEventListener('cartUpdated', handleCartUpdate);
-  }, []);
-
-  useEffect(() => {
-    // Carrinho Badge Update
-    const updateBadge = () => {
+    const updateCartState = () => {
       const cart = JSON.parse(localStorage.getItem('fulltime_cart') || '[]');
       const totalItems = cart.reduce((sum: number, item: any) => sum + (item.quantidade || 1), 0);
       setCartBadge(totalItems);
+      
+      // Abre o carrinho automaticamente apenas se for uma adição (evento customizado)
+      // e não for carregamento inicial ou storage
     };
-    updateBadge();
+
+    const handleCartUpdated = () => {
+      updateCartState();
+      const cart = JSON.parse(localStorage.getItem('fulltime_cart') || '[]');
+      if (cart.length > 0) setIsCartOpen(true);
+    };
+
+    updateCartState();
     
-    // Escutar por mudanças no localStorage e evento customizado
-    window.addEventListener('storage', updateBadge);
-    window.addEventListener('cartUpdated', updateBadge);
+    window.addEventListener('storage', updateCartState);
+    window.addEventListener('cartUpdated', handleCartUpdated);
     return () => {
-      window.removeEventListener('storage', updateBadge);
-      window.removeEventListener('cartUpdated', updateBadge);
+      window.removeEventListener('storage', updateCartState);
+      window.removeEventListener('cartUpdated', handleCartUpdated);
     };
   }, []);
 

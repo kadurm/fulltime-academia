@@ -66,7 +66,7 @@ const Loja: React.FC = () => {
       </Helmet>
 
       {/* Hero */}
-      <div id="hero" data-section="hero" className="pt-2 md:pt-4 bg-transparent"><section className="relative w-full h-fit flex items-center justify-center pt-0 pb-4 md:pb-8"><div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col relative z-10"><div className="items-center text-center flex flex-col"><img src="/FullSuplementosSemFundo.png" alt="Full Suplementos" className="w-[68%] md:w-[48%] max-w-[400px] mx-auto object-contain animate-in fade-in slide-in-from-bottom-8 duration-1000 ease-out" /><p className="-mt-12 md:-mt-28 relative z-10 text-gray-400 max-w-2xl mx-auto leading-relaxed">Suplementação premium para levar seu treino ao próximo nível.</p></div></div></section></div>
+      <div id="hero" data-section="hero" className="pt-[160px] md:pt-32 bg-transparent"><section className="relative w-full h-fit flex items-center justify-center pt-0 pb-4 md:pb-8"><div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col relative z-10"><div className="items-center text-center flex flex-col"><img src="/FullSuplementosSemFundo.png" alt="Full Suplementos" className="w-[68%] md:w-[48%] max-w-[400px] mx-auto object-contain animate-in fade-in slide-in-from-bottom-8 duration-1000 ease-out" /><p className="-mt-12 md:-mt-28 relative z-10 text-gray-400 max-w-2xl mx-auto leading-relaxed">Suplementação premium para levar seu treino ao próximo nível.</p></div></div></section></div>
 
       {/* Busca e Filtros */}
       <div className="container mx-auto px-6 max-w-7xl mb-12 flex flex-col gap-8">
