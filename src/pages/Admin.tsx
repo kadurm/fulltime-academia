@@ -283,11 +283,12 @@ const Admin: React.FC = () => {
           body: JSON.stringify({ imageStr: formImagem })
         });
         
+        const uploadData = await uploadRes.json();
+
         if (!uploadRes.ok) {
-          throw new Error('Falha no upload da imagem');
+          throw new Error(uploadData.error || 'Falha no upload da imagem');
         }
 
-        const uploadData = await uploadRes.json();
         if (uploadData.secure_url) {
           imagemUrl = uploadData.secure_url;
         } else {
