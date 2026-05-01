@@ -847,34 +847,36 @@ const Admin: React.FC = () => {
       )}
 
       {isModalOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <GlassCard className="w-full max-w-[500px] p-0 flex flex-col max-h-[90vh] bg-slate-900/90 overflow-hidden shadow-2xl">
+        <div className="fixed inset-0 z-[110] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-start sm:justify-center p-4 overflow-y-auto custom-scrollbar">
+          <div className="w-full max-w-[500px] flex flex-col my-auto bg-slate-900 border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative">
             {/* Header Modal - Fixo */}
-            <div className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
-              <h2 className="text-xl font-bold">{modalTitle} Produto</h2>
-              <button onClick={fecharModal} className="p-2 hover:bg-white/10 rounded-full transition-colors"><X size={24} /></button>
+            <div className="sticky top-0 z-20 p-6 border-b border-white/10 flex justify-between items-center bg-slate-900/95 backdrop-blur-sm">
+              <h2 className="text-xl font-bold text-white">{modalTitle} Produto</h2>
+              <button onClick={fecharModal} className="p-2 hover:bg-white/10 rounded-full transition-colors text-white/60 hover:text-white">
+                <X size={24} />
+              </button>
             </div>
 
             {/* Formulário - Rolável */}
-            <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+            <div className="p-8">
               <form id="produtoForm" onSubmit={salvarProduto} className="flex flex-col gap-6">
                 <div className="flex flex-col gap-1">
                   <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Nome do Produto</label>
-                  <input required type="text" value={formNome} onChange={(e) => setFormNome(e.target.value)} className="p-3 rounded-lg bg-black border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none" />
+                  <input required type="text" value={formNome} onChange={(e) => setFormNome(e.target.value)} className="w-full p-4 rounded-xl bg-black/50 border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Categoria</label>
-                  <select value={formCategoria} onChange={(e) => setFormCategoria(e.target.value)} className="p-3 rounded-lg bg-black border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none">
+                  <select value={formCategoria} onChange={(e) => setFormCategoria(e.target.value)} className="w-full p-4 rounded-xl bg-black/50 border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none">
                     {categorias.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Descrição</label>
-                  <textarea rows={3} value={formDescricao} onChange={(e) => setFormDescricao(e.target.value)} className="p-3 rounded-lg bg-black border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none" />
+                  <textarea rows={3} value={formDescricao} onChange={(e) => setFormDescricao(e.target.value)} className="w-full p-4 rounded-xl bg-black/50 border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Preço</label>
-                  <input required type="text" value={formPreco} onChange={handlePriceChange} placeholder="R$ 0,00" className="p-3 rounded-lg bg-black border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none" />
+                  <input required type="text" value={formPreco} onChange={handlePriceChange} placeholder="R$ 0,00" className="w-full p-4 rounded-xl bg-black/50 border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none" />
                 </div>
                 
                 <div className="flex flex-col gap-1">
@@ -886,13 +888,13 @@ const Admin: React.FC = () => {
                     <input type="file" ref={fileInputRef} hidden accept="image/*" onChange={handleImageChange} />
                     {!formImagem ? (
                       <div className="flex flex-col items-center gap-2 opacity-40">
-                        <Plus size={32} />
-                        <span className="text-xs font-bold">CARREGAR FOTO</span>
+                        <Plus size={32} className="text-white" />
+                        <span className="text-xs font-bold text-white">CARREGAR FOTO</span>
                       </div>
                     ) : (
                       <div className="relative group">
                         <img src={formImagem} alt="Preview" className="max-h-[150px] mx-auto rounded-lg shadow-lg border border-white/10" />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all rounded-lg text-[10px] font-bold">TROCAR IMAGEM</div>
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all rounded-lg text-[10px] font-bold text-white">TROCAR IMAGEM</div>
                       </div>
                     )}
                   </div>
@@ -901,12 +903,12 @@ const Admin: React.FC = () => {
             </div>
 
             {/* Footer - Fixo */}
-            <div className="p-6 border-t border-white/10 bg-white/5 flex gap-4">
+            <div className="sticky bottom-0 z-20 p-6 border-t border-white/10 bg-slate-900 flex gap-4 mt-auto">
               <button 
                 type="button" 
                 onClick={fecharModal} 
                 disabled={isSaving}
-                className="flex-1 py-4 bg-white/5 hover:bg-white/10 font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="flex-1 py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm border border-white/5"
               >
                 Cancelar
               </button>
@@ -914,7 +916,7 @@ const Admin: React.FC = () => {
                 type="submit" 
                 form="produtoForm"
                 disabled={isSaving}
-                className="flex-1 py-4 bg-blue-600 hover:bg-blue-500 font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm shadow-lg shadow-blue-600/20"
+                className="flex-1 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm shadow-lg shadow-blue-600/20"
               >
                 {isSaving ? (
                   <>
@@ -924,7 +926,7 @@ const Admin: React.FC = () => {
                 ) : 'Salvar Produto'}
               </button>
             </div>
-          </GlassCard>
+          </div>
         </div>
       )}
 
