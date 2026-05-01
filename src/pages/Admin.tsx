@@ -847,18 +847,18 @@ const Admin: React.FC = () => {
       )}
 
       {isModalOpen && (
-        <div className="fixed inset-0 z-[110] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-start sm:justify-center p-4 overflow-y-auto custom-scrollbar">
-          <div className="w-full max-w-[500px] flex flex-col my-auto bg-slate-900 border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative">
+        <div className="fixed inset-0 z-[110] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4">
+          <div className="w-full max-w-[500px] flex flex-col h-full max-h-[85vh] bg-slate-900 border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
             {/* Header Modal - Fixo */}
-            <div className="sticky top-0 z-20 p-6 border-b border-white/10 flex justify-between items-center bg-slate-900/95 backdrop-blur-sm">
+            <div className="shrink-0 p-6 border-b border-white/10 flex justify-between items-center bg-slate-900">
               <h2 className="text-xl font-bold text-white">{modalTitle} Produto</h2>
               <button onClick={fecharModal} className="p-2 hover:bg-white/10 rounded-full transition-colors text-white/60 hover:text-white">
                 <X size={24} />
               </button>
             </div>
 
-            {/* Formulário - Rolável */}
-            <div className="p-8">
+            {/* Formulário - Área com Rolagem Central */}
+            <div className="flex-1 overflow-y-auto p-8 custom-scrollbar bg-slate-900/50">
               <form id="produtoForm" onSubmit={salvarProduto} className="flex flex-col gap-6">
                 <div className="flex flex-col gap-1">
                   <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Nome do Produto</label>
@@ -879,7 +879,7 @@ const Admin: React.FC = () => {
                   <input required type="text" value={formPreco} onChange={handlePriceChange} placeholder="R$ 0,00" className="w-full p-4 rounded-xl bg-black/50 border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none" />
                 </div>
                 
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 pb-4">
                   <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Imagem do Produto</label>
                   <div 
                     className="border-2 border-dashed border-white/10 rounded-xl p-6 text-center cursor-pointer hover:border-blue-500/50 hover:bg-white/5 transition-all"
@@ -903,7 +903,7 @@ const Admin: React.FC = () => {
             </div>
 
             {/* Footer - Fixo */}
-            <div className="sticky bottom-0 z-20 p-6 border-t border-white/10 bg-slate-900 flex gap-4 mt-auto">
+            <div className="shrink-0 p-6 border-t border-white/10 bg-slate-900 flex gap-4">
               <button 
                 type="button" 
                 onClick={fecharModal} 
