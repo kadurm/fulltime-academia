@@ -846,70 +846,84 @@ const Admin: React.FC = () => {
         </div>
       )}
 
-      {/* Modal Novo/Editar */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <GlassCard className="w-full max-w-[500px] p-8 max-h-[90vh] overflow-y-auto bg-slate-900/90">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold">{modalTitle} Produto</h2>
+          <GlassCard className="w-full max-w-[500px] p-0 flex flex-col max-h-[90vh] bg-slate-900/90 overflow-hidden shadow-2xl">
+            {/* Header Modal - Fixo */}
+            <div className="p-6 border-b border-white/10 flex justify-between items-center bg-white/5">
+              <h2 className="text-xl font-bold">{modalTitle} Produto</h2>
               <button onClick={fecharModal} className="p-2 hover:bg-white/10 rounded-full transition-colors"><X size={24} /></button>
             </div>
-            <form onSubmit={salvarProduto} className="flex flex-col gap-4">
-              <div className="flex flex-col gap-1">
-                <label className="text-xs text-gray-400">Nome</label>
-                <input required type="text" value={formNome} onChange={(e) => setFormNome(e.target.value)} className="p-3 rounded-lg bg-black border border-white/10 text-white" />
-              </div>
-              <div className="flex flex-col gap-1">
-                <label className="text-xs text-gray-400">Categoria</label>
-                <select value={formCategoria} onChange={(e) => setFormCategoria(e.target.value)} className="p-3 rounded-lg bg-black border border-white/10 text-white">
-                  {categorias.map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
-              </div>
-              <div className="flex flex-col gap-1">
-                <label className="text-xs text-gray-400">Descrição</label>
-                <textarea rows={3} value={formDescricao} onChange={(e) => setFormDescricao(e.target.value)} className="p-3 rounded-lg bg-black border border-white/10 text-white" />
-              </div>
-              <div className="flex flex-col gap-1">
-                <label className="text-xs text-gray-400">Preço</label>
-                <input required type="text" value={formPreco} onChange={handlePriceChange} placeholder="R$ 0,00" className="p-3 rounded-lg bg-black border border-white/10 text-white" />
-              </div>
-              <div 
-                className="border-2 border-dashed border-white/20 rounded-xl p-6 text-center cursor-pointer hover:border-blue-500/50 transition-all"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <input type="file" ref={fileInputRef} hidden accept="image/*" onChange={handleImageChange} />
-                {!formImagem ? (
-                  <div className="flex flex-col items-center gap-2 opacity-60">
-                    <Plus size={32} />
-                    <span>Selecione uma foto</span>
+
+            {/* Formulário - Rolável */}
+            <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+              <form id="produtoForm" onSubmit={salvarProduto} className="flex flex-col gap-6">
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Nome do Produto</label>
+                  <input required type="text" value={formNome} onChange={(e) => setFormNome(e.target.value)} className="p-3 rounded-lg bg-black border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none" />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Categoria</label>
+                  <select value={formCategoria} onChange={(e) => setFormCategoria(e.target.value)} className="p-3 rounded-lg bg-black border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none">
+                    {categorias.map(c => <option key={c} value={c}>{c}</option>)}
+                  </select>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Descrição</label>
+                  <textarea rows={3} value={formDescricao} onChange={(e) => setFormDescricao(e.target.value)} className="p-3 rounded-lg bg-black border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none" />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Preço</label>
+                  <input required type="text" value={formPreco} onChange={handlePriceChange} placeholder="R$ 0,00" className="p-3 rounded-lg bg-black border border-white/10 text-white focus:border-blue-500/50 transition-all outline-none" />
+                </div>
+                
+                <div className="flex flex-col gap-1">
+                  <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Imagem do Produto</label>
+                  <div 
+                    className="border-2 border-dashed border-white/10 rounded-xl p-6 text-center cursor-pointer hover:border-blue-500/50 hover:bg-white/5 transition-all"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <input type="file" ref={fileInputRef} hidden accept="image/*" onChange={handleImageChange} />
+                    {!formImagem ? (
+                      <div className="flex flex-col items-center gap-2 opacity-40">
+                        <Plus size={32} />
+                        <span className="text-xs font-bold">CARREGAR FOTO</span>
+                      </div>
+                    ) : (
+                      <div className="relative group">
+                        <img src={formImagem} alt="Preview" className="max-h-[150px] mx-auto rounded-lg shadow-lg border border-white/10" />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all rounded-lg text-[10px] font-bold">TROCAR IMAGEM</div>
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  <img src={formImagem} alt="Preview" className="max-h-[120px] mx-auto rounded-lg" />
-                )}
-              </div>
-              <div className="flex gap-4 mt-4">
-                <button 
-                  type="button" 
-                  onClick={fecharModal} 
-                  disabled={isSaving}
-                  className="flex-1 py-3 bg-white/5 hover:bg-white/10 font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Cancelar
-                </button>
-                <button 
-                  type="submit" 
-                  disabled={isSaving}
-                  className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                >
-                  {isSaving ? (
-                    <>
-                      <Clock className="animate-spin" size={18} />
-                      Salvando...
-                    </>
-                  ) : 'Salvar'}
-                </button>
-              </div>
-            </form>
+                </div>
+              </form>
+            </div>
+
+            {/* Footer - Fixo */}
+            <div className="p-6 border-t border-white/10 bg-white/5 flex gap-4">
+              <button 
+                type="button" 
+                onClick={fecharModal} 
+                disabled={isSaving}
+                className="flex-1 py-4 bg-white/5 hover:bg-white/10 font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+              >
+                Cancelar
+              </button>
+              <button 
+                type="submit" 
+                form="produtoForm"
+                disabled={isSaving}
+                className="flex-1 py-4 bg-blue-600 hover:bg-blue-500 font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm shadow-lg shadow-blue-600/20"
+              >
+                {isSaving ? (
+                  <>
+                    <Clock className="animate-spin" size={18} />
+                    Salvando...
+                  </>
+                ) : 'Salvar Produto'}
+              </button>
+            </div>
           </GlassCard>
         </div>
       )}
