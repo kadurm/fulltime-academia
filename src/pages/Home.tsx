@@ -98,7 +98,7 @@ const Home: React.FC = () => {
       </Helmet>
 
       {/* Hero */}
-      <div id="hero" data-section="hero" className="pt-36 md:pt-28 bg-transparent scroll-mt-24 md:scroll-mt-32">
+      <div id="hero" data-section="hero" className="pt-40 md:pt-28 bg-transparent scroll-mt-24 md:scroll-mt-32">
         <section className="relative w-full h-fit md:min-h-screen flex items-center justify-center py-hero-page-padding">
           <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col gap-4 md:gap-5 relative z-10">
             <div className="items-center text-center flex flex-col gap-3 md:gap-3">
