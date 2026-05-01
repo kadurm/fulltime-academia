@@ -2,7 +2,7 @@
 @media (max-width: 768px) {
   /* 1. Home Spacing Fixes (Using exact IDs) */
   #hero section {
-    padding-top: 8rem !important;
+    padding-top: 0 !important;
     padding-bottom: 2rem !important;
   }
 
