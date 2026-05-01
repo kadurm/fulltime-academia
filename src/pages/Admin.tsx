@@ -108,6 +108,8 @@ const Admin: React.FC = () => {
   const [editingCatIndex, setEditingCatIndex] = useState<number | null>(null);
   const [editingCatValue, setEditingCatValue] = useState('');
 
+  const [isSaving, setIsSaving] = useState(false);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // KPIs Dashboard
@@ -269,33 +271,64 @@ const Admin: React.FC = () => {
 
   const salvarProduto = async (e: React.FormEvent) => {
     e.preventDefault();
-    const data = {
-      id: editingId !== null ? editingId : (produtos.length ? Math.max(...produtos.map(p => p.id)) + 1 : 1),
-      nome: formNome,
-      categoria: formCategoria,
-      descricao: formDescricao,
-      preco: formPreco,
-      imagem: formImagem
-    };
-
-    let novosProdutos = [...produtos];
-    if (editingId !== null) {
-      const i = novosProdutos.findIndex(x => x.id === editingId);
-      novosProdutos[i] = data;
-    } else {
-      novosProdutos.push(data);
-    }
+    setIsSaving(true);
+    let imagemUrl = formImagem;
 
     try {
-      await fetch('/api/produtos', {
+      // Se a imagem for um base64 (nova imagem), faz upload para Cloudinary
+      if (formImagem.startsWith('data:image')) {
+        const uploadRes = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imageStr: formImagem })
+        });
+        
+        if (!uploadRes.ok) {
+          throw new Error('Falha no upload da imagem');
+        }
+
+        const uploadData = await uploadRes.json();
+        if (uploadData.secure_url) {
+          imagemUrl = uploadData.secure_url;
+        } else {
+          throw new Error('URL da imagem não recebida');
+        }
+      }
+
+      const data = {
+        id: editingId !== null ? editingId : (produtos.length ? Math.max(...produtos.map(p => p.id)) + 1 : 1),
+        nome: formNome,
+        categoria: formCategoria,
+        descricao: formDescricao,
+        preco: formPreco,
+        imagem: imagemUrl
+      };
+
+      let novosProdutos = [...produtos];
+      if (editingId !== null) {
+        const i = novosProdutos.findIndex(x => x.id === editingId);
+        novosProdutos[i] = data;
+      } else {
+        novosProdutos.push(data);
+      }
+
+      const res = await fetch('/api/produtos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ produtos: novosProdutos })
       });
+
+      if (!res.ok) {
+        throw new Error('Falha ao salvar produtos no banco de dados');
+      }
+
       setProdutos(novosProdutos);
       fecharModal();
-    } catch (error) {
+    } catch (error: any) {
       console.error("Erro ao salvar produto:", error);
+      alert(`Erro ao salvar: ${error.message || 'Erro desconhecido'}`);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -855,8 +888,26 @@ const Admin: React.FC = () => {
                 )}
               </div>
               <div className="flex gap-4 mt-4">
-                <button type="button" onClick={fecharModal} className="flex-1 py-3 bg-white/5 hover:bg-white/10 font-bold rounded-xl transition-all">Cancelar</button>
-                <button type="submit" className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 font-bold rounded-xl transition-all">Salvar</button>
+                <button 
+                  type="button" 
+                  onClick={fecharModal} 
+                  disabled={isSaving}
+                  className="flex-1 py-3 bg-white/5 hover:bg-white/10 font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Cancelar
+                </button>
+                <button 
+                  type="submit" 
+                  disabled={isSaving}
+                  className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 font-bold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {isSaving ? (
+                    <>
+                      <Clock className="animate-spin" size={18} />
+                      Salvando...
+                    </>
+                  ) : 'Salvar'}
+                </button>
               </div>
             </form>
           </GlassCard>
