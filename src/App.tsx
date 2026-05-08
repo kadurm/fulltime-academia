@@ -11,6 +11,7 @@ import { CartSidebar } from './components/ui/cart-sidebar';
 
 // Importando imagem da logo
 import logo from '/logo.png';
+import logoKrm from '/LogoKrM_Final_Extreme.png';
 
 // Componente para resetar o scroll ao trocar de rota
 const ScrollToTop = () => {
@@ -119,7 +120,7 @@ function App() {
           <footer className="relative w-full z-10 bg-[#003399]/70 backdrop-blur-2xl border-t border-white/20 text-white py-10 mt-20 shadow-[0_-15px_30px_rgba(0,0,0,0.4)]">
             <div className="container mx-auto px-6 lg:px-12 max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8">
               <Link to="/" className="cursor-pointer">
-                <img src={logo} alt="Fulltime Academia" className="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" />
+                <img src={logoKrm} alt="KrM Corp" className="h-10 md:h-14 w-auto object-contain transition-transform hover:scale-105" />
               </Link>
               <span className="text-white/50 text-sm">© 2026 | KrM Corp</span>
             </div>
